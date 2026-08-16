@@ -3,1023 +3,1174 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ramel's Vision</title>
+<title>Ramel's Vision — Lead Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#050506;--panel:#0d0d11;--line:#1e1e25;--red:#c1121f;--red-hi:#e02434;--red-dim:#5a0a12;
---bone:#ecebe8;--muted:#8b8b96;--amber:#d9a441;--steel:#7d8fa3;--ok:#63b58a;
---mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
---sans:"Helvetica Neue",Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;}
+:root{
+  --void:#060507; --carbon:#0E0D11; --slab:#131218; --ash:#221F27; --ash2:#2E2A35;
+  --blood:#B0111F; --ember:#FF3B47; --blood-dim:#4A0910;
+  --bone:#EDEAE4; --smoke:#7A7680; --smoke2:#55525C;
+  --live:#4FA97C; --caution:#C9922F; --steel:#6E8298;
+  --disp:'Archivo',-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --r:2px;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{position:relative;min-height:100vh;background:var(--ink);color:var(--bone);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-button{font-family:inherit;cursor:pointer}
-input,select,textarea{font-family:inherit}
-::selection{background:var(--red);color:#fff}
+html{-webkit-text-size-adjust:100%}
+body{min-height:100vh;background:var(--void);color:var(--bone);font-family:var(--disp);
+  font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button,input,select,textarea{font-family:inherit;color:inherit}
+button{cursor:pointer;background:none;border:none}
+a{color:var(--ember);text-decoration:none}
+a:hover{text-decoration:underline}
+::selection{background:var(--blood);color:#fff}
+:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
 
-.smoke{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.smoke i{position:absolute;display:block;border-radius:50%;filter:blur(70px);opacity:.5}
-.s1{width:70vw;height:70vw;left:-20vw;top:-20vw;background:radial-gradient(circle,rgba(120,12,22,.42),transparent 66%);animation:drift1 46s ease-in-out infinite}
-.s2{width:60vw;height:60vw;right:-15vw;top:10vh;background:radial-gradient(circle,rgba(60,60,70,.30),transparent 66%);animation:drift2 62s ease-in-out infinite}
-.s3{width:80vw;height:60vw;left:10vw;bottom:-25vh;background:radial-gradient(circle,rgba(150,18,28,.24),transparent 68%);animation:drift3 54s ease-in-out infinite}
-.s4{width:45vw;height:45vw;right:5vw;bottom:5vh;background:radial-gradient(circle,rgba(40,40,48,.34),transparent 66%);animation:drift2 70s ease-in-out infinite reverse}
-@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(9vw,7vh) scale(1.16)}}
-@keyframes drift2{0%,100%{transform:translate(0,0) scale(1.06)}50%{transform:translate(-8vw,5vh) scale(.92)}}
-@keyframes drift3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-6vw,-6vh) scale(1.12)}}
-.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.045;background-image:radial-gradient(rgba(255,255,255,.8) .5px,transparent .5px);background-size:3px 3px}
-.wrap{position:relative;z-index:2}
+/* ── atmosphere : smoke ───────────────────────────── */
+.atmos{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:var(--void)}
+.atmos i{position:absolute;display:block;border-radius:50%;filter:blur(80px)}
+.a1{width:78vw;height:78vw;left:-24vw;top:-28vw;background:radial-gradient(circle,rgba(176,17,31,.30),transparent 65%);animation:f1 52s ease-in-out infinite}
+.a2{width:62vw;height:62vw;right:-18vw;top:8vh;background:radial-gradient(circle,rgba(60,58,70,.30),transparent 66%);animation:f2 68s ease-in-out infinite}
+.a3{width:86vw;height:62vw;left:8vw;bottom:-30vh;background:radial-gradient(circle,rgba(140,14,26,.20),transparent 68%);animation:f3 60s ease-in-out infinite}
+@keyframes f1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(8vw,6vh) scale(1.18)}}
+@keyframes f2{0%,100%{transform:translate(0,0) scale(1.05)}50%{transform:translate(-7vw,5vh) scale(.9)}}
+@keyframes f3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-5vw,-5vh) scale(1.14)}}
 
-.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
-.brand{font-size:clamp(30px,6vw,64px);font-weight:800;letter-spacing:.16em;text-transform:uppercase;line-height:1}
-.brand em{font-style:normal;color:var(--red-hi)}
-.h1{font-size:clamp(26px,4.6vw,52px);font-weight:800;letter-spacing:-.015em;line-height:1.04}
-.h2{font-size:19px;font-weight:700;letter-spacing:.01em}
-.lede{color:#b8b8c0;font-size:15px;line-height:1.65;max-width:62ch}
+/* layered drifting smoke — soft irregular plumes, several depths */
+.smoke{position:fixed;inset:-10%;z-index:1;pointer-events:none;overflow:hidden}
+.smoke .plume{position:absolute;border-radius:44% 56% 60% 40%/50% 45% 55% 50%;
+  filter:blur(46px);mix-blend-mode:screen;will-change:transform,border-radius}
+.p1{width:60vw;height:44vw;left:-10vw;top:6vh;
+  background:radial-gradient(ellipse at 40% 40%,rgba(150,148,158,.10),rgba(90,9,16,.05) 55%,transparent 75%);
+  animation:pl1 46s ease-in-out infinite}
+.p2{width:52vw;height:52vw;right:-14vw;top:30vh;
+  background:radial-gradient(ellipse at 60% 50%,rgba(176,17,31,.09),rgba(60,58,70,.05) 55%,transparent 75%);
+  animation:pl2 58s ease-in-out infinite}
+.p3{width:70vw;height:40vw;left:12vw;bottom:-6vh;
+  background:radial-gradient(ellipse at 50% 60%,rgba(122,118,128,.09),transparent 72%);
+  animation:pl3 64s ease-in-out infinite}
+.p4{width:44vw;height:44vw;left:50vw;top:-8vh;
+  background:radial-gradient(ellipse at 45% 45%,rgba(176,17,31,.07),transparent 70%);
+  animation:pl4 50s ease-in-out infinite}
+.p5{width:56vw;height:30vw;left:-8vw;bottom:12vh;
+  background:radial-gradient(ellipse at 55% 50%,rgba(90,9,16,.10),transparent 74%);
+  animation:pl5 70s ease-in-out infinite}
+@keyframes pl1{
+  0%{transform:translate(0,0) rotate(0deg) scale(1);border-radius:44% 56% 60% 40%/50% 45% 55% 50%}
+  33%{transform:translate(6vw,4vh) rotate(8deg) scale(1.12);border-radius:60% 40% 44% 56%/40% 60% 45% 55%}
+  66%{transform:translate(-4vw,7vh) rotate(-6deg) scale(.94);border-radius:50% 50% 38% 62%/58% 42% 60% 40%}
+  100%{transform:translate(0,0) rotate(0deg) scale(1);border-radius:44% 56% 60% 40%/50% 45% 55% 50%}}
+@keyframes pl2{
+  0%{transform:translate(0,0) rotate(0deg) scale(1)}
+  40%{transform:translate(-7vw,-5vh) rotate(-10deg) scale(1.15)}
+  70%{transform:translate(3vw,6vh) rotate(6deg) scale(.9)}
+  100%{transform:translate(0,0) rotate(0deg) scale(1)}}
+@keyframes pl3{
+  0%{transform:translate(0,0) rotate(0deg) scale(1)}
+  50%{transform:translate(5vw,-6vh) rotate(9deg) scale(1.1)}
+  100%{transform:translate(0,0) rotate(0deg) scale(1)}}
+@keyframes pl4{
+  0%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(-6vw,8vh) scale(1.2)}
+  100%{transform:translate(0,0) scale(1)}}
+@keyframes pl5{
+  0%{transform:translate(0,0) rotate(0deg) scale(1)}
+  50%{transform:translate(8vw,-3vh) rotate(-7deg) scale(1.08)}
+  100%{transform:translate(0,0) rotate(0deg) scale(1)}}
+
+/* faint drifting wisp texture riding above the plumes */
+.wisps{position:fixed;inset:-15%;z-index:1;pointer-events:none;opacity:.5;mix-blend-mode:screen;
+  background-image:
+    radial-gradient(ellipse 30% 14% at 20% 30%,rgba(200,196,204,.05),transparent 70%),
+    radial-gradient(ellipse 24% 18% at 70% 60%,rgba(200,196,204,.04),transparent 70%),
+    radial-gradient(ellipse 34% 12% at 45% 80%,rgba(200,196,204,.045),transparent 70%),
+    radial-gradient(ellipse 20% 22% at 85% 20%,rgba(200,196,204,.04),transparent 70%);
+  animation:wispdrift 90s linear infinite;filter:blur(18px)}
+@keyframes wispdrift{
+  0%{transform:translate(0,0) rotate(0deg)}
+  25%{transform:translate(-3vw,2vh) rotate(1deg)}
+  50%{transform:translate(2vw,-3vh) rotate(-1deg)}
+  75%{transform:translate(3vw,3vh) rotate(.6deg)}
+  100%{transform:translate(0,0) rotate(0deg)}}
+
+.grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.05;
+  background-image:radial-gradient(rgba(255,255,255,.9) .5px,transparent .5px);background-size:3px 3px}
+.vig{position:fixed;inset:0;z-index:2;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 40%,transparent 38%,rgba(0,0,0,.62) 100%)}
+.wrap{position:relative;z-index:3}
+@media(prefers-reduced-motion:reduce){.smoke .plume,.wisps{animation:none!important}}
+
+/* ── type system ──────────────────────────────────── */
+.wordmark{font-weight:900;letter-spacing:.14em;text-transform:uppercase;line-height:.92}
+.wordmark em{font-style:normal;color:var(--ember)}
+.tag{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.32em;
+  text-transform:uppercase;color:var(--smoke)}
+.rule{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--smoke);display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.rule::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--ash2),transparent)}
+.rule .idx{color:var(--blood);font-weight:700}
+.prose{color:#B5B1B9;font-size:14.5px;line-height:1.7;max-width:64ch}
 .mono{font-family:var(--mono)}
-.dim{color:var(--muted)}
-.sec-label{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px;margin:0 0 14px}
-.sec-label:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.dim{color:var(--smoke)}
+.num{font-family:var(--mono);font-weight:700;font-variant-numeric:tabular-nums}
 
-.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:18px;padding:12px 22px;background:rgba(6,6,8,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.tb-brand{font-weight:800;letter-spacing:.2em;font-size:13px;text-transform:uppercase;background:none;border:none;color:inherit}
-.tb-brand span{color:var(--red-hi)}
-.nav{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap}
-.nav button{background:none;border:1px solid transparent;color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:7px 12px;border-radius:3px;transition:.16s}
-.nav button:hover{color:var(--bone);background:rgba(255,255,255,.04)}
-.nav button.on{color:var(--bone);border-color:var(--red-dim);background:rgba(193,18,31,.1)}
-.page{max-width:1240px;margin:0 auto;padding:30px 22px 90px}
+/* ── chrome ───────────────────────────────────────── */
+.bar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:20px;
+  padding:14px 24px;background:rgba(6,5,7,.86);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--ash)}
+.bar-mark{font-weight:900;letter-spacing:.2em;font-size:12.5px;text-transform:uppercase}
+.bar-mark em{font-style:normal;color:var(--ember)}
+.nav{display:flex;gap:1px;margin-left:auto;flex-wrap:wrap}
+.nav button{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--smoke);padding:8px 13px;border:1px solid transparent;
+  border-radius:var(--r);transition:.18s}
+.nav button:hover{color:var(--bone);background:rgba(255,255,255,.035)}
+.nav button.on{color:var(--bone);border-color:var(--blood-dim);background:rgba(176,17,31,.12)}
+.nav .ct{color:var(--ember);margin-left:5px}
+.page{max-width:1320px;margin:0 auto;padding:36px 24px 100px}
 
-.panel{background:linear-gradient(180deg,rgba(20,20,25,.72),rgba(10,10,13,.72));border:1px solid var(--line);border-radius:6px;backdrop-filter:blur(12px)}
-.pad{padding:20px}
-.hair{height:1px;background:var(--line);margin:16px 0}
+/* ── surfaces ─────────────────────────────────────── */
+.slab{background:linear-gradient(168deg,rgba(24,22,29,.7),rgba(11,10,14,.78));
+  border:1px solid var(--ash);border-radius:var(--r);backdrop-filter:blur(14px)}
+.p{padding:24px}
+.hr{height:1px;background:var(--ash);margin:22px 0}
 
-.btn{background:var(--red);color:#fff;border:none;border-radius:3px;padding:13px 24px;font-weight:700;font-size:12px;letter-spacing:.18em;text-transform:uppercase;transition:.18s}
-.btn:hover{background:var(--red-hi);box-shadow:0 0 26px rgba(193,18,31,.42)}
-.btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
-.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--bone)}
-.btn.ghost:hover{border-color:var(--red);background:rgba(193,18,31,.08);box-shadow:none}
-.btn.sm{padding:8px 14px;font-size:10px;letter-spacing:.14em}
+/* ── controls ─────────────────────────────────────── */
+.btn{background:var(--blood);color:#fff;border-radius:var(--r);padding:14px 26px;
+  font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;transition:.2s;border:1px solid var(--blood)}
+.btn:hover{background:var(--ember);border-color:var(--ember);box-shadow:0 0 32px rgba(176,17,31,.45)}
+.btn:disabled{opacity:.35;cursor:not-allowed;box-shadow:none}
+.btn.line{background:none;border-color:var(--ash2);color:var(--bone)}
+.btn.line:hover{border-color:var(--blood);background:rgba(176,17,31,.1);box-shadow:none}
+.btn.live{background:var(--live);border-color:var(--live);color:#05130C}
+.btn.live:hover{background:#63c491;border-color:#63c491;box-shadow:0 0 26px rgba(79,169,124,.4)}
+.btn.s{padding:9px 15px;font-size:9.5px;letter-spacing:.16em}
 
-.field label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
-.inp{width:100%;background:rgba(0,0,0,.5);border:1px solid var(--line);border-radius:3px;color:var(--bone);padding:12px 13px;font-size:14px;outline:none;transition:.16s}
-.inp:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(193,18,31,.14)}
-.inp::placeholder{color:#55555f}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.fld label{display:block;font-family:var(--mono);font-size:9.5px;font-weight:500;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--smoke);margin-bottom:8px}
+.in{width:100%;background:rgba(0,0,0,.55);border:1px solid var(--ash);border-radius:var(--r);
+  padding:13px 14px;font-size:14.5px;outline:none;transition:.18s}
+.in:focus{border-color:var(--blood);box-shadow:0 0 0 3px rgba(176,17,31,.16);background:rgba(0,0,0,.7)}
+.in::placeholder{color:var(--smoke2)}
+select.in{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--smoke) 50%),linear-gradient(135deg,var(--smoke) 50%,transparent 50%);
+  background-position:calc(100% - 18px) center,calc(100% - 13px) center;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 
-.chips{display:flex;flex-wrap:wrap;gap:7px}
-.chip{background:rgba(255,255,255,.03);border:1px solid var(--line);color:#a5a5b0;border-radius:3px;padding:7px 11px;font-size:11px;font-family:var(--mono);letter-spacing:.05em;transition:.14s}
-.chip:hover{border-color:#3a3a45;color:var(--bone)}
-.chip.on{background:rgba(193,18,31,.16);border-color:var(--red);color:#fff}
-.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:2px;border:1px solid;white-space:nowrap}
-.p-hot{color:#fff;border-color:var(--red);background:var(--red)}
-.p-warm{color:var(--amber);border-color:rgba(217,164,65,.5);background:rgba(217,164,65,.1)}
-.p-cold{color:var(--steel);border-color:rgba(125,143,163,.4);background:rgba(125,143,163,.08)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:rgba(255,255,255,.025);border:1px solid var(--ash);color:#9A96A2;
+  border-radius:var(--r);padding:8px 12px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.06em;transition:.16s}
+.chip:hover{border-color:var(--ash2);color:var(--bone)}
+.chip.on{background:rgba(176,17,31,.18);border-color:var(--blood);color:#fff}
 
-.term{position:relative;border:1px solid var(--line);border-radius:6px;background:rgba(4,4,6,.9);overflow:hidden}
-.term:before{content:"";position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--red-hi),transparent);animation:sweep 2.6s linear infinite}
-@keyframes sweep{0%{top:0;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:100%;opacity:0}}
-.term-body{padding:22px;font-family:var(--mono);font-size:12.5px;line-height:2.05;max-height:340px;overflow:auto}
-.tline{display:flex;gap:12px;color:var(--muted)}
-.tline b{color:var(--bone);font-weight:400}
-.tline.hit b{color:var(--red-hi)}
-.bar{height:2px;background:var(--line);border-radius:2px;overflow:hidden}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red-dim),var(--red-hi));transition:width .5s}
+.sw{display:flex;align-items:center;gap:12px;padding:14px 15px;background:rgba(0,0,0,.42);
+  border:1px solid var(--ash);border-radius:var(--r);cursor:pointer;transition:.18s}
+.sw:hover{border-color:var(--ash2)}
+.sw.on{border-color:rgba(79,169,124,.5);background:rgba(79,169,124,.07)}
+.sw .box{width:16px;height:16px;border:1px solid var(--ash2);border-radius:1px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;transition:.18s}
+.sw.on .box{background:var(--live);border-color:var(--live);color:#05130C}
+.sw .t{font-size:13px;font-weight:500}
+.sw .s{font-family:var(--mono);font-size:10px;color:var(--smoke);margin-top:3px;letter-spacing:.04em}
 
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
-.stat{border:1px solid var(--line);border-radius:5px;padding:15px;background:rgba(12,12,15,.6)}
-.stat .n{font-size:29px;font-weight:800;letter-spacing:-.02em;line-height:1}
-.stat .l{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:8px}
-.stat.red .n{color:var(--red-hi)}
+/* ── status marks ─────────────────────────────────── */
+.mark{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9px;
+  font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:4px 8px;
+  border-radius:1px;border:1px solid;white-space:nowrap}
+.m-hot{color:#fff;border-color:var(--blood);background:var(--blood)}
+.m-warm{color:var(--caution);border-color:rgba(201,146,47,.45);background:rgba(201,146,47,.1)}
+.m-cold{color:var(--steel);border-color:rgba(110,130,152,.4);background:rgba(110,130,152,.08)}
+.m-live{color:var(--live);border-color:rgba(79,169,124,.45);background:rgba(79,169,124,.09)}
+.yes{color:var(--live)}.no{color:var(--ember)}.unk{color:var(--smoke)}
 
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
-.card{border:1px solid var(--line);border-radius:6px;background:linear-gradient(180deg,rgba(20,20,25,.7),rgba(9,9,12,.7));padding:17px;cursor:pointer;transition:.18s;position:relative;overflow:hidden;text-align:left;width:100%}
-.card:hover{border-color:#33333d;transform:translateY(-2px)}
-.card.hot{border-left:2px solid var(--red)}
-.card.warm{border-left:2px solid var(--amber)}
-.card.cold{border-left:2px solid var(--steel)}
-.card-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-.card h3{margin:0 0 3px;font-size:15.5px;font-weight:700;line-height:1.3}
-.score{font-family:var(--mono);font-size:22px;font-weight:700;line-height:1}
-.kv{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:4px 0}
-.kv span:first-child{color:var(--muted);font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase}
-.no{color:var(--red-hi)}.yes{color:var(--ok)}.unk{color:var(--muted)}
+/* ── SIGNATURE: signal meter ──────────────────────── */
+.sig{display:flex;gap:2px;align-items:flex-end;height:16px}
+.sig s{display:block;width:100%;flex:1;background:var(--ash2);border-radius:.5px;
+  transform-origin:bottom;transition:background .3s}
+.sig s.f{background:var(--steel)}
+.sig.hot s.f{background:var(--ember);box-shadow:0 0 6px rgba(255,59,71,.5)}
+.sig.warm s.f{background:var(--caution)}
+.sig-wrap{display:flex;align-items:center;gap:12px}
+.sig-val{font-family:var(--mono);font-weight:700;font-size:13px;font-variant-numeric:tabular-nums;
+  min-width:52px;text-align:right;letter-spacing:.04em}
 
-.scrim{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(4px);z-index:60}
-.drawer{position:fixed;top:0;right:0;bottom:0;width:min(760px,100%);background:#08080a;border-left:1px solid var(--line);z-index:61;overflow-y:auto}
-.dhead{position:sticky;top:0;background:rgba(8,8,10,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:20px 24px;z-index:2}
-.dbody{padding:8px 24px 60px}
-.block{border-top:1px solid var(--line);padding:20px 0}
-.block:first-child{border-top:none}
-.x{background:none;border:1px solid var(--line);color:var(--muted);border-radius:3px;width:30px;height:30px;font-size:15px}
-.x:hover{color:#fff;border-color:var(--red)}
-ul.tight{margin:0;padding-left:17px;line-height:1.75;font-size:13.5px}
-ul.tight li{margin-bottom:3px}
-.reasons{list-style:none;padding:0;margin:0;font-size:13.5px;line-height:1.9}
-.reasons li:before{content:"✓";color:var(--ok);margin-right:9px;font-family:var(--mono)}
-.reasons li.bad:before{content:"×";color:var(--muted)}
-.reasons li.unk:before{content:"?";color:var(--amber)}
-.meter{display:flex;align-items:center;gap:11px;font-size:12.5px;padding:5px 0}
-.meter .t{width:150px;color:var(--muted);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
-.meter .b{flex:1;height:4px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden}
-.meter .b i{display:block;height:100%;background:var(--red)}
-.meter .v{width:52px;text-align:right;font-family:var(--mono);color:var(--bone)}
-.quote{border-left:2px solid var(--red);padding:10px 0 10px 15px;font-size:14px;line-height:1.7;color:#d6d6dc;font-style:italic}
-.warnbox{border:1px solid rgba(217,164,65,.35);background:rgba(217,164,65,.07);border-radius:4px;padding:13px 15px;font-size:13px;line-height:1.6}
-.empty{text-align:center;padding:70px 20px;color:var(--muted)}
-.empty h3{color:var(--bone);margin:0 0 8px}
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#141419;border:1px solid var(--red-dim);border-radius:4px;padding:12px 20px;font-size:13px;z-index:90}
-.note{font-size:12px;color:var(--muted);line-height:1.6}
-.status-sel{background:rgba(0,0,0,.5);border:1px solid var(--line);color:var(--bone);border-radius:3px;padding:7px 9px;font-size:12px}
-.tabs{display:flex;gap:6px;flex-wrap:wrap}
+/* ── file stamp ───────────────────────────────────── */
+.stamp{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.2em;
+  color:var(--smoke2);text-transform:uppercase}
 
-.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:rgba(9,9,12,.6)}
-table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:900px}
-th{text-align:left;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:12px 13px;border-bottom:1px solid var(--line);white-space:nowrap;cursor:pointer;background:rgba(0,0,0,.35)}
+/* ── hero ─────────────────────────────────────────── */
+.hero{max-width:1320px;margin:0 auto;padding:clamp(56px,13vh,140px) 24px 64px}
+.hero .wordmark{font-size:clamp(38px,9.5vw,116px);animation:settle 1.2s cubic-bezier(.2,.8,.2,1) both}
+@keyframes settle{from{letter-spacing:.34em;opacity:0}to{letter-spacing:.14em;opacity:1}}
+.thesis{font-size:clamp(24px,4.4vw,46px);font-weight:800;letter-spacing:-.02em;line-height:1.06;
+  animation:rise .9s .3s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+.hero .prose{animation:rise .9s .45s cubic-bezier(.2,.8,.2,1) both}
+.hero .cta{animation:rise .9s .6s cubic-bezier(.2,.8,.2,1) both}
+.readout{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--ash);border-radius:var(--r);
+  overflow:hidden;animation:rise .9s .75s cubic-bezier(.2,.8,.2,1) both}
+.readout div{flex:1;min-width:150px;padding:18px 20px;border-right:1px solid var(--ash);background:rgba(10,9,13,.55)}
+.readout div:last-child{border-right:none}
+.readout .k{font-family:var(--mono);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--smoke)}
+.readout .v{font-size:13.5px;margin-top:8px;color:#C6C2CA;line-height:1.5}
+
+/* ── scan terminal ────────────────────────────────── */
+.scan{position:relative;border:1px solid var(--ash);border-radius:var(--r);
+  background:rgba(3,3,5,.94);overflow:hidden}
+.scan::before{content:"";position:absolute;left:0;right:0;height:1px;z-index:2;
+  background:linear-gradient(90deg,transparent,var(--ember),transparent);
+  box-shadow:0 0 12px var(--ember);animation:sweep 3s linear infinite}
+@keyframes sweep{0%{top:-1px;opacity:0}8%{opacity:1}92%{opacity:1}100%{top:100%;opacity:0}}
+.scan-hd{display:flex;align-items:center;gap:10px;padding:12px 20px;border-bottom:1px solid var(--ash);
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--smoke)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--ember);animation:blink 1.4s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.scan-body{padding:20px;font-family:var(--mono);font-size:12px;line-height:2.1;max-height:380px;overflow:auto}
+.ln{display:flex;gap:14px;color:var(--smoke)}
+.ln .ts{color:var(--smoke2);flex-shrink:0}
+.ln b{font-weight:400;color:#B8B4BE}
+.ln.hit b{color:var(--ember)}
+.ln.ok b{color:var(--live)}
+.cursor::after{content:"▊";color:var(--ember);animation:blink 1s infinite;margin-left:2px}
+.track{height:1px;background:var(--ash);overflow:hidden}
+.track i{display:block;height:100%;background:linear-gradient(90deg,var(--blood-dim),var(--ember));
+  box-shadow:0 0 10px rgba(255,59,71,.5);transition:width .6s cubic-bezier(.4,0,.2,1)}
+
+/* ── metrics ──────────────────────────────────────── */
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:1px;
+  background:var(--ash);border:1px solid var(--ash);border-radius:var(--r);overflow:hidden}
+.met{background:var(--carbon);padding:18px 16px;position:relative}
+.met::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--ash2)}
+.met.hot::before{background:var(--blood)}
+.met.live::before{background:var(--live)}
+.met .n{font-family:var(--mono);font-weight:700;font-size:27px;line-height:1;font-variant-numeric:tabular-nums}
+.met.hot .n{color:var(--ember)}
+.met.live .n{color:var(--live)}
+.met .k{font-family:var(--mono);font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--smoke);margin-top:10px}
+
+/* ── dossier cards ────────────────────────────────── */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.file{position:relative;background:linear-gradient(168deg,rgba(24,22,29,.72),rgba(10,9,13,.8));
+  border:1px solid var(--ash);border-left:3px solid var(--ash2);border-radius:var(--r);
+  padding:20px;cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s}
+.file:hover{transform:translateY(-3px);border-color:var(--ash2)}
+.file.hot{border-left-color:var(--blood)}
+.file.hot:hover{border-left-color:var(--ember);box-shadow:0 8px 40px rgba(176,17,31,.22)}
+.file.warm{border-left-color:var(--caution)}
+.file.cold{border-left-color:var(--steel)}
+.file-hd{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:14px}
+.file h3{font-size:16px;font-weight:700;line-height:1.25;letter-spacing:-.01em;margin-bottom:5px}
+.file .loc{font-family:var(--mono);font-size:10.5px;color:var(--smoke);letter-spacing:.04em}
+.rows{border-top:1px solid var(--ash);padding-top:12px;margin-top:14px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:5px 0;font-size:13px}
+.row .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--smoke);white-space:nowrap}
+.row .v{text-align:right}
+.dial{display:block;margin-top:14px;padding:11px;border:1px solid rgba(79,169,124,.35);
+  background:rgba(79,169,124,.08);border-radius:var(--r);text-align:center;
+  font-family:var(--mono);font-size:12.5px;font-weight:700;letter-spacing:.06em;color:var(--live);transition:.16s}
+.dial:hover{background:rgba(79,169,124,.18);text-decoration:none}
+.dial.off{border-color:var(--ash);background:none;color:var(--smoke2);font-weight:400;cursor:default}
+
+/* ── table ────────────────────────────────────────── */
+.tbl{overflow-x:auto;border:1px solid var(--ash);border-radius:var(--r);background:rgba(10,9,13,.6)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:960px}
+th{text-align:left;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--smoke);padding:14px;border-bottom:1px solid var(--ash2);
+  white-space:nowrap;cursor:pointer;background:rgba(0,0,0,.45);position:sticky;top:0}
 th:hover{color:var(--bone)}
-td{padding:11px 13px;border-bottom:1px solid rgba(30,30,37,.6);vertical-align:middle}
-tbody tr{cursor:pointer;transition:.12s}
-tbody tr:hover{background:rgba(193,18,31,.06)}
+td{padding:12px 14px;border-bottom:1px solid rgba(34,31,39,.7)}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+tbody tr{cursor:pointer;transition:.14s}
+tbody tr:hover{background:rgba(176,17,31,.07)}
 
-.hero{padding:clamp(40px,9vh,90px) 22px 50px;max-width:1240px;margin:0 auto}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
-.step{background:#0a0a0d;padding:20px 16px}
-.step .n{font-family:var(--mono);font-size:10px;color:var(--red-hi);letter-spacing:.24em}
-.step h4{margin:10px 0 6px;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
-.step p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.6}
+/* ── drawer ───────────────────────────────────────── */
+.scrim{position:fixed;inset:0;background:rgba(3,3,5,.82);backdrop-filter:blur(5px);z-index:60;
+  animation:fade .22s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.dossier{position:fixed;top:0;right:0;bottom:0;width:min(780px,100%);background:#08070A;
+  border-left:1px solid var(--ash2);z-index:61;overflow-y:auto;
+  animation:slide .3s cubic-bezier(.2,.8,.2,1)}
+@keyframes slide{from{transform:translateX(30px);opacity:.5}to{transform:none;opacity:1}}
+.d-hd{position:sticky;top:0;z-index:2;padding:24px 28px;background:rgba(8,7,10,.96);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--ash)}
+.d-body{padding:0 28px 80px}
+.sect{border-top:1px solid var(--ash);padding:26px 0}
+.sect:first-child{border-top:none}
+.x{border:1px solid var(--ash);color:var(--smoke);border-radius:var(--r);width:32px;height:32px;
+  font-size:15px;transition:.16s;flex-shrink:0}
+.x:hover{color:#fff;border-color:var(--blood);background:rgba(176,17,31,.12)}
+ul.t{margin:0;padding-left:18px;line-height:1.8;font-size:13.5px}
+ul.t li{margin-bottom:4px}
+.ev{list-style:none;padding:0;font-size:13.5px;line-height:2}
+.ev li::before{content:"✓";color:var(--live);margin-right:10px;font-family:var(--mono);font-size:11px}
+.ev li.n::before{content:"×";color:var(--smoke2)}
+.ev li.q::before{content:"?";color:var(--caution)}
+.gauge{display:flex;align-items:center;gap:14px;padding:6px 0;font-size:12.5px}
+.gauge .g-k{width:158px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--smoke)}
+.gauge .g-b{flex:1;height:3px;background:rgba(255,255,255,.055);overflow:hidden}
+.gauge .g-b i{display:block;height:100%;background:var(--blood)}
+.gauge .g-v{width:54px;text-align:right;font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums}
+.pull{border-left:2px solid var(--blood);padding:12px 0 12px 18px;font-size:14.5px;line-height:1.7;
+  color:#CFCAD4;font-style:italic}
+.caution{border:1px solid rgba(201,146,47,.32);background:rgba(201,146,47,.06);border-radius:var(--r);
+  padding:15px 17px;font-size:13px;line-height:1.65}
+.confirm{border:1px solid rgba(79,169,124,.32);background:rgba(79,169,124,.06);border-radius:var(--r);
+  padding:15px 17px;font-size:13.5px;line-height:1.6;color:#9FD3B7}
+.big{font-family:var(--mono);font-weight:700;font-size:30px;line-height:1;font-variant-numeric:tabular-nums}
 
-@media(max-width:820px){.grid4{grid-template-columns:repeat(2,1fr)}.page{padding:22px 15px 70px}}
-@media(max-width:520px){.grid4,.grid2{grid-template-columns:1fr}.nav button{padding:6px 8px}}
+/* ── misc ─────────────────────────────────────────── */
+.void{text-align:center;padding:88px 20px;color:var(--smoke)}
+.void h3{color:var(--bone);font-size:19px;margin-bottom:10px;font-weight:700}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--slab);
+  border:1px solid var(--blood-dim);border-radius:var(--r);padding:13px 22px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em;z-index:90;animation:fade .2s}
+.note{font-family:var(--mono);font-size:10.5px;color:var(--smoke);line-height:1.7;letter-spacing:.02em}
+.sel{background:rgba(0,0,0,.5);border:1px solid var(--ash);border-radius:var(--r);
+  padding:8px 10px;font-family:var(--mono);font-size:11px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(184px,1fr));gap:1px;
+  background:var(--ash);border:1px solid var(--ash);border-radius:var(--r);overflow:hidden}
+.stp{background:#0A090D;padding:24px 20px}
+.stp .i{font-family:var(--mono);font-size:9.5px;color:var(--blood);letter-spacing:.28em;font-weight:700}
+.stp h4{margin:12px 0 8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+.stp p{font-size:12.5px;color:var(--smoke);line-height:1.65}
+
+@media(max-width:860px){.g4,.g3{grid-template-columns:repeat(2,1fr)}.page{padding:26px 16px 80px}
+  .d-hd,.d-body{padding-left:18px;padding-right:18px}}
+@media(max-width:540px){.g4,.g3,.g2{grid-template-columns:1fr}.nav button{padding:7px 9px;font-size:9px}
+  .bar{padding:12px 16px;gap:12px}.gauge .g-k{width:110px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 
-<div class="smoke"><i class="s1"></i><i class="s2"></i><i class="s3"></i><i class="s4"></i></div>
-<div class="grain"></div>
+<div class="atmos"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+<div class="smoke">
+  <div class="plume p1"></div>
+  <div class="plume p2"></div>
+  <div class="plume p3"></div>
+  <div class="plume p4"></div>
+  <div class="plume p5"></div>
+</div>
+<div class="wisps"></div>
+<div class="grain"></div><div class="vig"></div>
 
-<div class="wrap" id="app">
+<div class="wrap">
 
-<!-- LANDING -->
-<div id="view-landing">
+<!-- ══ LANDING ══ -->
+<div id="v-landing">
   <div class="hero">
-    <div class="eyebrow" style="margin-bottom:18px">AI-Powered Business Intelligence</div>
-    <h1 class="brand">Ramel'<em>s</em> Vision</h1>
-    <div style="height:26px"></div>
-    <h2 class="h1">Find the lead.<br>Know the business.<br><span style="color:var(--red-hi)">Close the deal.</span></h2>
-    <div style="height:20px"></div>
-    <p class="lede">Search businesses across the United States and uncover their owner, reputation, online presence, booking systems, social channels, and sales potential — with a source behind every field.</p>
-    <div style="height:28px"></div>
-    <button class="btn" onclick="go('app')">Start finding leads</button>
+    <div class="tag" style="margin-bottom:22px">Lead Intelligence Terminal</div>
+    <h1 class="wordmark">Ramel'<em>s</em><br>Vision</h1>
+    <div style="height:36px"></div>
+    <h2 class="thesis">Find the lead.<br>Know the business.<br><span style="color:var(--ember)">Close the deal.</span></h2>
+    <div style="height:24px"></div>
+    <p class="prose">Pull up to 200 local businesses at once. Every one arrives with a verified phone number, a full read on what's missing from their online setup, and the exact angle to open the call with.</p>
+    <div style="height:34px"></div>
+    <div class="cta"><button class="btn" onclick="go('app')">Open terminal</button></div>
   </div>
   <div class="page" style="padding-top:0">
-    <div class="sec-label">How it runs</div>
+    <div class="rule"><span class="idx">§</span>Operating principle</div>
+    <div class="readout">
+      <div><div class="k">Verified only</div><div class="v">Phone numbers, ratings, and review counts come straight from the listing. Nothing is generated.</div></div>
+      <div><div class="k">Absence is stated carefully</div><div class="v">"No website found in sources checked" — never "they have no website."</div></div>
+      <div><div class="k">Owners are never guessed</div><div class="v">If no source names a decision maker, the field reads unverified. Ask on the call.</div></div>
+      <div><div class="k">Scoring is explainable</div><div class="v">Every point in the 100-point model traces to a category you can see.</div></div>
+    </div>
+    <div style="height:44px"></div>
+    <div class="rule"><span class="idx">§</span>The run</div>
     <div class="steps">
-      <div class="step"><div class="n">01</div><h4>Find</h4><p>Discover real businesses via Google Maps.</p></div>
-      <div class="step"><div class="n">02</div><h4>Verify</h4><p>Check websites, booking, socials, reviews.</p></div>
-      <div class="step"><div class="n">03</div><h4>Score</h4><p>Transparent 100-point lead model.</p></div>
-      <div class="step"><div class="n">04</div><h4>Prioritize</h4><p>Best opportunities float to the top.</p></div>
-      <div class="step"><div class="n">05</div><h4>Close</h4><p>Call intelligence for every lead.</p></div>
+      <div class="stp"><div class="i">01</div><h4>Sweep</h4><p>Multiple queries pull every matching business in the area.</p></div>
+      <div class="stp"><div class="i">02</div><h4>Verify</h4><p>Phone, website, booking, socials, and reputation checked.</p></div>
+      <div class="stp"><div class="i">03</div><h4>Score</h4><p>Digital gaps weighed against business strength.</p></div>
+      <div class="stp"><div class="i">04</div><h4>Rank</h4><p>Strong reputation plus weak online setup rises to the top.</p></div>
+      <div class="stp"><div class="i">05</div><h4>Dial</h4><p>Open the file, read the angle, tap the number.</p></div>
     </div>
   </div>
 </div>
 
-<!-- APP -->
-<div id="view-app" style="display:none">
-  <header class="topbar">
-    <button class="tb-brand" onclick="go('landing')">Ramel'<span>s</span> Vision</button>
+<!-- ══ APP ══ -->
+<div id="v-app" style="display:none">
+  <header class="bar">
+    <button class="bar-mark" onclick="go('landing')">Ramel'<em>s</em> Vision</button>
     <nav class="nav">
-      <button onclick="tab('search')" id="tab-search" class="on">Search</button>
-      <button onclick="tab('results')" id="tab-results">Results</button>
-      <button onclick="tab('saved')" id="tab-saved">My leads</button>
-      <button onclick="tab('history')" id="tab-history">History</button>
-      <button onclick="tab('settings')" id="tab-settings">Settings</button>
+      <button onclick="tab('search')" id="t-search" class="on">Search</button>
+      <button onclick="tab('results')" id="t-results">Results</button>
+      <button onclick="tab('saved')" id="t-saved">Files</button>
+      <button onclick="tab('history')" id="t-history">History</button>
+      <button onclick="tab('settings')" id="t-settings">Setup</button>
     </nav>
   </header>
 
   <main class="page">
 
     <!-- SEARCH -->
-    <div id="pane-search">
-      <div class="sec-label">New search</div>
-      <div class="panel pad">
-        <div class="grid4">
-          <div class="field"><label>Niche</label><input class="inp" id="f-niche" value="Plumbers" list="niches">
-            <datalist id="niches"><option>Plumbers</option><option>Roofers</option><option>HVAC</option><option>Dentists</option><option>Electricians</option><option>Landscapers</option><option>Auto Detailers</option><option>Barbers</option><option>Med Spas</option><option>Pressure Washers</option></datalist></div>
-          <div class="field"><label>State</label><input class="inp" id="f-state" value="California"></div>
-          <div class="field"><label>City</label><input class="inp" id="f-city" value="San Jose"></div>
-          <div class="field"><label>Number of leads</label><select class="inp" id="f-count"><option value="5">5 leads</option><option value="10" selected>10 leads</option><option value="15">15 leads</option><option value="25">25 leads</option></select></div>
+    <div id="p-search">
+      <div class="rule"><span class="idx">§01</span>Target parameters</div>
+      <div class="slab p">
+        <div class="g4">
+          <div class="fld"><label>Trade</label><input class="in" id="f-niche" value="Plumbers" list="nl">
+            <datalist id="nl"><option>Plumbers</option><option>Roofers</option><option>HVAC</option><option>Dentists</option><option>Electricians</option><option>Landscapers</option><option>Auto Detailers</option><option>Barbers</option><option>Med Spas</option><option>Pressure Washers</option><option>Chiropractors</option><option>Nail Salons</option><option>Gyms</option><option>Auto Repair</option><option>Pest Control</option><option>Towing</option><option>Locksmiths</option><option>Movers</option><option>Painters</option><option>Restaurants</option></datalist></div>
+          <div class="fld"><label>State</label><input class="in" id="f-state" value="California"></div>
+          <div class="fld"><label>City</label><input class="in" id="f-city" value="San Jose"></div>
+          <div class="fld"><label>Volume</label><select class="in" id="f-count">
+            <option value="10">10 leads</option><option value="25">25 leads</option>
+            <option value="50" selected>50 leads</option><option value="100">100 leads</option>
+            <option value="150">150 leads</option><option value="200">200 leads</option></select></div>
         </div>
-        <div class="hair"></div>
-        <div class="sec-label">Filters</div>
-        <div class="grid2">
-          <div class="field"><label>Website</label><div class="chips" id="filt-website">
-            <button class="chip" data-v="none">No website only</button>
-            <button class="chip" data-v="exists">Website exists</button>
-            <button class="chip" data-v="unknown">Unverified</button>
-          </div></div>
-          <div class="field"><label>Booking</label><div class="chips" id="filt-booking">
-            <button class="chip" data-v="none">No booking</button>
-            <button class="chip" data-v="exists">Booking exists</button>
-            <button class="chip" data-v="unknown">Unverified</button>
-          </div></div>
+        <div style="height:16px"></div>
+        <div class="g2">
+          <div class="sw on" id="sw-phone" onclick="tg('sw-phone')"><div class="box">✓</div>
+            <div><div class="t">Require a phone number</div><div class="s">Drops anything you can't dial</div></div></div>
+          <div class="sw" id="sw-near" onclick="tg('sw-near')"><div class="box">✓</div>
+            <div><div class="t">Widen to surrounding area</div><div class="s">More volume, looser geography</div></div></div>
         </div>
-        <div style="height:14px"></div>
-        <div class="grid2">
-          <div class="field"><label>Social media</label><div class="chips" id="filt-social">
-            <button class="chip" data-v="none">None detected</button>
-            <button class="chip" data-v="multi">Multiple missing</button>
-          </div></div>
-          <div class="field"><label>Lead temperature</label><div class="chips" id="filt-temp">
-            <button class="chip" data-v="HOT">🔥 Hot</button>
-            <button class="chip" data-v="WARM">🟡 Warm</button>
-            <button class="chip" data-v="COLD">❄️ Cold</button>
-          </div></div>
+        <div class="hr"></div>
+        <div class="rule" style="margin-bottom:14px"><span class="idx">§02</span>Narrow the sweep</div>
+        <div class="g2">
+          <div class="fld"><label>Website</label><div class="chips" id="c-web">
+            <button class="chip" data-v="none">None found</button>
+            <button class="chip" data-v="exists">Has one</button>
+            <button class="chip" data-v="unknown">Unverified</button></div></div>
+          <div class="fld"><label>Booking</label><div class="chips" id="c-book">
+            <button class="chip" data-v="none">None found</button>
+            <button class="chip" data-v="exists">Has one</button>
+            <button class="chip" data-v="unknown">Unverified</button></div></div>
         </div>
-        <div class="hair"></div>
+        <div style="height:16px"></div>
+        <div class="g2">
+          <div class="fld"><label>Social presence</label><div class="chips" id="c-soc">
+            <button class="chip" data-v="none">Nothing found</button>
+            <button class="chip" data-v="multi">Thin</button></div></div>
+          <div class="fld"><label>Temperature</label><div class="chips" id="c-temp">
+            <button class="chip" data-v="HOT">Hot</button>
+            <button class="chip" data-v="WARM">Warm</button>
+            <button class="chip" data-v="COLD">Cold</button></div></div>
+        </div>
+        <div style="height:16px"></div>
+        <div class="g3">
+          <div class="fld"><label>Reviews at least</label><input class="in" id="f-minrev" placeholder="25" inputmode="numeric"></div>
+          <div class="fld"><label>Reviews at most</label><input class="in" id="f-maxrev" placeholder="300" inputmode="numeric"></div>
+          <div class="fld"><label>Rating at least</label><input class="in" id="f-minrate" placeholder="4.3" inputmode="decimal"></div>
+        </div>
+        <div class="hr"></div>
         <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-          <button class="btn" onclick="startSearch()">Find leads</button>
-          <button class="btn ghost" onclick="loadDemo()">Load demo data</button>
-          <button class="btn ghost" onclick="clearFilters()">Clear filters</button>
-          <span class="note" id="provider-label" style="margin-left:auto"></span>
+          <button class="btn" onclick="run(false)">Run sweep</button>
+          <button class="btn line" onclick="run(true)">Load sample</button>
+          <button class="btn line" onclick="clearF()">Reset filters</button>
+          <span class="note" id="src-label" style="margin-left:auto"></span>
         </div>
+        <div style="height:12px"></div>
+        <div class="note" id="cost"></div>
       </div>
     </div>
 
     <!-- RESULTS -->
-    <div id="pane-results" style="display:none">
-      <div id="progress-area" style="display:none">
-        <div class="sec-label" id="progress-label">Running</div>
-        <div class="term"><div class="term-body" id="log"></div></div>
-        <div style="height:14px"></div>
-        <div class="bar"><i id="bar" style="width:0%"></i></div>
-      </div>
-      <div id="results-area" style="display:none">
-        <div class="sec-label" id="results-count"></div>
-        <div class="stats">
-          <div class="stat"><div class="n red" id="s-total">0</div><div class="l">Leads found</div></div>
-          <div class="stat"><div class="n red" id="s-hot">0</div><div class="l">Hot leads</div></div>
-          <div class="stat"><div class="n" id="s-warm">0</div><div class="l">Warm leads</div></div>
-          <div class="stat"><div class="n" id="s-cold">0</div><div class="l">Cold leads</div></div>
-          <div class="stat"><div class="n red" id="s-noweb">0</div><div class="l">No website</div></div>
-          <div class="stat"><div class="n red" id="s-nobook">0</div><div class="l">No booking</div></div>
-          <div class="stat"><div class="n red" id="s-nosoc">0</div><div class="l">No social</div></div>
-          <div class="stat"><div class="n" id="s-avg">0</div><div class="l">Avg score</div></div>
+    <div id="p-results" style="display:none">
+      <div id="a-prog" style="display:none">
+        <div class="scan">
+          <div class="scan-hd"><span class="dot"></span><span id="scan-title">Sweeping</span></div>
+          <div class="scan-body" id="log"></div>
         </div>
-        <div style="height:20px"></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-          <button class="chip on" id="lay-cards" onclick="setLayout('cards')">Cards</button>
-          <button class="chip" id="lay-table" onclick="setLayout('table')">Table</button>
-          <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn ghost sm" onclick="exportCSV()">Export CSV</button>
-            <button class="btn ghost sm" onclick="exportJSON()">Export JSON</button>
-            <button class="btn ghost sm" onclick="exportReport()">Export report</button>
+        <div style="height:18px"></div>
+        <div class="track"><i id="bar" style="width:0%"></i></div>
+      </div>
+
+      <div id="a-res" style="display:none">
+        <div class="rule"><span class="idx">§</span><span id="res-line"></span></div>
+        <div class="metrics">
+          <div class="met hot"><div class="n" id="m-total">0</div><div class="k">Leads</div></div>
+          <div class="met live"><div class="n" id="m-phone">0</div><div class="k">Callable</div></div>
+          <div class="met hot"><div class="n" id="m-hot">0</div><div class="k">Hot</div></div>
+          <div class="met"><div class="n" id="m-warm">0</div><div class="k">Warm</div></div>
+          <div class="met hot"><div class="n" id="m-noweb">0</div><div class="k">No website</div></div>
+          <div class="met hot"><div class="n" id="m-nobook">0</div><div class="k">No booking</div></div>
+          <div class="met hot"><div class="n" id="m-nosoc">0</div><div class="k">No social</div></div>
+          <div class="met"><div class="n" id="m-avg">0</div><div class="k">Avg signal</div></div>
+        </div>
+        <div style="height:24px"></div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
+          <button class="chip on" id="l-cards" onclick="setL('cards')">Files</button>
+          <button class="chip" id="l-table" onclick="setL('table')">Table</button>
+          <button class="chip" onclick="saveHot()">Save all hot</button>
+          <div style="margin-left:auto;display:flex;gap:7px;flex-wrap:wrap">
+            <button class="btn line s" onclick="expCall()">Call list</button>
+            <button class="btn line s" onclick="expCSV()">CSV</button>
+            <button class="btn line s" onclick="expJSON()">JSON</button>
+            <button class="btn line s" onclick="expReport()">Report</button>
           </div>
         </div>
-        <div style="height:16px"></div>
-        <div class="cards" id="cards"></div>
-        <div class="tblwrap" id="tablewrap" style="display:none"></div>
+        <div style="height:20px"></div>
+        <div class="grid" id="cards"></div>
+        <div class="tbl" id="tbl" style="display:none"></div>
       </div>
-      <div id="error-area" style="display:none" class="panel pad">
-        <div class="sec-label">Search stopped</div>
-        <p id="error-msg" style="color:var(--muted);font-size:14px;margin-bottom:16px"></p>
-        <button class="btn ghost sm" onclick="tab('search')">Back to search</button>
+
+      <div id="a-err" style="display:none" class="slab p">
+        <div class="rule"><span class="idx">§</span>Sweep halted</div>
+        <p class="prose" id="err-msg" style="margin-bottom:20px"></p>
+        <button class="btn line s" onclick="tab('search')">Back to parameters</button>
         <span style="display:inline-block;width:8px"></span>
-        <button class="btn ghost sm" onclick="loadDemo()">Load demo instead</button>
+        <button class="btn line s" onclick="run(true)">Load sample instead</button>
       </div>
-      <div id="empty-results" class="empty" style="display:none">
-        <h3>No results yet</h3><p>Run a search to fill this screen.</p>
-        <div style="height:16px"></div>
-        <button class="btn" onclick="tab('search')">Go to search</button>
+
+      <div id="a-empty" class="void" style="display:none">
+        <h3>Nothing swept yet</h3><p>Set your parameters and run a sweep to populate this screen.</p>
+        <div style="height:20px"></div><button class="btn" onclick="tab('search')">Set parameters</button>
       </div>
     </div>
 
     <!-- SAVED -->
-    <div id="pane-saved" style="display:none">
-      <div class="tabs" id="saved-tabs" style="margin-bottom:18px"></div>
-      <div id="saved-cards" class="cards"></div>
-      <div id="saved-empty" class="empty" style="display:none"><h3>No saved leads yet</h3><p>Save a lead from any result card.</p></div>
+    <div id="p-saved" style="display:none">
+      <div class="rule"><span class="idx">§</span>Working files</div>
+      <div class="chips" id="s-tabs" style="margin-bottom:18px"></div>
+      <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap" id="s-acts"></div>
+      <div id="s-cards" class="grid"></div>
+      <div id="s-empty" class="void" style="display:none"><h3>No files open</h3><p>Save a lead from any result to start a working file.</p></div>
     </div>
 
     <!-- HISTORY -->
-    <div id="pane-history" style="display:none">
-      <div class="sec-label" style="flex:1">Search history</div>
-      <div id="history-cards" class="cards"></div>
-      <div id="history-empty" class="empty" style="display:none"><h3>No searches yet</h3><p>Every search is saved here.</p></div>
+    <div id="p-history" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+        <div class="rule" style="flex:1"><span class="idx">§</span>Previous sweeps</div>
+        <button class="btn line s" onclick="clrHist()">Clear</button>
+      </div>
+      <div id="h-cards" class="grid"></div>
+      <div id="h-empty" class="void" style="display:none"><h3>No sweeps recorded</h3><p>Every run is logged here so you can reopen the results.</p></div>
     </div>
 
     <!-- SETTINGS -->
-    <div id="pane-settings" style="display:none">
-      <div class="sec-label">API settings</div>
-      <div class="panel pad" style="margin-bottom:18px">
-        <div class="eyebrow">Why this exists</div>
-        <p class="lede" style="margin:8px 0 0;font-size:13.5px">This app runs standalone in Safari — no Claude sandbox. Your proxy holds your Apify token server-side; the app only talks to your proxy.</p>
-      </div>
-      <div class="sec-label">Data source</div>
-      <div class="panel pad" style="margin-bottom:14px" id="proxy-panel">
-        <div class="h2" style="font-size:15px;margin-bottom:4px">Proxy Server <span id="proxy-active-pill"></span></div>
-        <div class="note" style="margin-bottom:14px">Your Render proxy URL — connects to Apify for real Google Maps leads</div>
-        <div class="field"><label>Proxy URL</label><input class="inp" type="url" id="proxy-input" placeholder="https://ramel-s-vision-1.onrender.com"></div>
-        <div style="height:10px"></div>
+    <div id="p-settings" style="display:none">
+      <div class="rule"><span class="idx">§01</span>Connection</div>
+      <div class="slab p" style="margin-bottom:16px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:6px">
+          <div style="font-size:16px;font-weight:700">Proxy server</div><span id="pill-proxy"></span>
+        </div>
+        <div class="note" style="margin-bottom:18px">Your Render URL. It holds the Apify token server-side and relays every sweep.</div>
+        <div class="fld"><label>Proxy URL</label><input class="in" type="url" id="proxy-in" placeholder="https://ramel-s-vision-1.onrender.com"></div>
+        <div style="height:14px"></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn ghost sm" onclick="testProxy()">Test connection</button>
-          <button class="btn sm" onclick="saveProxy()">Save & activate</button>
+          <button class="btn line s" onclick="testProxy()">Test connection</button>
+          <button class="btn s" onclick="saveProxy()">Save and activate</button>
         </div>
-        <div id="proxy-result" style="margin-top:10px;font-size:13px"></div>
+        <div id="proxy-msg" style="margin-top:14px;font-size:13px"></div>
       </div>
-      <div class="panel pad" id="demo-panel">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
-          <div>
-            <div class="h2" style="font-size:15px">Demo data <span id="demo-active-pill"></span></div>
-            <div class="note" style="margin-top:4px">Fictional sample records. No connection needed.</div>
-          </div>
-          <button class="btn ghost sm" onclick="toggleDemo()" id="demo-toggle-btn">Switch to demo</button>
+      <div class="slab p" style="margin-bottom:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+          <div><div style="font-size:16px;font-weight:700">Sample data <span id="pill-demo"></span></div>
+          <div class="note" style="margin-top:6px">Fictional records for testing the interface. No connection needed.</div></div>
+          <button class="btn line s" onclick="togDemo()" id="demo-btn">Switch to sample</button>
         </div>
+      </div>
+      <div class="rule"><span class="idx">§02</span>On phone numbers</div>
+      <div class="slab p">
+        <p class="prose" style="margin:0">Most listings carry a phone number, but not all of them do. With <strong style="color:var(--bone)">Require a phone number</strong> switched on, anything without a verified number is dropped before scoring — so every file you open is one you can dial. Numbers come from the listing itself and are never generated or inferred.</p>
       </div>
     </div>
 
   </main>
 </div>
-
 </div>
 
-<div id="scrim" class="scrim" style="display:none" onclick="closeDrawer()"></div>
-<aside id="drawer" class="drawer" style="display:none">
-  <div class="dhead">
-    <div style="display:flex;justify-content:space-between;gap:14px;align-items:flex-start">
-      <div>
-        <div id="d-pill" style="margin-bottom:10px"></div>
-        <div id="d-name" class="h2"></div>
-        <div id="d-loc" class="dim mono" style="font-size:11px;margin-top:5px"></div>
+<div id="scrim" class="scrim" style="display:none" onclick="closeD()"></div>
+<aside id="dossier" class="dossier" style="display:none">
+  <div class="d-hd">
+    <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start">
+      <div style="min-width:0">
+        <div class="stamp" id="d-stamp"></div>
+        <div style="height:10px"></div>
+        <div id="d-marks" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+        <div style="height:12px"></div>
+        <div id="d-name" style="font-size:21px;font-weight:800;letter-spacing:-.015em;line-height:1.2"></div>
+        <div id="d-loc" class="note" style="margin-top:7px"></div>
       </div>
-      <button class="x" onclick="closeDrawer()">✕</button>
+      <button class="x" onclick="closeD()">✕</button>
     </div>
-    <div style="height:14px"></div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn ghost sm" onclick="toggleSave()" id="d-save-btn">☆ Save lead</button>
-      <select class="status-sel" id="d-status-sel" onchange="updateStatus()"></select>
-      <a id="d-call-link" class="btn ghost sm" style="text-decoration:none;display:none">Call</a>
+    <div style="height:16px"></div>
+    <div class="sig-wrap" id="d-sig"></div>
+    <div style="height:16px"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <a id="d-dial" class="btn live s" style="display:none"></a>
+      <button class="btn line s" onclick="togSave()" id="d-save">Save file</button>
+      <button class="btn line s" id="d-copy" onclick="copyNum()" style="display:none">Copy number</button>
+      <select class="sel" id="d-status" onchange="setStat()"></select>
     </div>
   </div>
-  <div class="dbody" id="d-body"></div>
+  <div class="d-body" id="d-body"></div>
 </aside>
 
 <div id="toast" class="toast" style="display:none"></div>
 
 <script>
-/* ============================= STATE ============================= */
-const LS_SAVED = 'rv:saved', LS_CRM = 'rv:crm', LS_HISTORY = 'rv:history', LS_PROXY = 'rv:proxy', LS_DEMO = 'rv:demo';
-let leads = [], saved = [], crm = {}, history = [], useDemo = false, layout = 'cards', currentLead = null, dropped = 0;
-const filters = { website: [], booking: [], social: [], temp: [] };
+const LS={saved:'rv3:saved',crm:'rv3:crm',hist:'rv3:hist',proxy:'rv3:proxy',demo:'rv3:demo'};
+let leads=[],saved=[],crm={},hist=[],useDemo=false,cur=null,dropped=0,noPhone=0,sc=9,sd=-1;
+const F={web:[],book:[],soc:[],temp:[],minRev:null,maxRev:null,minRate:null};
+const SOC=['facebook','instagram','tiktok','youtube','linkedin'];
+const PIPE=['New','Contacted','Follow up','Interested','Proposal','Won','Lost'];
+const ld=(k,f)=>{try{return JSON.parse(localStorage.getItem(k))??f}catch{return f}};
+const sv=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const $=id=>document.getElementById(id);
 
-function load(key, fallback) { try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } }
-function save(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
-
-function init() {
-  saved = load(LS_SAVED, []);
-  crm = load(LS_CRM, {});
-  history = load(LS_HISTORY, []);
-  useDemo = load(LS_DEMO, false);
-  const p = localStorage.getItem(LS_PROXY) || '';
-  if (p) document.getElementById('proxy-input').value = p;
-  document.querySelectorAll('.chips .chip').forEach(c => c.onclick = () => toggleFilter(c));
-  updateProviderLabel();
-  updateDemoUI();
-  renderSaved();
-  renderHistory();
-  go('landing');
+function init(){
+  saved=ld(LS.saved,[]);crm=ld(LS.crm,{});hist=ld(LS.hist,[]);useDemo=ld(LS.demo,false);
+  const p=localStorage.getItem(LS.proxy)||'';if(p)$('proxy-in').value=p;
+  document.querySelectorAll('.chips .chip[data-v]').forEach(c=>c.onclick=()=>c.classList.toggle('on'));
+  $('f-count').onchange=cost;
+  srcLabel();demoUI();cost();renderSaved();renderHist();go('landing');
 }
-
-function go(v) {
-  document.getElementById('view-landing').style.display = v === 'landing' ? '' : 'none';
-  document.getElementById('view-app').style.display = v === 'app' ? '' : 'none';
-  if (v === 'app') tab('search');
+function go(v){$('v-landing').style.display=v==='landing'?'':'none';
+  $('v-app').style.display=v==='app'?'':'none';if(v==='app')tab('search')}
+function tab(t){
+  ['search','results','saved','history','settings'].forEach(v=>{
+    $('p-'+v).style.display=v===t?'':'none';$('t-'+v).classList.toggle('on',v===t)});
+  if(t==='saved')renderSaved();if(t==='history')renderHist();
+  if(t==='results'&&!leads.length){$('a-empty').style.display='';
+    ['a-res','a-prog','a-err'].forEach(i=>$(i).style.display='none')}
+  navCounts();
 }
-
-function tab(t) {
-  ['search','results','saved','history','settings'].forEach(v => {
-    document.getElementById('pane-'+v).style.display = v===t ? '' : 'none';
-    document.getElementById('tab-'+v).classList.toggle('on', v===t);
-  });
-  if (t==='saved') renderSaved();
-  if (t==='history') renderHistory();
-  if (t==='results' && !leads.length) {
-    document.getElementById('empty-results').style.display = '';
-    document.getElementById('results-area').style.display = 'none';
-    document.getElementById('progress-area').style.display = 'none';
-    document.getElementById('error-area').style.display = 'none';
-  }
+function navCounts(){
+  $('t-results').innerHTML='Results'+(leads.length?`<span class="ct">${leads.length}</span>`:'');
+  $('t-saved').innerHTML='Files'+(saved.length?`<span class="ct">${saved.length}</span>`:'');
 }
+const tg=id=>$(id).classList.toggle('on');
+const on=id=>$(id).classList.contains('on');
+const getC=id=>Array.from(document.querySelectorAll('#'+id+' .chip.on')).map(c=>c.dataset.v);
+function clearF(){document.querySelectorAll('.chips .chip[data-v]').forEach(c=>c.classList.remove('on'));
+  ['f-minrev','f-maxrev','f-minrate'].forEach(i=>$(i).value='')}
+function cost(){const n=+$('f-count').value;
+  $('cost').textContent=n>50?`${n} leads runs several queries · about 2–3 minutes · roughly $${(n*0.004).toFixed(2)} in Apify credit`
+    :`About 30–90 seconds · roughly $${(n*0.004).toFixed(2)} in Apify credit`}
+function srcLabel(){const p=localStorage.getItem(LS.proxy);
+  $('src-label').textContent=useDemo?'Source — sample data':p?'Source — Apify relay':'Source — none set, open Setup'}
+function demoUI(){
+  $('pill-demo').innerHTML=useDemo?'<span class="mark m-hot">Active</span>':'';
+  $('pill-proxy').innerHTML=!useDemo?'<span class="mark m-hot">Active</span>':'';
+  $('demo-btn').textContent=useDemo?'Using sample':'Switch to sample';srcLabel()}
+function togDemo(){useDemo=!useDemo;sv(LS.demo,useDemo);demoUI()}
 
-function toggleFilter(el) {
-  el.classList.toggle('on');
-}
-function getFilterVals(id) {
-  return Array.from(document.querySelectorAll('#'+id+' .chip.on')).map(c=>c.dataset.v);
-}
-function clearFilters() {
-  document.querySelectorAll('.chips .chip').forEach(c=>c.classList.remove('on'));
-}
+/* ── scoring ── */
+const nSoc=l=>SOC.filter(k=>l.social&&l.social[k]).length;
+function health(l){const g=l.reviews.rating,r=l.reviews.count,y=l.age.years,w=l.website.status,b=l.booking.status,s=nSoc(l);
+  let x=0;
+  if(g!=null)x+=Math.max(0,Math.min(30,((g-3)/1.9)*30));
+  if(r!=null)x+=Math.max(0,Math.min(25,(Math.log10(r+1)/Math.log10(600))*25));
+  if(y!=null)x+=Math.min(15,(y/10)*15);
+  x+=w==='exists'?15:w==='none'?0:5;x+=b==='exists'?5:b==='none'?0:2;x+=Math.min(10,s*3.5);
+  return Math.round(Math.max(0,Math.min(100,x)))}
+function temp(l){
+  const w=l.website.status,b=l.booking.status,s=nSoc(l),r=l.reviews.count,g=l.reviews.rating,y=l.age.years;
+  const opp=(w==='none'?20:w==='unknown'?9:3)+(b==='none'?10:b==='unknown'?5:0);
+  const cats=[{k:'Online opportunity',m:30,v:Math.min(30,opp)},
+    {k:'Business strength',m:20,v:r!=null?Math.min(20,(Math.log10(r+1)/Math.log10(400))*20):8},
+    {k:'Reputation',m:20,v:g!=null?Math.max(0,Math.min(20,((g-3.2)/1.6)*20)):8},
+    {k:'Years operating',m:10,v:y!=null?Math.min(10,(y/8)*10):4},
+    {k:'Social gap',m:10,v:s===0?10:s===1?6:s===2?3:1},
+    {k:'Customer activity',m:10,v:r!=null?Math.min(10,(r/40)*10):4}];
+  const total=Math.round(cats.reduce((a,c)=>a+c.v,0));
+  const t=total>=75?'HOT':total>=50?'WARM':'COLD';
+  const ev=[];
+  if(y!=null)ev.push({s:1,t:`${y} years operating`});
+  if(r!=null)ev.push({s:1,t:`${r} reviews on the listing`});
+  if(g!=null)ev.push({s:1,t:`${g.toFixed(1)} average rating`});
+  if(l.phone)ev.push({s:1,t:`Phone on file — ${l.phone}`});
+  if(w==='none')ev.push({s:1,t:'No website found in sources checked'});
+  else if(w==='exists')ev.push({s:0,t:'Website already in place'});
+  else ev.push({s:2,t:'Website status not confirmed'});
+  if(b==='none')ev.push({s:1,t:'No booking system found in sources checked'});
+  else if(b==='exists')ev.push({s:0,t:'Online booking already in place'});
+  else ev.push({s:2,t:'Booking status not confirmed'});
+  if(s===0)ev.push({s:1,t:'No social profiles found in sources checked'});
+  else ev.push({s:0,t:`${s} social channel${s>1?'s':''} on the listing`});
+  return{total,temp:t,cats,ev}}
+const socStr=l=>{const n=nSoc(l);return n>=3?'Strong':n===2?'Average':n===1?'Weak':'None found'};
+function opp(w,b,s,g,r){const A=[],B=[],C=[],D=[];
+  if(r>100)A.push(`${r} reviews built up over time`);
+  if(g>=4.5)A.push(`${g} rating — customers are happy`);
+  if(w==='none'){B.push('Nothing for online searchers to land on');C.push('Website');D.push('Website build')}
+  if(b==='none'){C.push('Online booking');D.push('Booking system')}
+  if(w!=='none'&&b==='none')D.push('Lead capture form');
+  if(s===0){C.push('Social presence');D.push('Social media setup')}
+  if(r!=null&&r<30)D.push('Review generation');
+  return{well:A,poor:B,missing:C,sell:D}}
+function intel(l,w,b,s){const m=[],a=[];
+  if(l.reviews.count)m.push(`Their ${l.reviews.count} reviews and the reputation behind them`);
+  if(l.age.years)m.push(`How long they've been working the area — ${l.age.years} years`);
+  if(w==='none')m.push('How much easier it would be for people to find them online');
+  if(b==='none')m.push('Letting customers book without picking up the phone');
+  if(s===0)m.push('The social presence their competitors already have');
+  a.push('Revenue, profit, or customer counts — none of that is public');
+  a.push("The owner's name — no source confirmed it");
+  if(w==='unknown')a.push('That they have no website — it was never confirmed');
+  if(b==='unknown')a.push('That they have no booking system — it was never confirmed');
+  const p=w==='none'?"You've clearly built something real here — I'm looking at how much easier it could be for people searching online to actually find and book you."
+    :b==='none'?"Your customers already trust you. The gap I see is that booking still means a phone call — that's costing you the ones who won't make it."
+    :"Your setup is solid. What I'd focus on is getting more of the right people to it.";
+  return{mention:m,avoid:a,pitch:p}}
+function offer(w,b,s){
+  if(w==='none'&&b==='none')return{h:'Website + online booking',w:'No web presence and no booking system found in sources checked.'};
+  if(w==='none')return{h:'Website build',w:'No website found in sources checked.'};
+  if(b==='none')return{h:'Online booking system',w:'No booking system detected in sources checked.'};
+  if(s===0)return{h:'Social presence',w:'No social profiles detected in sources checked.'};
+  return{h:'Lead generation and SEO',w:'The core setup is in place — growth comes from traffic and conversion.'}}
 
-function updateProviderLabel() {
-  const p = localStorage.getItem(LS_PROXY);
-  const lbl = document.getElementById('provider-label');
-  if (useDemo) lbl.innerHTML = 'Active source: <strong>Demo data</strong>';
-  else if (p) lbl.innerHTML = 'Active source: <strong>Apify via proxy</strong>';
-  else lbl.innerHTML = 'Active source: <strong>None</strong> — go to Settings';
-}
+/* ── normalize ── */
+function norm(p,niche,city,state){
+  const web=p.website?{status:'exists',url:p.website,https:p.website.startsWith('https')}:{status:'none',url:null};
+  const bu=p.bookingLink||(p.reservationLinks&&p.reservationLinks[0]&&p.reservationLinks[0].link);
+  const book=bu?{status:'exists',url:bu}:{status:'unknown',url:null};
+  const social={};SOC.forEach(k=>social[k]=null);
+  (p.socialMediaLinks||[]).forEach(s=>{const pl=(s.platform||'').toLowerCase();
+    SOC.forEach(k=>{if(pl.includes(k)&&!social[k])social[k]=s.link})});
+  const l={id:(p.placeId||p.cid||p.title||Math.random())+'',name:p.title||'Unnamed business',
+    address:p.address||null,city:p.city||city,state:p.state||state,category:p.categoryName||niche,
+    phone:p.phone||p.phoneUnformatted||null,email:p.email||null,website:web,booking:book,social,
+    reviews:{count:p.reviewsCount??null,rating:p.totalScore??null},
+    age:{years:p.yearsInBusiness??null},photos:(p.imageUrls||[]).slice(0,3),
+    hours:(p.openingHours||[]).slice(0,3).map(h=>`${h.day} ${h.hours}`).join('  ·  ')||null,
+    operating:p.permanentlyClosed?'Permanently closed':p.temporarilyClosed?'Temporarily closed':'Open on Google Maps',
+    mapUrl:p.url||null,demo:false,checked:new Date().toLocaleDateString()};
+  const s=nSoc(l);
+  l.opp=opp(web.status,book.status,s,l.reviews.rating,l.reviews.count);
+  l.call=intel(l,web.status,book.status,s);l.offer=offer(web.status,book.status,s);
+  l.health=health(l);l.t=temp(l);return l}
 
-function updateDemoUI() {
-  document.getElementById('demo-active-pill').innerHTML = useDemo ? '<span class="pill p-hot">Active</span>' : '';
-  document.getElementById('proxy-active-pill').innerHTML = !useDemo ? '<span class="pill p-hot">Active</span>' : '';
-  document.getElementById('demo-toggle-btn').textContent = useDemo ? 'Using demo' : 'Switch to demo';
-  updateProviderLabel();
-}
-function toggleDemo() { useDemo = !useDemo; save(LS_DEMO, useDemo); updateDemoUI(); }
+function pass(l){const w=l.website.status,b=l.booking.status,s=nSoc(l);
+  if(F.web.length&&!F.web.includes(w))return false;
+  if(F.book.length&&!F.book.includes(b))return false;
+  if(F.soc.length&&!F.soc.some(k=>k==='none'?s===0:s<=1))return false;
+  if(F.temp.length&&!F.temp.includes(l.t.temp))return false;
+  if(F.minRev!=null&&(l.reviews.count==null||l.reviews.count<F.minRev))return false;
+  if(F.maxRev!=null&&(l.reviews.count==null||l.reviews.count>F.maxRev))return false;
+  if(F.minRate!=null&&(l.reviews.rating==null||l.reviews.rating<F.minRate))return false;
+  return true}
 
-/* ============================= SCORING ============================= */
-const SOCIAL_KEYS=['facebook','instagram','tiktok','youtube','linkedin'];
-function countSocials(l){return SOCIAL_KEYS.filter(k=>l.social&&l.social[k]).length}
+/* ── query expansion ── */
+const VAR={plumbers:['plumber','emergency plumber','drain cleaning','water heater repair','plumbing contractor'],
+roofers:['roofer','roofing contractor','roof repair','roof replacement'],
+hvac:['hvac contractor','air conditioning repair','heating repair','furnace repair'],
+dentists:['dentist','dental clinic','family dentistry','cosmetic dentist'],
+electricians:['electrician','electrical contractor','emergency electrician'],
+landscapers:['landscaper','landscaping','lawn care','tree service'],
+barbers:['barber shop','barber','mens haircut'],
+'auto detailers':['auto detailing','car detailing','mobile detailing'],
+'med spas':['med spa','medical spa','botox clinic'],
+'pressure washers':['pressure washing','power washing','exterior cleaning'],
+'auto repair':['auto repair','mechanic','brake repair','transmission repair'],
+'pest control':['pest control','exterminator','termite control'],
+chiropractors:['chiropractor','chiropractic clinic'],'nail salons':['nail salon','manicure'],
+gyms:['gym','fitness center','personal trainer'],towing:['towing service','tow truck'],
+locksmiths:['locksmith','emergency locksmith'],movers:['moving company','movers'],
+painters:['painter','painting contractor','house painting'],restaurants:['restaurant','dining']};
+function queries(niche,city,state,count,near){
+  const v=VAR[niche.toLowerCase().trim()]||[niche];
+  const need=Math.ceil(count/45),q=[];
+  for(let i=0;i<Math.min(Math.max(need,1),v.length);i++)q.push(`${v[i]} in ${city}, ${state}`);
+  if(q.length===1&&count>45){q.push(`${niche} near ${city}, ${state}`);q.push(`best ${niche} ${city} ${state}`)}
+  if(near)q.push(`${v[0]} near ${city}, ${state}`);
+  return q.slice(0,6)}
 
-function healthScore(l){
-  const g=l.reviews.rating,r=l.reviews.count,y=l.age.years;
-  const web=l.website.status,bk=l.booking.status,soc=countSocials(l);
-  let s=0;
-  if(g!=null)s+=Math.max(0,Math.min(30,((g-3)/1.9)*30));
-  if(r!=null)s+=Math.max(0,Math.min(25,(Math.log10(r+1)/Math.log10(600))*25));
-  if(y!=null)s+=Math.min(15,(y/10)*15);
-  s+=web==='exists'?15:web==='outdated'?7:web==='none'?0:5;
-  s+=bk==='exists'?5:bk==='none'?0:2;
-  s+=Math.min(10,soc*3.5);
-  return Math.round(Math.max(0,Math.min(100,s)));
-}
+/* ── sweep ── */
+function log(t,c){const el=$('log'),d=document.createElement('div');
+  d.className='ln'+(c?' '+c:'');
+  const ts=new Date().toLocaleTimeString('en-US',{hour12:false});
+  d.innerHTML=`<span class="ts">${ts}</span><b>${t}</b>`;
+  el.appendChild(d);el.scrollTop=el.scrollHeight}
+const bar=p=>$('bar').style.width=p+'%';
 
-function tempScore(l){
-  const web=l.website.status,bk=l.booking.status,soc=countSocials(l);
-  const r=l.reviews.count,g=l.reviews.rating,y=l.age.years;
-  let opp=0;
-  opp+=web==='none'?20:web==='outdated'?13:web==='unknown'?9:3;
-  opp+=bk==='none'?10:bk==='unknown'?5:0;
-  const cats=[
-    {label:'Online opportunity',max:30,val:Math.min(30,opp)},
-    {label:'Business strength',max:20,val:r!=null?Math.min(20,(Math.log10(r+1)/Math.log10(400))*20):8},
-    {label:'Reputation',max:20,val:g!=null?Math.max(0,Math.min(20,((g-3.2)/1.6)*20)):8},
-    {label:'Business age',max:10,val:y!=null?Math.min(10,(y/8)*10):4},
-    {label:'Social gap',max:10,val:soc===0?10:soc===1?6:soc===2?3:1},
-    {label:'Customer activity',max:10,val:r!=null?Math.min(10,(r/40)*10):4},
-  ];
-  const total=Math.round(cats.reduce((a,c)=>a+c.val,0));
-  const temp=total>=75?'HOT':total>=50?'WARM':'COLD';
-  const reasons=[];
-  if(y!=null)reasons.push({ok:true,t:`${y}+ years in business`});
-  if(r!=null)reasons.push({ok:true,t:`${r} reviews`});
-  if(g!=null)reasons.push({ok:true,t:`${g.toFixed(1)}-star rating`});
-  if(web==='none')reasons.push({ok:true,t:'No website found in sources checked'});
-  else if(web==='exists')reasons.push({ok:false,t:'Website already in place'});
-  else reasons.push({ok:null,t:'Website status could not be verified'});
-  if(bk==='none')reasons.push({ok:true,t:'No booking system found in sources checked'});
-  else if(bk==='exists')reasons.push({ok:false,t:'Online booking already in place'});
-  else reasons.push({ok:null,t:'Booking status could not be verified'});
-  if(soc===0)reasons.push({ok:true,t:'No social profiles found in sources checked'});
-  else reasons.push({ok:false,t:`${soc} active social channels`});
-  return {total,temp,cats,reasons};
-}
+async function run(demo){
+  const niche=$('f-niche').value.trim(),city=$('f-city').value.trim(),state=$('f-state').value.trim();
+  const count=+$('f-count').value,reqPhone=on('sw-phone'),near=on('sw-near');
+  F.web=getC('c-web');F.book=getC('c-book');F.soc=getC('c-soc');F.temp=getC('c-temp');
+  const a=$('f-minrev').value.trim(),b=$('f-maxrev').value.trim(),c=$('f-minrate').value.trim();
+  F.minRev=a?+a:null;F.maxRev=b?+b:null;F.minRate=c?+c:null;
+  if(!demo&&(!niche||!city||!state)){toast('Fill in trade, city, and state');return}
 
-function socialStrength(l){const n=countSocials(l);return n>=3?'Strong':n===2?'Average':n===1?'Weak':'None detected'}
+  leads=[];dropped=0;noPhone=0;tab('results');
+  $('a-prog').style.display='';['a-res','a-err','a-empty'].forEach(i=>$(i).style.display='none');
+  $('log').innerHTML='';bar(3);$('scan-title').textContent=`Sweeping ${city}, ${state}`;
 
-function ruleBasedOpportunity(web,bk,socCount,rating,reviewCount){
-  const doingWell=[],doingPoorly=[],missing=[],couldSell=[];
-  if(reviewCount>100)doingWell.push(`${reviewCount}+ reviews on record`);
-  if(rating>=4.5)doingWell.push(`Strong ${rating}-star reputation`);
-  if(web==='none'){doingPoorly.push('No website found');missing.push('Website');couldSell.push('Website build');}
-  if(bk==='none'){missing.push('Online booking');couldSell.push('Online booking system');}
-  if(web!=='none'&&bk==='none')couldSell.push('Lead capture / contact form');
-  if(socCount===0){missing.push('Social media');couldSell.push('Social media presence');}
-  if(reviewCount<30)couldSell.push('Review generation system');
-  return {doingWell,doingPoorly,missing,couldSell};
-}
+  log(`Target — ${niche} · ${city}, ${state} · ${count} leads`);
+  if(reqPhone)log('Phone number required for every lead','ok');
 
-function ruleBasedCall(biz,web,bk,socCount){
-  const mention=[],avoid=[];
-  if(biz.reviews.count)mention.push(`Their ${biz.reviews.count}+ reviews and reputation`);
-  if(biz.age.years)mention.push(`Being established for ${biz.age.years}+ years`);
-  if(web==='none')mention.push('How easy it would be for customers to find them online');
-  if(bk==='none')mention.push('Making it easier for customers to book directly');
-  avoid.push('Revenue, profit, or customer-count claims — not verified');
-  avoid.push("Owner's name — not verified");
-  if(web==='unknown')avoid.push('Claiming they have no website — not confirmed');
-  const pitch=web==='none'?"You've built a strong reputation — let's make it easy for people to reach and book you.":
-    bk==='none'?"Your customers already trust you — online booking would let more of them convert.":
-    "There are a few digital gaps that would be straightforward to close.";
-  return {summary:`${biz.name}, ${biz.city}, ${biz.state}. Sourced via Apify/Google Maps.`,mention,avoid,pitch};
-}
+  if(demo||useDemo){
+    log('Source — sample data');
+    await new Promise(r=>setTimeout(r,500));bar(55);
+    const rows=demoRows(city,state,count);
+    rows.forEach(r=>log(`${r.name} — ${r.phone||'no number listed'}`,r.t.temp==='HOT'?'hit':''));
+    bar(90);finish(rows,count,reqPhone);return}
 
-function ruleBasedOffer(web,bk,socCount){
-  if(web==='none'&&bk==='none')return{headline:'Website + Online Booking',why:'No web presence or booking system found.'};
-  if(web==='none')return{headline:'Professional Website',why:'No website found in sources checked.'};
-  if(bk==='none')return{headline:'Online Booking System',why:'No booking system detected.'};
-  if(socCount===0)return{headline:'Social Media Presence',why:'No social profiles detected.'};
-  return{headline:'Lead Generation / SEO',why:'Core digital infrastructure is in place.'};
-}
+  const proxy=(localStorage.getItem(LS.proxy)||'').replace(/\/$/,'');
+  if(!proxy){err('No relay configured. Open Setup and add your proxy URL.');return}
 
-/* ============================= NORMALIZE ============================= */
-function normalize(place, niche, city, state) {
-  const website = place.website ? {status:'exists', url:place.website, https:place.website.startsWith('https'), confidence:'verified'} : {status:'none', url:null, confidence:'verified'};
-  const bookingUrl = place.bookingLink || (place.reservationLinks&&place.reservationLinks[0]&&place.reservationLinks[0].link);
-  const booking = bookingUrl ? {status:'exists', url:bookingUrl, confidence:'verified'} : {status:'unknown', url:null, confidence:'unverified'};
-  const social = {};
-  SOCIAL_KEYS.forEach(k=>social[k]=null);
-  (place.socialMediaLinks||[]).forEach(s=>{
-    const p=(s.platform||'').toLowerCase();
-    SOCIAL_KEYS.forEach(k=>{if(p.includes(k)&&!social[k])social[k]=s.link;});
-  });
-  const reviews = {count:place.reviewsCount??null, rating:place.totalScore??null, confidence:'verified'};
-  const age = {years:place.yearsInBusiness??null, confidence:place.yearsInBusiness?'likely':'unverified'};
-  const l = {
-    id: (place.placeId||place.title||Math.random())+'',
-    name: place.title || 'Unnamed business',
-    address: place.address || null,
-    city: place.city || city, state: place.state || state,
-    category: place.categoryName || niche,
-    phone: place.phone || place.phoneUnformatted || null,
-    website, booking, social, reviews, age,
-    photos: (place.imageUrls||[]).slice(0,3),
-    hours: null, operating: place.permanentlyClosed?'Permanently closed':'Listed on Google Maps',
-    owner: {name:null, confidence:'unverified'},
-    demo:false, checkedAt: new Date().toLocaleDateString(),
-  };
-  const socCount = countSocials(l);
-  l.opportunity = ruleBasedOpportunity(website.status,booking.status,socCount,reviews.rating,reviews.count);
-  l.call = ruleBasedCall(l,website.status,booking.status,socCount);
-  l.offer = ruleBasedOffer(website.status,booking.status,socCount);
-  l.health = healthScore(l);
-  l.temp = tempScore(l);
-  return l;
-}
+  const qs=queries(niche,city,state,count,near);
+  log(`${qs.length} quer${qs.length>1?'ies':'y'} queued for coverage`);
+  qs.forEach(q=>log(`  ${q}`));
+  const per=Math.min(60,Math.ceil((count*1.9)/qs.length)+5);
+  const seen=new Set(),all=[];
 
-function passesFilters(l, f) {
-  const w=l.website.status,b=l.booking.status,soc=countSocials(l);
-  if(f.website.length && !f.website.includes(w)) return false;
-  if(f.booking.length && !f.booking.includes(b)) return false;
-  if(f.social.length){
-    const ok=f.social.some(k=>k==='none'?soc===0:k==='multi'?soc<=1:!l.social[k]);
-    if(!ok) return false;
-  }
-  if(f.temp.length && !f.temp.includes(l.temp.temp)) return false;
-  return true;
-}
-
-/* ============================= SEARCH ============================= */
-const STAGES=['Finding businesses','Verifying businesses','Checking websites','Checking booking systems','Checking social media','Analyzing reviews','Ranking leads'];
-
-function logLine(t,hit){
-  const el=document.getElementById('log');
-  const d=document.createElement('div');
-  d.className='tline'+(hit?' hit':'');
-  d.innerHTML='<span style="opacity:.4">›</span> <b>'+t+'</b>';
-  el.appendChild(d);
-  el.scrollTop=el.scrollHeight;
-}
-function setBar(p){document.getElementById('bar').style.width=p+'%'}
-
-async function startSearch(demo) {
-  const niche=document.getElementById('f-niche').value.trim();
-  const city=document.getElementById('f-city').value.trim();
-  const state=document.getElementById('f-state').value.trim();
-  const count=parseInt(document.getElementById('f-count').value);
-  filters.website=getFilterVals('filt-website');
-  filters.booking=getFilterVals('filt-booking');
-  filters.social=getFilterVals('filt-social');
-  filters.temp=getFilterVals('filt-temp');
-
-  if(!demo && (!niche||!city||!state)){ alert('Fill in all fields.'); return; }
-
-  leads=[]; dropped=0;
-  tab('results');
-  document.getElementById('progress-area').style.display='';
-  document.getElementById('results-area').style.display='none';
-  document.getElementById('error-area').style.display='none';
-  document.getElementById('empty-results').style.display='none';
-  document.getElementById('log').innerHTML='';
-  setBar(5);
-
-  const proxy=localStorage.getItem(LS_PROXY)||'';
-  const filtered = filters.website.length||filters.booking.length||filters.social.length||filters.temp.length;
-  const overfetch = filtered ? Math.min(60, Math.ceil(count*1.7)) : count;
-
-  logLine(`Query: ${niche} · ${city}, ${state} · up to ${overfetch} candidates`);
-  if(filtered) logLine('Filters active — fetching wider to find qualifying matches');
-
-  if(demo || useDemo){
-    logLine('Data source: Demo data');
-    await new Promise(r=>setTimeout(r,400));
-    setBar(50);
-    const rows=demoRows(city,state).slice(0,overfetch);
-    rows.forEach(r=>logLine(`${r.name} — ${r.website.status} website, ${r.booking.status} booking`, r.temp.temp==='HOT'));
-    setBar(90);
-    finishSearch(rows, count, filtered);
-    return;
-  }
-
-  if(!proxy){
-    showError('No proxy configured. Go to Settings and add your Render proxy URL, or use Load Demo.');
-    return;
-  }
-
-  try {
-    logLine('Calling Apify via proxy — this can take 30-90 seconds…');
-    setBar(20);
-    const res = await fetch(proxy.replace(/\/$/,'')+'/search', {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({searchStringsArray:[`${niche} in ${city}, ${state}`], maxCrawledPlacesPerSearch: Math.min(overfetch+5,60)})
-    });
-    setBar(65);
-    if(!res.ok){
-      const t=await res.text().catch(()=>'');
-      throw new Error(`Proxy returned ${res.status}: ${t.slice(0,150)}`);
-    }
-    const places = await res.json();
-    if(!Array.isArray(places)||!places.length) throw new Error('No businesses returned. Try a broader city or different niche.');
-    logLine(`${places.length} businesses returned`, true);
-    setBar(80);
-
-    const all = places.map(p=>normalize(p,niche,city,state));
-    all.forEach(l=>logLine(`${l.name} — website ${l.website.status}, booking ${l.booking.status}, ${countSocials(l)} socials`, l.temp.temp==='HOT'));
-    setBar(95);
-    finishSearch(all, count, filtered);
-  } catch(e) {
-    showError(e.message);
-  }
-}
-
-function finishSearch(all, count, filtered) {
-  const pass = all.filter(l=>passesFilters(l,filters)).sort((a,b)=>b.temp.total-a.temp.total);
-  const final = pass.slice(0,count);
-  dropped = all.length - pass.length;
-  leads = final;
-  setBar(100);
-  logLine(`${final.length} lead${final.length===1?'':'s'} qualified${filtered?` · ${dropped} filtered out`:''}`, true);
-  const entry={at:new Date().toLocaleString(),q:{niche:document.getElementById('f-niche').value,city:document.getElementById('f-city').value,state:document.getElementById('f-state').value,count},leads:final};
-  history.unshift(entry); history=history.slice(0,20); save(LS_HISTORY,history);
-  setTimeout(renderResults, 500);
-}
-
-function showError(msg) {
-  document.getElementById('progress-area').style.display='none';
-  document.getElementById('error-area').style.display='';
-  document.getElementById('error-msg').textContent=msg;
-}
-
-function loadDemo() { startSearch(true); }
-
-function demoRows(city,state) {
-  const rows=[
-    ['Demo Plumbing & Drain Co.','none','unknown',[],327,4.8,8,'Plumber'],
-    ['Sample Ridge Roofing (demo)','exists','unknown',['facebook'],142,4.6,12,'Roofing contractor'],
-    ['Example HVAC Services (demo)','exists','exists',['facebook','instagram'],511,4.7,15,'HVAC contractor'],
-    ['Placeholder Electric (demo)','none','unknown',['facebook'],89,4.9,5,'Electrician'],
-    ['Testbed Auto Detailing (demo)','unknown','unknown',['instagram'],61,4.4,3,'Auto detailing'],
-    ['Fixture Landscaping (demo)','none','unknown',[],204,4.5,11,'Landscaper'],
-    ['Mockup Med Spa (demo)','exists','exists',['instagram','tiktok','facebook'],388,4.8,6,'Med spa'],
-    ['Dummy Pressure Washing (demo)','none','unknown',['facebook','instagram'],47,5.0,2,'Pressure washing'],
-  ];
-  return rows.map((r,i)=>{
-    const social={}; SOCIAL_KEYS.forEach(k=>social[k]=r[3].includes(k)?`https://example.com/${k}`:null);
-    const l={
-      id:'demo-'+i, name:r[0], address:`${100+i*37} Example Ave, ${city}, ${state}`, city, state, category:r[7],
-      phone:null, website:{status:r[1],url:r[1]==='exists'?'https://example.com':null,confidence:'verified'},
-      booking:{status:r[2],confidence:'unverified'}, social, reviews:{count:r[4],rating:r[5],confidence:'verified'},
-      age:{years:r[6],confidence:'verified'}, photos:[], hours:null, operating:'Demo record',
-      owner:{name:null,confidence:'unverified'}, demo:true, checkedAt:new Date().toLocaleDateString(),
-    };
-    const socCount=countSocials(l);
-    l.opportunity=ruleBasedOpportunity(l.website.status,l.booking.status,socCount,r[5],r[4]);
-    l.call=ruleBasedCall(l,l.website.status,l.booking.status,socCount);
-    l.offer=ruleBasedOffer(l.website.status,l.booking.status,socCount);
-    l.health=healthScore(l); l.temp=tempScore(l);
-    return l;
-  }).sort((a,b)=>b.temp.total-a.temp.total);
-}
-
-/* ============================= RESULTS RENDER ============================= */
-function renderResults() {
-  document.getElementById('progress-area').style.display='none';
-  document.getElementById('results-area').style.display='';
-  document.getElementById('results-count').textContent=`${leads.length} qualified lead${leads.length===1?'':'s'}${dropped?` · ${dropped} filtered out`:''}`;
-  const hot=leads.filter(l=>l.temp.temp==='HOT').length;
-  const warm=leads.filter(l=>l.temp.temp==='WARM').length;
-  const cold=leads.filter(l=>l.temp.temp==='COLD').length;
-  const noweb=leads.filter(l=>l.website.status==='none').length;
-  const nobook=leads.filter(l=>l.booking.status==='none').length;
-  const nosoc=leads.filter(l=>countSocials(l)===0).length;
-  const avg=leads.length?Math.round(leads.reduce((a,l)=>a+l.temp.total,0)/leads.length):0;
-  document.getElementById('s-total').textContent=leads.length;
-  document.getElementById('s-hot').textContent=hot;
-  document.getElementById('s-warm').textContent=warm;
-  document.getElementById('s-cold').textContent=cold;
-  document.getElementById('s-noweb').textContent=noweb;
-  document.getElementById('s-nobook').textContent=nobook;
-  document.getElementById('s-nosoc').textContent=nosoc;
-  document.getElementById('s-avg').textContent=avg;
-  renderCards();
-  renderTable();
-}
-
-function statusText(status,url,noneLabel){
-  if(status==='none')return `<span class="no">${noneLabel}</span>`;
-  if(status==='unknown')return `<span class="unk">Not verified</span>`;
-  return `<span class="yes">${url?url.replace(/^https?:\/\//,'').slice(0,30):'Detected'}</span>`;
-}
-
-function cardHTML(l,idx) {
-  const t=l.temp,cls=t.temp.toLowerCase();
-  const icon=t.temp==='HOT'?'🔥':t.temp==='WARM'?'🟡':'❄️';
-  const isSaved = saved.some(s=>s.id===l.id);
-  return `<div class="card ${cls}" onclick="openDrawer('${l.id}')">
-    <div class="card-top">
-      <div><h3>${l.name}</h3><div class="dim mono" style="font-size:11px">${l.city}, ${l.state}${l.category?' · '+l.category:''}</div></div>
-      <div style="text-align:right"><div class="score" style="color:${t.temp==='HOT'?'var(--red-hi)':t.temp==='WARM'?'var(--amber)':'var(--steel)'}">${t.total}</div><div class="dim mono" style="font-size:9px">/100</div></div>
-    </div>
-    <div style="height:12px"></div>
-    <span class="pill p-${cls}">${icon} ${t.temp}</span>
-    <div style="height:12px"></div>
-    <div class="kv"><span>Owner</span><span>${l.owner.name||'<em class="unk">Not verified</em>'}</span></div>
-    <div class="kv"><span>Website</span><span>${statusText(l.website.status,l.website.url,'None detected')}</span></div>
-    <div class="kv"><span>Booking</span><span>${statusText(l.booking.status,null,'None detected')}</span></div>
-    <div class="kv"><span>Social</span><span class="${countSocials(l)?'':'no'}">${socialStrength(l)}</span></div>
-    <div class="kv"><span>Reviews</span><span>${l.reviews.count!=null?l.reviews.count+' · '+l.reviews.rating+'★':'<em class="unk">Not verified</em>'}</span></div>
-    <div class="kv"><span>Health</span><span>${l.health}/100</span></div>
-    <div style="height:12px"></div>
-    <button class="btn ghost sm" onclick="event.stopPropagation();toggleSaveById('${l.id}')">${isSaved?'★ Saved':'☆ Save lead'}</button>
-  </div>`;
-}
-
-function renderCards() {
-  document.getElementById('cards').innerHTML = leads.map(l=>cardHTML(l)).join('');
-}
-
-const COLS=[['Lead',l=>l.name],['Owner',l=>l.owner.name||'—'],['Location',l=>l.city+', '+l.state],
-['Website',l=>l.website.status==='none'?'✕':l.website.status==='unknown'?'?':'✓'],
-['Booking',l=>l.booking.status==='none'?'✕':l.booking.status==='unknown'?'?':'✓'],
-['Social',l=>countSocials(l)],['Reviews',l=>l.reviews.count??'—'],['Rating',l=>l.reviews.rating??'—'],
-['Health',l=>l.health],['Score',l=>l.temp.total],['Temp',l=>l.temp.temp==='HOT'?'🔥':l.temp.temp==='WARM'?'🟡':'❄️']];
-
-function renderTable() {
-  const rows=[...leads].sort((a,b)=>b.temp.total-a.temp.total);
-  let html='<table><thead><tr>'+COLS.map(c=>`<th>${c[0]}</th>`).join('')+'</tr></thead><tbody>';
-  rows.forEach(l=>{
-    html+=`<tr onclick="openDrawer('${l.id}')">`+COLS.map(c=>`<td>${c[1](l)}</td>`).join('')+'</tr>';
-  });
-  html+='</tbody></table>';
-  document.getElementById('tablewrap').innerHTML=html;
-}
-
-function setLayout(l) {
-  layout=l;
-  document.getElementById('lay-cards').classList.toggle('on',l==='cards');
-  document.getElementById('lay-table').classList.toggle('on',l==='table');
-  document.getElementById('cards').style.display=l==='cards'?'':'none';
-  document.getElementById('tablewrap').style.display=l==='table'?'':'none';
-}
-
-/* ============================= DRAWER ============================= */
-const PIPELINE=['New','Contacted','Follow up','Interested','Proposal','Won','Lost'];
-
-function findLead(id){return leads.find(l=>l.id===id)||saved.find(l=>l.id===id)}
-
-function openDrawer(id) {
-  const l=findLead(id); if(!l) return;
-  currentLead=l;
-  const t=l.temp,cls=t.temp.toLowerCase();
-  const icon=t.temp==='HOT'?'🔥':t.temp==='WARM'?'🟡':'❄️';
-  const isSaved=saved.some(s=>s.id===l.id);
-  const c=crm[l.id]||{status:'New',note:''};
-
-  document.getElementById('d-pill').innerHTML=`<span class="pill p-${cls}">${icon} ${t.temp}</span>`;
-  document.getElementById('d-name').textContent=l.name;
-  document.getElementById('d-loc').textContent=`${l.address||l.city+', '+l.state} · Checked ${l.checkedAt}`;
-  document.getElementById('d-save-btn').textContent=isSaved?'★ Saved':'☆ Save lead';
-  const sel=document.getElementById('d-status-sel');
-  sel.innerHTML=PIPELINE.map(s=>`<option ${s===c.status?'selected':''}>${s}</option>`).join('');
-  const callLink=document.getElementById('d-call-link');
-  if(l.phone){callLink.style.display='';callLink.href='tel:'+l.phone;callLink.textContent='Call '+l.phone;}
-  else callLink.style.display='none';
-
-  const socials=SOCIAL_KEYS.filter(k=>l.social[k]);
-
-  document.getElementById('d-body').innerHTML=`
-    <div class="block">
-      <div class="sec-label">Lead score — ${t.total}/100</div>
-      <ul class="reasons">${t.reasons.map(r=>`<li class="${r.ok===false?'bad':r.ok===null?'unk':''}">${r.t}</li>`).join('')}</ul>
-      <div style="height:14px"></div>
-      ${t.cats.map(c2=>`<div class="meter"><span class="t">${c2.label}</span><span class="b"><i style="width:${(c2.val/c2.max)*100}%"></i></span><span class="v">${Math.round(c2.val)}/${c2.max}</span></div>`).join('')}
-    </div>
-    <div class="block">
-      <div class="sec-label">Owner / decision maker</div>
-      <div style="font-size:17px;color:${l.owner.name?'var(--bone)':'var(--muted)'}">${l.owner.name||'Owner not verified'}</div>
-      <div class="hair"></div>
-      <div class="kv"><span>Phone</span><span>${l.phone||'<em class="unk">Not verified</em>'}</span></div>
-      <div class="kv"><span>Address</span><span>${l.address||'<em class="unk">Not verified</em>'}</span></div>
-      <div class="kv"><span>Category</span><span>${l.category||'—'}</span></div>
-      <div class="kv"><span>Business age</span><span>${l.age.years!=null?l.age.years+' years':'<em class="unk">Not verified</em>'}</span></div>
-    </div>
-    <div class="block">
-      <div class="sec-label">Website analysis</div>
-      ${l.website.status==='none'?'<div class="no" style="font-family:var(--mono);font-size:13px">NO WEBSITE DETECTED FROM SOURCES CHECKED</div>':
-        l.website.status==='exists'?`<a href="${l.website.url}" target="_blank" style="color:var(--red-hi);font-size:14px">${l.website.url}</a>`:
-        '<div class="unk" style="font-size:13px">Website status could not be verified.</div>'}
-    </div>
-    <div class="block">
-      <div class="sec-label">Booking analysis</div>
-      ${l.booking.status==='none'?'<div class="no" style="font-family:var(--mono);font-size:13px">NO BOOKING SYSTEM DETECTED</div>':
-        l.booking.status==='exists'?`<div class="yes" style="font-size:14px">Booking detected${l.booking.url?': <a href="'+l.booking.url+'" target="_blank" style="color:var(--red-hi)">'+l.booking.url+'</a>':''}</div>`:
-        '<div class="unk" style="font-size:13px">Booking status could not be verified.</div>'}
-    </div>
-    <div class="block">
-      <div class="sec-label">Social media — ${socialStrength(l)}</div>
-      ${socials.length?`<div class="chips">${socials.map(k=>`<a class="chip" href="${l.social[k]}" target="_blank" style="text-decoration:none">${k[0].toUpperCase()+k.slice(1)}</a>`).join('')}</div>`:
-        '<div class="no" style="font-family:var(--mono);font-size:13px">NO SOCIAL PROFILES DETECTED</div>'}
-    </div>
-    <div class="block">
-      <div class="sec-label">Reviews & reputation</div>
-      ${l.reviews.count==null?'<div class="unk" style="font-size:13px">Review data not verified.</div>':`
-      <div style="display:flex;gap:26px;align-items:baseline">
-        <div><div class="score">${l.reviews.rating}</div><div class="dim mono" style="font-size:9.5px;margin-top:5px">RATING</div></div>
-        <div><div class="score">${l.reviews.count}</div><div class="dim mono" style="font-size:9.5px;margin-top:5px">REVIEWS</div></div>
-      </div>`}
-    </div>
-    <div class="block">
-      <div class="sec-label">Business health — ${l.health}/100</div>
-      <div class="note">Reflects observable public signals only. Revenue and customer counts are private and not estimated.</div>
-    </div>
-    <div class="block">
-      <div class="sec-label">AI opportunity analysis</div>
-      ${['doingWell','doingPoorly','missing','couldSell'].map(k=>{
-        const titles={doingWell:'Doing well',doingPoorly:'Doing poorly',missing:'Missing',couldSell:'What you could sell them'};
-        const arr=l.opportunity[k]||[];
-        return `<div style="margin-bottom:12px"><div class="eyebrow">${titles[k]}</div>${arr.length?'<ul class="tight" style="margin-top:6px">'+arr.map(x=>`<li>${x}</li>`).join('')+'</ul>':'<div class="unk" style="font-size:13px;margin-top:5px">Nothing established.</div>'}</div>`;
-      }).join('')}
-    </div>
-    <div class="block">
-      <div class="sec-label">Recommended offer</div>
-      <div style="font-size:17px;font-weight:700;color:var(--red-hi)">${l.offer.headline}</div>
-      <p class="lede" style="font-size:13.5px;margin-top:9px">${l.offer.why}</p>
-    </div>
-    <div class="block">
-      <div class="sec-label">Call intelligence</div>
-      <div class="eyebrow">Who am I calling?</div>
-      <div style="font-size:15px;margin-top:6px">${l.owner.name||'Unknown — ask for the owner or decision maker.'}</div>
-      <div class="eyebrow" style="margin-top:14px">What should I mention?</div>
-      <ul class="tight" style="margin-top:6px">${l.call.mention.map(x=>`<li>${x}</li>`).join('')}</ul>
-      <div class="eyebrow" style="margin-top:14px">What should I not say?</div>
-      <div class="warnbox" style="margin-top:7px"><ul class="tight" style="font-size:13px">${l.call.avoid.map(x=>`<li>${x}</li>`).join('')}</ul></div>
-    </div>
-    <div class="block">
-      <div class="sec-label">Sources</div>
-      <ul class="tight" style="font-size:12.5px"><li>Google Maps via Apify (compass/crawler-google-places)</li></ul>
-      <div class="note" style="margin-top:12px">Last checked ${l.checkedAt}</div>
-    </div>
-    <div class="block">
-      <div class="sec-label">Notes</div>
-      <textarea class="inp" rows="4" placeholder="Called... Owner interested..." id="d-note">${c.note||''}</textarea>
-    </div>
-  `;
-  document.getElementById('d-note') && (document.getElementById('d-note').onblur = saveNote);
-  document.getElementById('scrim').style.display='';
-  document.getElementById('drawer').style.display='';
-}
-
-function closeDrawer(){document.getElementById('scrim').style.display='none';document.getElementById('drawer').style.display='none'}
-
-function saveNote(){
-  if(!currentLead)return;
-  const c=crm[currentLead.id]||{status:'New',note:''};
-  c.note=document.getElementById('d-note').value;
-  crm[currentLead.id]=c; save(LS_CRM,crm);
-}
-function updateStatus(){
-  if(!currentLead)return;
-  const c=crm[currentLead.id]||{status:'New',note:''};
-  c.status=document.getElementById('d-status-sel').value;
-  crm[currentLead.id]=c; save(LS_CRM,crm);
-  renderSaved();
-}
-
-function toggleSave(){if(currentLead)toggleSaveById(currentLead.id)}
-function toggleSaveById(id){
-  const l=findLead(id); if(!l)return;
-  const idx=saved.findIndex(s=>s.id===id);
-  if(idx>=0){saved.splice(idx,1);toast('Removed from My Leads');}
-  else{saved.push(l);toast('Saved to My Leads');}
-  save(LS_SAVED,saved);
-  renderCards(); renderTable(); renderSaved();
-  if(currentLead&&currentLead.id===id)document.getElementById('d-save-btn').textContent=saved.some(s=>s.id===id)?'★ Saved':'☆ Save lead';
-}
-
-function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.style.display='';setTimeout(()=>el.style.display='none',2500)}
-
-/* ============================= SAVED / CRM ============================= */
-function renderSaved(){
-  const tabsEl=document.getElementById('saved-tabs');
-  const counts={};['All',...PIPELINE].forEach(s=>counts[s]=s==='All'?saved.length:saved.filter(l=>(crm[l.id]?.status||'New')===s).length);
-  tabsEl.innerHTML=['All',...PIPELINE].map(s=>`<button class="chip ${s===(window._savedTab||'All')?'on':''}" onclick="setSavedTab('${s}')">${s} · ${counts[s]}</button>`).join('');
-  const activeTab=window._savedTab||'All';
-  const list=activeTab==='All'?saved:saved.filter(l=>(crm[l.id]?.status||'New')===activeTab);
-  document.getElementById('saved-empty').style.display=saved.length?'none':'';
-  document.getElementById('saved-cards').innerHTML=list.map(l=>{
-    const c=crm[l.id]||{status:'New',note:''};
-    return `<div class="card ${l.temp.temp.toLowerCase()}">
-      <div class="card-top"><div><h3>${l.name}</h3><div class="dim mono" style="font-size:11px">${l.city}, ${l.state}</div></div><span class="pill p-${l.temp.temp.toLowerCase()}">${l.temp.temp==='HOT'?'🔥':l.temp.temp==='WARM'?'🟡':'❄️'} ${l.temp.temp}</span></div>
-      <div style="height:10px"></div>
-      <div class="kv"><span>Owner</span><span>${l.owner.name||'Not verified'}</span></div>
-      <div class="kv"><span>Phone</span><span>${l.phone||'Not verified'}</span></div>
-      <div class="kv"><span>Score</span><span>${l.temp.total}/100</span></div>
-      <div style="height:10px"></div>
-      <select class="status-sel" style="width:100%" onchange="setLeadStatus('${l.id}',this.value)">${PIPELINE.map(s=>`<option ${s===c.status?'selected':''}>${s}</option>`).join('')}</select>
-      ${c.note?`<p class="note" style="margin-top:10px">${c.note}</p>`:''}
-      <div style="height:10px;display:flex"></div>
-      <div style="display:flex;gap:7px"><button class="btn ghost sm" onclick="openDrawer('${l.id}')">Open</button><button class="btn ghost sm" onclick="toggleSaveById('${l.id}')">Remove</button></div>
-    </div>`;
-  }).join('');
-}
-function setSavedTab(t){window._savedTab=t;renderSaved()}
-function setLeadStatus(id,status){const c=crm[id]||{status:'New',note:''};c.status=status;crm[id]=c;save(LS_CRM,crm);renderSaved()}
-
-/* ============================= HISTORY ============================= */
-function renderHistory(){
-  document.getElementById('history-empty').style.display=history.length?'none':'';
-  document.getElementById('history-cards').innerHTML=history.map((h,i)=>`
-    <div class="card" onclick='reopenHistory(${i})'>
-      <div class="mono dim" style="font-size:10px;letter-spacing:.16em">SEARCH #${history.length-i}</div>
-      <div style="height:8px"></div><h3>${h.q.niche}</h3>
-      <div class="dim" style="font-size:13px">${h.q.city}, ${h.q.state} · ${h.q.count} requested</div>
-      <div style="height:10px"></div>
-      <div class="kv"><span>Qualified</span><span>${h.leads.length}</span></div>
-      <div class="kv"><span>Hot</span><span>${h.leads.filter(l=>l.temp.temp==='HOT').length}</span></div>
-      <div class="kv"><span>Run</span><span>${h.at}</span></div>
-    </div>`).join('');
-}
-function reopenHistory(i){
-  const h=history[i]; leads=h.leads; dropped=0;
-  document.getElementById('f-niche').value=h.q.niche;
-  document.getElementById('f-city').value=h.q.city;
-  document.getElementById('f-state').value=h.q.state;
-  tab('results');
-  document.getElementById('progress-area').style.display='none';
-  document.getElementById('empty-results').style.display='none';
-  renderResults();
-}
-
-/* ============================= EXPORT ============================= */
-function csvCell(v){const s=v==null?'':String(v);return /[",\n]/.test(s)?`"${s.replace(/"/g,'""')}"`:s}
-function exportCSV(){
-  const cols=[['Business',l=>l.name],['Owner',l=>l.owner.name||'Owner not verified'],['Phone',l=>l.phone],['Address',l=>l.address],
-    ['City',l=>l.city],['State',l=>l.state],['Website',l=>l.website.status],['Website URL',l=>l.website.url],
-    ['Booking',l=>l.booking.status],['Reviews',l=>l.reviews.count],['Rating',l=>l.reviews.rating],['Health',l=>l.health],
-    ['Score',l=>l.temp.total],['Temp',l=>l.temp.temp],['Offer',l=>l.offer.headline]];
-  const head=cols.map(c=>csvCell(c[0])).join(',');
-  const rows=leads.map(l=>cols.map(c=>csvCell(c[1](l))).join(','));
-  downloadFile('ramels-vision-leads.csv',[head,...rows].join('\n'),'text/csv');
-}
-function exportJSON(){downloadFile('ramels-vision-leads.json',JSON.stringify(leads,null,2),'application/json')}
-function exportReport(){
-  const rows=leads.map(l=>`<article><h2>${l.temp.temp} · ${l.temp.total}/100 — ${l.name}</h2>
-  <p>${l.address||l.city+', '+l.state}</p>
-  <table><tr><td>Owner</td><td>${l.owner.name||'Not verified'}</td></tr>
-  <tr><td>Phone</td><td>${l.phone||'Not verified'}</td></tr>
-  <tr><td>Website</td><td>${l.website.status}</td></tr>
-  <tr><td>Booking</td><td>${l.booking.status}</td></tr>
-  <tr><td>Reviews</td><td>${l.reviews.count||'—'} · ${l.reviews.rating||'—'}</td></tr>
-  <tr><td>Offer</td><td>${l.offer.headline}</td></tr></table></article>`).join('');
-  const html=`<!doctype html><meta charset="utf-8"><title>Ramel's Vision Report</title>
-  <style>body{font:14px/1.6 -apple-system,Arial;margin:40px}article{border-top:2px solid #c1121f;padding:16px 0}table{border-collapse:collapse;font-size:13px}td{border:1px solid #ddd;padding:5px 9px}</style>
-  <h1>Ramel's Vision — Lead Report</h1><p>${leads.length} leads · ${new Date().toLocaleDateString()}</p>${rows}`;
-  downloadFile('ramels-vision-report.html',html,'text/html');
-}
-function downloadFile(name,content,mime){
-  const a=document.createElement('a');
-  a.href='data:'+mime+';charset=utf-8,'+encodeURIComponent(content);
-  a.download=name; a.click();
-}
-
-/* ============================= SETTINGS ============================= */
-function saveProxy(){
-  const v=document.getElementById('proxy-input').value.trim().replace(/\/$/,'');
-  localStorage.setItem(LS_PROXY,v);
-  useDemo=false; save(LS_DEMO,false);
-  updateDemoUI();
-  document.getElementById('proxy-result').innerHTML='<span style="color:var(--ok)">✓ Saved and activated</span>';
-}
-async function testProxy(){
-  const v=document.getElementById('proxy-input').value.trim().replace(/\/$/,'');
-  const resEl=document.getElementById('proxy-result');
-  if(!v){resEl.innerHTML='<span style="color:var(--red-hi)">Enter a URL first</span>';return;}
-  resEl.textContent='Testing…';
   try{
-    const r=await fetch(v+'/health');
-    const d=await r.json();
-    if(d.ok&&d.tokenSet)resEl.innerHTML='<span style="color:var(--ok)">✓ Proxy live, Apify token set. Ready!</span>';
-    else if(d.ok)resEl.innerHTML='<span style="color:var(--amber)">⚠ Proxy running but APIFY_TOKEN not set on server</span>';
-  }catch(e){resEl.innerHTML='<span style="color:var(--red-hi)">✕ Cannot reach proxy: '+e.message+'</span>';}
-}
+    for(let i=0;i<qs.length;i++){
+      bar(12+Math.round((i/qs.length)*62));
+      log(`Query ${i+1} of ${qs.length} — relaying`);
+      const r=await fetch(proxy+'/search',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({searchStringsArray:[qs[i]],maxCrawledPlacesPerSearch:per})});
+      if(!r.ok){const t=await r.text().catch(()=>'');
+        if(i===0)throw new Error(`Relay returned ${r.status}. ${t.slice(0,140)}`);
+        log(`Query ${i+1} returned ${r.status} — moving on`,'hit');continue}
+      const places=await r.json();
+      if(!Array.isArray(places)){log(`Query ${i+1} returned nothing usable`);continue}
+      let n=0;places.forEach(p=>{const id=(p.placeId||p.cid||p.title)+'';
+        if(seen.has(id))return;seen.add(id);all.push(norm(p,niche,city,state));n++});
+      log(`${n} new · ${all.length} collected`,n?'ok':'');
+      if(all.length>=count*1.9)break}
+    if(!all.length)throw new Error('Nothing came back. Try a larger city or a broader trade.');
+    bar(84);
+    log(`${all.length} unique businesses · ${all.filter(l=>l.phone).length} with a number`,'ok');
+    finish(all,count,reqPhone);
+  }catch(e){err(e.message)}}
 
+function finish(all,count,reqPhone){
+  let pool=all;
+  if(reqPhone){const b=pool.length;pool=pool.filter(l=>l.phone);noPhone=b-pool.length;
+    if(noPhone)log(`${noPhone} dropped — no number on the listing`,'hit')}
+  const ok=pool.filter(pass).sort((a,b)=>b.t.total-a.t.total);
+  dropped=pool.length-ok.length;leads=ok.slice(0,count);bar(100);
+  log(`${leads.length} file${leads.length===1?'':'s'} ready${dropped?` · ${dropped} filtered out`:''}`,'ok');
+  hist.unshift({at:new Date().toLocaleString(),q:{niche:$('f-niche').value,city:$('f-city').value,state:$('f-state').value,count},leads});
+  hist=hist.slice(0,20);sv(LS.hist,hist);
+  setTimeout(render,650)}
+function err(m){$('a-prog').style.display='none';$('a-err').style.display='';$('err-msg').textContent=m}
+
+function demoRows(city,state,count){
+  const base=[['Martinez Plumbing & Drain','(408) 555-0143','none','unknown',[],327,4.8,11,'Plumber'],
+  ['Ridgeline Roofing','(408) 555-0271','exists','unknown',['facebook'],142,4.6,12,'Roofing'],
+  ['Valley Air & Heat','(408) 555-0392','exists','exists',['facebook','instagram'],511,4.7,15,'HVAC'],
+  ['Lopez Electric','(408) 555-0418','none','unknown',['facebook'],89,4.9,6,'Electrician'],
+  ['Cascade Auto Detail',null,'unknown','unknown',['instagram'],61,4.4,3,'Detailing'],
+  ['Green Valley Landscaping','(408) 555-0577','none','unknown',[],204,4.5,9,'Landscaper'],
+  ['Alder Med Spa','(408) 555-0630','exists','exists',['instagram','tiktok','facebook'],388,4.8,6,'Med spa'],
+  ['Bright Wash Exteriors','(408) 555-0744','none','unknown',['facebook'],47,5.0,2,'Pressure washing'],
+  ['Sentinel Pest Control','(408) 555-0851','none','unknown',[],156,4.6,9,'Pest control'],
+  ['Ironside Towing','(408) 555-0967','unknown','unknown',[],73,4.2,4,'Towing']];
+  const out=[];
+  for(let i=0;i<Math.min(count,40);i++){
+    const r=base[i%base.length],sfx=i>=base.length?` ${Math.floor(i/base.length)+1}`:'';
+    const social={};SOC.forEach(k=>social[k]=r[4].includes(k)?`https://example.com/${k}`:null);
+    const l={id:'s-'+i,name:r[0]+sfx,phone:r[1],email:null,
+      address:`${100+i*37} Example Ave, ${city}, ${state}`,city,state,category:r[8],
+      website:{status:r[2],url:r[2]==='exists'?'https://example.com':null},
+      booking:{status:r[3],url:null},social,reviews:{count:r[5],rating:r[6]},age:{years:r[7]},
+      photos:[],hours:null,operating:'Sample record',mapUrl:null,demo:true,checked:new Date().toLocaleDateString()};
+    const s=nSoc(l);
+    l.opp=opp(l.website.status,l.booking.status,s,r[6],r[5]);
+    l.call=intel(l,l.website.status,l.booking.status,s);
+    l.offer=offer(l.website.status,l.booking.status,s);
+    l.health=health(l);l.t=temp(l);out.push(l)}
+  return out.sort((a,b)=>b.t.total-a.t.total)}
+
+/* ── signature meter ── */
+function sig(score,t,ticks){
+  const n=ticks||20,fill=Math.round((score/100)*n);
+  let h=`<div class="sig ${t.toLowerCase()}">`;
+  for(let i=0;i<n;i++)h+=`<s class="${i<fill?'f':''}" style="height:${40+((i/n)*60)}%"></s>`;
+  return h+'</div>'}
+function sigRow(score,t){
+  return`<div class="sig-wrap" style="flex:1">${sig(score,t)}<span class="sig-val" style="color:${t==='HOT'?'var(--ember)':t==='WARM'?'var(--caution)':'var(--steel)'}">${score}<span style="color:var(--smoke2)">/100</span></span></div>`}
+
+/* ── render ── */
+function render(){
+  $('a-prog').style.display='none';$('a-res').style.display='';
+  const c=fn=>leads.filter(fn).length;
+  $('res-line').textContent=`${leads.length} file${leads.length===1?'':'s'} ready`+
+    (dropped?` · ${dropped} filtered out`:'')+(noPhone?` · ${noPhone} had no number`:'');
+  $('m-total').textContent=leads.length;$('m-phone').textContent=c(l=>l.phone);
+  $('m-hot').textContent=c(l=>l.t.temp==='HOT');$('m-warm').textContent=c(l=>l.t.temp==='WARM');
+  $('m-noweb').textContent=c(l=>l.website.status==='none');$('m-nobook').textContent=c(l=>l.booking.status==='none');
+  $('m-nosoc').textContent=c(l=>nSoc(l)===0);
+  $('m-avg').textContent=leads.length?Math.round(leads.reduce((a,l)=>a+l.t.total,0)/leads.length):0;
+  cards();table();navCounts()}
+
+function stat(s,url,none){
+  if(s==='none')return`<span class="no">${none}</span>`;
+  if(s==='unknown')return`<span class="unk">Not confirmed</span>`;
+  return`<span class="yes">${url?url.replace(/^https?:\/\//,'').replace(/\/$/,'').slice(0,26):'Yes'}</span>`}
+
+function fileHTML(l,i){
+  const t=l.t,cls=t.temp.toLowerCase(),isS=saved.some(s=>s.id===l.id);
+  return`<div class="file ${cls}" onclick="openD('${l.id}')">
+    <div class="file-hd">
+      <div style="min-width:0"><h3>${l.name}</h3><div class="loc">${l.city}, ${l.state}${l.category?' — '+l.category:''}</div></div>
+      <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">
+        <span class="mark m-${cls}">${t.temp}</span>
+        ${l.phone?'<span class="mark m-live">Callable</span>':''}</div>
+    </div>
+    ${sigRow(t.total,t.temp)}
+    <div class="rows">
+      <div class="row"><span class="k">Website</span><span class="v">${stat(l.website.status,l.website.url,'None found')}</span></div>
+      <div class="row"><span class="k">Booking</span><span class="v">${stat(l.booking.status,null,'None found')}</span></div>
+      <div class="row"><span class="k">Social</span><span class="v ${nSoc(l)?'':'no'}">${socStr(l)}</span></div>
+      <div class="row"><span class="k">Reviews</span><span class="v">${l.reviews.count!=null?`<span class="num">${l.reviews.count}</span> at <span class="num">${l.reviews.rating}</span>`:'<span class="unk">—</span>'}</span></div>
+      <div class="row"><span class="k">Health</span><span class="v num">${l.health}</span></div>
+    </div>
+    ${l.phone?`<a class="dial" href="tel:${l.phone}" onclick="event.stopPropagation()">${l.phone}</a>`
+      :'<div class="dial off">No number listed</div>'}
+    <div style="height:8px"></div>
+    <button class="btn line s" style="width:100%" onclick="event.stopPropagation();togSaveId('${l.id}')">${isS?'Saved to files':'Save file'}</button>
+  </div>`}
+function cards(){$('cards').innerHTML=leads.map(fileHTML).join('')}
+
+const C=[['Business',l=>l.name,l=>l.name,0],
+['Phone',l=>l.phone?`<span class="yes">${l.phone}</span>`:'<span class="unk">—</span>',l=>l.phone?1:0,1],
+['City',l=>l.city,l=>l.city,0],
+['Web',l=>l.website.status==='none'?'<span class="no">none</span>':l.website.status==='unknown'?'<span class="unk">?</span>':'<span class="yes">yes</span>',l=>l.website.status,0],
+['Book',l=>l.booking.status==='none'?'<span class="no">none</span>':l.booking.status==='unknown'?'<span class="unk">?</span>':'<span class="yes">yes</span>',l=>l.booking.status,0],
+['Soc',l=>nSoc(l),l=>nSoc(l),1],['Reviews',l=>l.reviews.count??'—',l=>l.reviews.count??-1,1],
+['Rating',l=>l.reviews.rating??'—',l=>l.reviews.rating??-1,1],['Health',l=>l.health,l=>l.health,1],
+['Signal',l=>l.temp,l=>l.t.total,1],['Temp',l=>`<span class="mark m-${l.t.temp.toLowerCase()}">${l.t.temp}</span>`,l=>l.t.total,0]];
+function table(){
+  const key=C[sc][2];
+  const rows=[...leads].sort((a,b)=>{const x=key(a),y=key(b);
+    return typeof x==='string'?x.localeCompare(y)*sd:(x-y)*sd});
+  let h='<table><thead><tr>'+C.map((c,i)=>`<th onclick="sortBy(${i})">${c[0]}${sc===i?(sd===-1?' ↓':' ↑'):''}</th>`).join('')+'</tr></thead><tbody>';
+  rows.forEach(l=>{h+=`<tr onclick="openD('${l.id}')">`+C.map((c,i)=>{
+    const v=i===9?`<span class="num" style="color:${l.t.temp==='HOT'?'var(--ember)':l.t.temp==='WARM'?'var(--caution)':'var(--steel)'}">${l.t.total}</span>`:c[1](l);
+    return`<td class="${c[3]?'n':''}">${v}</td>`}).join('')+'</tr>'});
+  $('tbl').innerHTML=h+'</tbody></table>'}
+function sortBy(i){sd=sc===i?-sd:-1;sc=i;table()}
+function setL(v){$('l-cards').classList.toggle('on',v==='cards');$('l-table').classList.toggle('on',v==='table');
+  $('cards').style.display=v==='cards'?'':'none';$('tbl').style.display=v==='table'?'':'none'}
+function saveHot(){const h=leads.filter(l=>l.t.temp==='HOT'&&!saved.some(s=>s.id===l.id));
+  h.forEach(l=>saved.push(l));sv(LS.saved,saved);cards();renderSaved();navCounts();
+  toast(`${h.length} hot file${h.length===1?'':'s'} saved`)}
+
+/* ── dossier ── */
+const find=id=>leads.find(l=>l.id===id)||saved.find(l=>l.id===id);
+function openD(id){
+  const l=find(id);if(!l)return;cur=l;
+  const t=l.t,cls=t.temp.toLowerCase(),c=crm[l.id]||{status:'New',note:''};
+  const idx=leads.findIndex(x=>x.id===id);
+  $('d-stamp').textContent=`File ${String(idx>=0?idx+1:saved.findIndex(x=>x.id===id)+1).padStart(4,'0')} — opened ${l.checked}`;
+  $('d-marks').innerHTML=`<span class="mark m-${cls}">${t.temp} lead</span>`+
+    (l.phone?'<span class="mark m-live">Callable</span>':'')+
+    (l.demo?'<span class="mark m-warm">Sample</span>':'');
+  $('d-name').textContent=l.name;
+  $('d-loc').textContent=l.address||`${l.city}, ${l.state}`;
+  $('d-sig').innerHTML=sigRow(t.total,t.temp);
+  $('d-save').textContent=saved.some(s=>s.id===l.id)?'Saved to files':'Save file';
+  $('d-status').innerHTML=PIPE.map(s=>`<option ${s===c.status?'selected':''}>${s}</option>`).join('');
+  const dial=$('d-dial'),cp=$('d-copy');
+  if(l.phone){dial.style.display='';dial.href='tel:'+l.phone;dial.textContent='Call '+l.phone;cp.style.display=''}
+  else{dial.style.display='none';cp.style.display='none'}
+  const socs=SOC.filter(k=>l.social[k]);
+
+  $('d-body').innerHTML=`
+  ${l.demo?'<div style="padding-top:22px"><div class="caution">Sample record — fictional. Do not call this number.</div></div>':''}
+  <div class="sect">
+    <div class="rule"><span class="idx">§01</span>Why this scored ${t.total}</div>
+    <ul class="ev">${t.ev.map(e=>`<li class="${e.s===0?'n':e.s===2?'q':''}">${e.t}</li>`).join('')}</ul>
+    <div style="height:18px"></div>
+    ${t.cats.map(x=>`<div class="gauge"><span class="g-k">${x.k}</span><span class="g-b"><i style="width:${(x.v/x.m)*100}%"></i></span><span class="g-v">${Math.round(x.v)}/${x.m}</span></div>`).join('')}
+  </div>
+  <div class="sect">
+    <div class="rule"><span class="idx">§02</span>Contact</div>
+    <div class="row"><span class="k">Phone</span><span class="v">${l.phone?`<a href="tel:${l.phone}" class="yes">${l.phone}</a>`:'<span class="unk">Not listed</span>'}</span></div>
+    <div class="row"><span class="k">Email</span><span class="v">${l.email||'<span class="unk">Not found</span>'}</span></div>
+    <div class="row"><span class="k">Address</span><span class="v">${l.address||'<span class="unk">Not found</span>'}</span></div>
+    <div class="row"><span class="k">Decision maker</span><span class="v"><span class="unk">Not verified — ask on the call</span></span></div>
+    <div class="row"><span class="k">Trade</span><span class="v">${l.category||'—'}</span></div>
+    <div class="row"><span class="k">Hours</span><span class="v">${l.hours||'<span class="unk">Not listed</span>'}</span></div>
+    <div class="row"><span class="k">Status</span><span class="v">${l.operating}</span></div>
+    <div class="row"><span class="k">Years open</span><span class="v">${l.age.years!=null?`<span class="num">${l.age.years}</span>`:'<span class="unk">Not listed</span>'}</span></div>
+    ${l.mapUrl?`<div class="row"><span class="k">Listing</span><span class="v"><a href="${l.mapUrl}" target="_blank">Open in Maps</a></span></div>`:''}
+  </div>
+  <div class="sect">
+    <div class="rule"><span class="idx">§03</span>Online setup</div>
+    <div style="margin-bottom:18px">
+      <div class="note" style="margin-bottom:7px">Website</div>
+      ${l.website.status==='none'?'<div class="no mono" style="font-size:12.5px;letter-spacing:.1em">NO WEBSITE FOUND IN SOURCES CHECKED</div>'
+        :l.website.status==='exists'?`<a href="${l.website.url}" target="_blank" style="font-size:14.5px">${l.website.url}</a>
+          <div style="margin-top:8px" class="note">${l.website.https?'Secure (HTTPS)':'Not secured — no HTTPS'}</div>`
+        :'<div class="unk" style="font-size:13.5px">Could not be confirmed either way.</div>'}
+    </div>
+    <div style="margin-bottom:18px">
+      <div class="note" style="margin-bottom:7px">Booking</div>
+      ${l.booking.status==='none'?'<div class="no mono" style="font-size:12.5px;letter-spacing:.1em">NO BOOKING SYSTEM FOUND</div>'
+        :l.booking.status==='exists'?`<div class="yes" style="font-size:14px">Booking link on the listing${l.booking.url?` — <a href="${l.booking.url}" target="_blank">open</a>`:''}</div>`
+        :'<div class="unk" style="font-size:13.5px">Not confirmed. Google Maps does not always surface booking links.</div>'}
+    </div>
+    <div>
+      <div class="note" style="margin-bottom:7px">Social — ${socStr(l)}</div>
+      ${socs.length?`<div class="chips">${socs.map(k=>`<a class="chip" href="${l.social[k]}" target="_blank">${k[0].toUpperCase()+k.slice(1)}</a>`).join('')}</div>`
+        :'<div class="no mono" style="font-size:12.5px;letter-spacing:.1em">NO PROFILES FOUND IN SOURCES CHECKED</div>'}
+      ${SOC.filter(k=>!l.social[k]).length?`<div class="note" style="margin-top:10px">Not found: ${SOC.filter(k=>!l.social[k]).join(', ')}</div>`:''}
+    </div>
+  </div>
+  <div class="sect">
+    <div class="rule"><span class="idx">§04</span>Reputation</div>
+    ${l.reviews.count==null?'<div class="unk" style="font-size:13.5px">No review data on the listing.</div>':`
+    <div style="display:flex;gap:36px;align-items:baseline">
+      <div><div class="big">${l.reviews.rating}</div><div class="note" style="margin-top:8px">Rating</div></div>
+      <div><div class="big">${l.reviews.count}</div><div class="note" style="margin-top:8px">Reviews</div></div>
+      <div><div class="big">${l.health}</div><div class="note" style="margin-top:8px">Health score</div></div>
+    </div>
+    <div class="note" style="margin-top:18px">Health reflects public signals only — reviews, rating, age, and online setup. Revenue and customer counts are private and are not estimated.</div>`}
+  </div>
+  <div class="sect">
+    <div class="rule"><span class="idx">§05</span>The gap</div>
+    ${[['well','Working for them'],['poor','Working against them'],['missing','Missing'],['sell','Sellable']].map(([k,title])=>{
+      const arr=l.opp[k]||[];
+      return`<div style="margin-bottom:16px"><div class="note" style="margin-bottom:7px">${title}</div>
+      ${arr.length?`<ul class="t">${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`:'<div class="unk" style="font-size:13px">Nothing established from the listing.</div>'}</div>`}).join('')}
+  </div>
+  <div class="sect">
+    <div class="rule"><span class="idx">§06</span>The offer</div>
+    <div style="font-size:19px;font-weight:800;color:var(--ember);letter-spacing:-.01em">${l.offer.h}</div>
+    <p class="prose" style="margin-top:10px">${l.offer.w}</p>
+    <div class="pull" style="margin-top:16px">${l.call.pitch}</div>
+  </div>
+  <div class="sect">
+    <div class="rule"><span class="idx">§07</span>Before you dial</div>
+    <div class="note" style="margin-bottom:8px">Lead with</div>
+    <ul class="t">${l.call.mention.map(x=>`<li>${x}</li>`).join('')}</ul>
+    <div class="note" style="margin:18px 0 8px">Do not claim</div>
+    <div class="caution"><ul class="t" style="font-size:13px">${l.call.avoid.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+  </div>
+  <div class="sect">
+    <div class="rule"><span class="idx">§08</span>Sources</div>
+    <ul class="t" style="font-size:12.5px"><li>Google Maps listing, pulled through Apify</li>
+    ${l.mapUrl?`<li><a href="${l.mapUrl}" target="_blank">View the original listing</a></li>`:''}</ul>
+    <div class="note" style="margin-top:14px">Checked ${l.checked}. Run the sweep again to refresh.</div>
+  </div>
+  <div class="sect">
+    <div class="rule"><span class="idx">§09</span>Call notes</div>
+    <textarea class="in" rows="4" placeholder="Called Aug 16. Spoke to the owner. Follow up Monday." id="d-note">${c.note||''}</textarea>
+  </div>`;
+  const nt=$('d-note');if(nt)nt.onblur=saveNote;
+  $('scrim').style.display='';$('dossier').style.display='';
+  document.body.style.overflow='hidden'}
+function closeD(){$('scrim').style.display='none';$('dossier').style.display='none';document.body.style.overflow=''}
+function copyNum(){if(!cur||!cur.phone)return;
+  navigator.clipboard?.writeText(cur.phone).then(()=>toast('Number copied'),()=>toast('Could not copy'))}
+function saveNote(){if(!cur)return;const c=crm[cur.id]||{status:'New',note:''};
+  c.note=$('d-note').value;crm[cur.id]=c;sv(LS.crm,crm)}
+function setStat(){if(!cur)return;const c=crm[cur.id]||{status:'New',note:''};
+  c.status=$('d-status').value;crm[cur.id]=c;sv(LS.crm,crm);renderSaved()}
+function togSave(){if(cur)togSaveId(cur.id)}
+function togSaveId(id){const l=find(id);if(!l)return;
+  const i=saved.findIndex(s=>s.id===id);
+  if(i>=0){saved.splice(i,1);toast('Removed from files')}else{saved.push(l);toast('Saved to files')}
+  sv(LS.saved,saved);cards();renderSaved();navCounts();
+  if(cur&&cur.id===id)$('d-save').textContent=saved.some(s=>s.id===id)?'Saved to files':'Save file'}
+function toast(m){const el=$('toast');el.textContent=m;el.style.display='';
+  clearTimeout(window._tt);window._tt=setTimeout(()=>el.style.display='none',2400)}
+
+/* ── files ── */
+function renderSaved(){
+  const ct={};['All',...PIPE].forEach(s=>ct[s]=s==='All'?saved.length:saved.filter(l=>(crm[l.id]?.status||'New')===s).length);
+  const at=window._st||'All';
+  $('s-tabs').innerHTML=['All',...PIPE].map(s=>`<button class="chip ${s===at?'on':''}" onclick="setST('${s}')">${s} ${ct[s]}</button>`).join('');
+  $('s-acts').innerHTML=saved.length?`<button class="btn line s" onclick="expSavedCSV()">Export CSV</button><button class="btn line s" onclick="expSavedCall()">Call list</button>`:'';
+  const list=at==='All'?saved:saved.filter(l=>(crm[l.id]?.status||'New')===at);
+  $('s-empty').style.display=saved.length?'none':'';
+  $('s-cards').innerHTML=list.map(l=>{const c=crm[l.id]||{status:'New',note:''};
+    return`<div class="file ${l.t.temp.toLowerCase()}">
+      <div class="file-hd"><div style="min-width:0"><h3>${l.name}</h3><div class="loc">${l.city}, ${l.state}</div></div>
+      <span class="mark m-${l.t.temp.toLowerCase()}">${l.t.total}</span></div>
+      ${sigRow(l.t.total,l.t.temp)}
+      <div class="rows">
+        <div class="row"><span class="k">Phone</span><span class="v">${l.phone?`<a href="tel:${l.phone}" class="yes">${l.phone}</a>`:'<span class="unk">—</span>'}</span></div>
+        <div class="row"><span class="k">Website</span><span class="v">${stat(l.website.status,null,'None')}</span></div>
+      </div>
+      <div style="height:12px"></div>
+      <select class="sel" style="width:100%" onchange="setLS('${l.id}',this.value)">${PIPE.map(s=>`<option ${s===c.status?'selected':''}>${s}</option>`).join('')}</select>
+      ${c.note?`<p class="note" style="margin-top:12px;color:#9A96A2">${c.note}</p>`:''}
+      <div style="height:12px"></div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap">
+        ${l.phone?`<a class="btn live s" href="tel:${l.phone}">Call</a>`:''}
+        <button class="btn line s" onclick="openD('${l.id}')">Open file</button>
+        <button class="btn line s" onclick="togSaveId('${l.id}')">Remove</button></div>
+    </div>`}).join('')}
+function setST(t){window._st=t;renderSaved()}
+function setLS(id,s){const c=crm[id]||{status:'New',note:''};c.status=s;crm[id]=c;sv(LS.crm,crm);renderSaved()}
+
+/* ── history ── */
+function renderHist(){
+  $('h-empty').style.display=hist.length?'none':'';
+  $('h-cards').innerHTML=hist.map((h,i)=>`<div class="file" onclick="reopen(${i})">
+    <div class="stamp">Sweep ${String(hist.length-i).padStart(3,'0')}</div>
+    <div style="height:10px"></div>
+    <h3>${h.q.niche}</h3><div class="loc">${h.q.city}, ${h.q.state}</div>
+    <div class="rows">
+      <div class="row"><span class="k">Files</span><span class="v num">${h.leads.length}</span></div>
+      <div class="row"><span class="k">Callable</span><span class="v num yes">${h.leads.filter(l=>l.phone).length}</span></div>
+      <div class="row"><span class="k">Hot</span><span class="v num">${h.leads.filter(l=>l.t.temp==='HOT').length}</span></div>
+      <div class="row"><span class="k">Run</span><span class="v" style="font-size:11px">${h.at}</span></div>
+    </div></div>`).join('')}
+function reopen(i){const h=hist[i];leads=h.leads;dropped=0;noPhone=0;
+  $('f-niche').value=h.q.niche;$('f-city').value=h.q.city;$('f-state').value=h.q.state;
+  tab('results');$('a-prog').style.display='none';$('a-empty').style.display='none';render()}
+function clrHist(){hist=[];sv(LS.hist,hist);renderHist()}
+
+/* ── export ── */
+const cel=v=>{const s=v==null?'':String(v);return/[",\n]/.test(s)?`"${s.replace(/"/g,'""')}"`:s};
+const EX=[['Business',l=>l.name],['Phone',l=>l.phone],['Email',l=>l.email],['Address',l=>l.address],
+['City',l=>l.city],['State',l=>l.state],['Trade',l=>l.category],['Website',l=>l.website.status],
+['Website URL',l=>l.website.url],['Booking',l=>l.booking.status],['Facebook',l=>l.social.facebook],
+['Instagram',l=>l.social.instagram],['Reviews',l=>l.reviews.count],['Rating',l=>l.reviews.rating],
+['Years',l=>l.age.years],['Health',l=>l.health],['Signal',l=>l.t.total],['Temperature',l=>l.t.temp],
+['Offer',l=>l.offer.h],['Missing',l=>l.opp.missing.join('; ')],['Checked',l=>l.checked]];
+const csv=a=>[EX.map(c=>cel(c[0])).join(','),...a.map(l=>EX.map(c=>cel(c[1](l))).join(','))].join('\n');
+const callList=a=>['Business,Phone,Signal,Temperature,Offer',
+  ...a.filter(l=>l.phone).map(l=>[cel(l.name),cel(l.phone),l.t.total,l.t.temp,cel(l.offer.h)].join(','))].join('\n');
+function expCSV(){dl('ramels-vision-leads.csv',csv(leads),'text/csv')}
+function expSavedCSV(){dl('ramels-vision-files.csv',csv(saved),'text/csv')}
+function expJSON(){dl('ramels-vision-leads.json',JSON.stringify(leads,null,2),'application/json')}
+function expCall(){dl('call-list.csv',callList(leads),'text/csv');toast(`${leads.filter(l=>l.phone).length} numbers exported`)}
+function expSavedCall(){dl('my-call-list.csv',callList(saved),'text/csv')}
+function expReport(){
+  const rows=leads.map((l,i)=>`<article><div class="fn">File ${String(i+1).padStart(4,'0')} — ${l.t.temp} — signal ${l.t.total}/100</div>
+  <h2>${l.name}</h2><p class="ph">${l.phone||'No number listed'}</p>
+  <p>${l.address||l.city+', '+l.state}</p>
+  <table><tr><td>Website</td><td>${l.website.status==='none'?'None found':l.website.url||l.website.status}</td></tr>
+  <tr><td>Booking</td><td>${l.booking.status==='none'?'None found':l.booking.status}</td></tr>
+  <tr><td>Reviews</td><td>${l.reviews.count||'—'} at ${l.reviews.rating||'—'}</td></tr>
+  <tr><td>Offer</td><td>${l.offer.h}</td></tr></table>
+  <p><b>Open with:</b> ${l.call.pitch}</p>
+  <p><b>Do not claim:</b> ${l.call.avoid.join(' · ')}</p></article>`).join('');
+  dl('ramels-vision-report.html',`<!doctype html><meta charset="utf-8"><title>Ramel's Vision — Report</title>
+  <style>body{font:14px/1.65 -apple-system,Segoe UI,Arial;margin:44px;color:#141216;max-width:820px}
+  h1{letter-spacing:.16em;text-transform:uppercase;font-size:20px;border-bottom:3px solid #B0111F;padding-bottom:12px}
+  .meta{color:#666;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:30px}
+  article{border-top:1px solid #ddd;padding:22px 0;page-break-inside:avoid}
+  .fn{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#B0111F}
+  h2{font-size:17px;margin:8px 0 4px}.ph{font-weight:700;font-size:16px;margin-bottom:4px}
+  table{border-collapse:collapse;margin:12px 0;font-size:13px}
+  td{border:1px solid #e2e2e2;padding:6px 10px}td:first-child{color:#777;width:110px;font-size:11px;text-transform:uppercase;letter-spacing:.08em}</style>
+  <h1>Ramel's Vision — Lead Report</h1>
+  <div class="meta">${leads.length} files · ${leads.filter(l=>l.phone).length} callable · ${new Date().toLocaleDateString()}</div>${rows}`,'text/html')}
+function dl(n,c,m){const a=document.createElement('a');
+  a.href='data:'+m+';charset=utf-8,'+encodeURIComponent(c);a.download=n;a.click()}
+
+/* ── setup ── */
+function saveProxy(){const v=$('proxy-in').value.trim().replace(/\/$/,'');
+  localStorage.setItem(LS.proxy,v);useDemo=false;sv(LS.demo,false);demoUI();
+  $('proxy-msg').innerHTML='<span class="yes">Saved. Relay is active.</span>'}
+async function testProxy(){
+  const v=$('proxy-in').value.trim().replace(/\/$/,''),el=$('proxy-msg');
+  if(!v){el.innerHTML='<span class="no">Enter your proxy URL first.</span>';return}
+  el.innerHTML='<span class="unk">Testing…</span>';
+  try{const r=await fetch(v+'/health'),d=await r.json();
+    if(d.ok&&d.tokenSet)el.innerHTML='<span class="yes">Relay is live and the Apify token is set. Ready to sweep.</span>';
+    else if(d.ok)el.innerHTML='<span style="color:var(--caution)">Relay is running but APIFY_TOKEN is missing on the server.</span>';
+  }catch(e){el.innerHTML=`<span class="no">Could not reach the relay. ${e.message}</span>`}}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeD()});
 init();
 </script>
 </body>
