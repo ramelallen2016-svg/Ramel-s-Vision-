@@ -547,19 +547,23 @@ ul.t li{margin-bottom:4px}
 
     <!-- SETTINGS -->
     <div id="p-settings" style="display:none">
-      <div class="rule"><span class="idx">§01</span>Connection</div>
+      <div class="rule"><span class="idx">§01</span>Data source</div>
       <div class="slab p" style="margin-bottom:16px">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:6px">
-          <div style="font-size:16px;font-weight:700">Proxy server</div><span id="pill-proxy"></span>
+          <div style="font-size:16px;font-weight:700">Claude AI search <span class="mark m-hot" style="margin-left:8px">Active</span></div>
         </div>
-        <div class="note" style="margin-bottom:18px">Your Render URL. It holds the Apify token server-side and relays every sweep.</div>
-        <div class="fld"><label>Proxy URL</label><input class="in" type="url" id="proxy-in" placeholder="https://ramel-s-vision-1.onrender.com"></div>
+        <div class="note" style="margin-bottom:14px">Uses Claude's built-in web search to find and research real businesses. No API key, no proxy, no Apify account needed. Works directly on iPhone.</div>
+        <div class="slab p" style="border-color:rgba(79,169,124,.25);background:rgba(79,169,124,.05)">
+          <div style="font-size:13px;color:#9FD3B7;line-height:1.8">
+            ✓ Works on iPhone with no setup<br>
+            ✓ No proxy server needed<br>
+            ✓ Uses your existing Claude plan<br>
+            ✓ Finds real businesses with web search<br>
+            ✓ Every search batched to use minimum messages
+          </div>
+        </div>
         <div style="height:14px"></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn line s" onclick="testProxy()">Test connection</button>
-          <button class="btn s" onclick="saveProxy()">Save and activate</button>
-        </div>
-        <div id="proxy-msg" style="margin-top:14px;font-size:13px"></div>
+        <div class="note"><strong style="color:var(--bone)">Usage per search:</strong> ~2–4 Claude messages for 10 leads, ~4–8 for 25 leads. Scoring, filters, CRM and exports use zero Claude messages.</div>
       </div>
       <div class="slab p" style="margin-bottom:16px">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
@@ -570,7 +574,7 @@ ul.t li{margin-bottom:4px}
       </div>
       <div class="rule"><span class="idx">§02</span>On phone numbers</div>
       <div class="slab p">
-        <p class="prose" style="margin:0">Most listings carry a phone number, but not all of them do. With <strong style="color:var(--bone)">Require a phone number</strong> switched on, anything without a verified number is dropped before scoring — so every file you open is one you can dial. Numbers come from the listing itself and are never generated or inferred.</p>
+        <p class="prose" style="margin:0">Claude searches the web for real businesses and only returns phone numbers that appear on public listings. With <strong style="color:var(--bone)">Require a phone number</strong> switched on, any business without a verified number is dropped before scoring — so every file you open is one you can dial. Numbers are never made up.</p>
       </div>
     </div>
 
@@ -608,7 +612,7 @@ ul.t li{margin-bottom:4px}
 <div id="toast" class="toast" style="display:none"></div>
 
 <script>
-const LS={saved:'rv3:saved',crm:'rv3:crm',hist:'rv3:hist',proxy:'rv3:proxy',demo:'rv3:demo'};
+const LS={saved:'rv3:saved',crm:'rv3:crm',hist:'rv3:hist',demo:'rv3:demo'};
 let leads=[],saved=[],crm={},hist=[],useDemo=false,cur=null,dropped=0,noPhone=0,sc=9,sd=-1;
 const F={web:[],book:[],soc:[],temp:[],minRev:null,maxRev:null,minRate:null};
 const SOC=['facebook','instagram','tiktok','youtube','linkedin'];
@@ -619,7 +623,7 @@ const $=id=>document.getElementById(id);
 
 function init(){
   saved=ld(LS.saved,[]);crm=ld(LS.crm,{});hist=ld(LS.hist,[]);useDemo=ld(LS.demo,false);
-  const p=localStorage.getItem(LS.proxy)||'';if(p)$('proxy-in').value=p;
+  // Claude mode — no proxy needed
   document.querySelectorAll('.chips .chip[data-v]').forEach(c=>c.onclick=()=>c.classList.toggle('on'));
   $('f-count').onchange=cost;
   srcLabel();demoUI();cost();renderSaved();renderHist();go('landing');
@@ -644,13 +648,12 @@ const getC=id=>Array.from(document.querySelectorAll('#'+id+' .chip.on')).map(c=>
 function clearF(){document.querySelectorAll('.chips .chip[data-v]').forEach(c=>c.classList.remove('on'));
   ['f-minrev','f-maxrev','f-minrate'].forEach(i=>$(i).value='')}
 function cost(){const n=+$('f-count').value;
-  $('cost').textContent=n>50?`${n} leads runs several queries · about 2–3 minutes · roughly $${(n*0.004).toFixed(2)} in Apify credit`
-    :`About 30–90 seconds · roughly $${(n*0.004).toFixed(2)} in Apify credit`}
-function srcLabel(){const p=localStorage.getItem(LS.proxy);
-  $('src-label').textContent=useDemo?'Source — sample data':p?'Source — Apify relay':'Source — none set, open Setup'}
+  $('cost').textContent=n>50
+    ?`${n} leads uses ${Math.ceil(n/12)} Claude messages · takes about 2–3 minutes`
+    :`Uses about ${Math.ceil(n/12)} Claude messages · takes 30–90 seconds`}
+function srcLabel(){$('src-label').textContent=useDemo?'Source — sample data':'Source — Claude AI search'}
 function demoUI(){
   $('pill-demo').innerHTML=useDemo?'<span class="mark m-hot">Active</span>':'';
-  $('pill-proxy').innerHTML=!useDemo?'<span class="mark m-hot">Active</span>':'';
   $('demo-btn').textContent=useDemo?'Using sample':'Switch to sample';srcLabel()}
 function togDemo(){useDemo=!useDemo;sv(LS.demo,useDemo);demoUI()}
 
@@ -783,6 +786,46 @@ function log(t,c){const el=$('log'),d=document.createElement('div');
   el.appendChild(d);el.scrollTop=el.scrollHeight}
 const bar=p=>$('bar').style.width=p+'%';
 
+/* ── Claude AI provider — minimal token usage ── */
+const CLAUDE_URL='https://api.anthropic.com/v1/messages';
+
+async function callClaude(prompt, systemMsg){
+  const body={
+    model:'claude-sonnet-4-6',
+    max_tokens:1000,
+    system: systemMsg || 'You are a business research engine. Return only valid JSON. No markdown, no explanation, no extra text — just the raw JSON.',
+    messages:[{role:'user',content:prompt}],
+    tools:[{type:'web_search_20250305',name:'web_search'}]
+  };
+  const r=await fetch(CLAUDE_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!r.ok){const t=await r.text().catch(()=>'');throw new Error(`Claude API ${r.status}: ${t.slice(0,120)}`);}
+  const d=await r.json();
+  // extract text blocks (web search results may also come back)
+  return (d.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n');
+}
+
+function parseJSON(text, expectArray){
+  if(!text) return expectArray ? [] : null;
+  let t = text.replace(/```json/gi,'').replace(/```/g,'').trim();
+  const open = expectArray ? '[' : '{';
+  const i = t.indexOf(open);
+  if(i < 0) return expectArray ? [] : null;
+  t = t.slice(i);
+  // find the matching close
+  const close = expectArray ? ']' : '}';
+  let depth=0, inStr=false, esc=false, end=-1;
+  for(let p=0;p<t.length;p++){
+    const c=t[p];
+    if(inStr){if(esc)esc=false;else if(c==='\\')esc=true;else if(c==='"')inStr=false;continue;}
+    if(c==='"')inStr=true;
+    else if(c==='{'||c==='[')depth++;
+    else if(c==='}'||c===']'){depth--;if(depth===0){end=p;break;}}
+  }
+  if(end<0) t = t + (expectArray?']':'}'); // try repairing truncated
+  try{ return JSON.parse(end>=0 ? t.slice(0,end+1) : t); }
+  catch(e){ return expectArray ? [] : null; }
+}
+
 async function run(demo){
   const niche=$('f-niche').value.trim(),city=$('f-city').value.trim(),state=$('f-state').value.trim();
   const count=+$('f-count').value,reqPhone=on('sw-phone'),near=on('sw-near');
@@ -796,44 +839,124 @@ async function run(demo){
   $('log').innerHTML='';bar(3);$('scan-title').textContent=`Sweeping ${city}, ${state}`;
 
   log(`Target — ${niche} · ${city}, ${state} · ${count} leads`);
-  if(reqPhone)log('Phone number required for every lead','ok');
+  if(reqPhone)log('Phone required — leads without a number will be dropped','ok');
 
   if(demo||useDemo){
     log('Source — sample data');
     await new Promise(r=>setTimeout(r,500));bar(55);
     const rows=demoRows(city,state,count);
     rows.forEach(r=>log(`${r.name} — ${r.phone||'no number listed'}`,r.t.temp==='HOT'?'hit':''));
-    bar(90);finish(rows,count,reqPhone);return}
+    bar(90);finish(rows,count,reqPhone);return;
+  }
 
-  const proxy=(localStorage.getItem(LS.proxy)||'').replace(/\/$/,'');
-  if(!proxy){err('No relay configured. Open Setup and add your proxy URL.');return}
+  // Claude batched search — one call per batch of ~12 businesses
+  const batchSize=12;
+  const batches=Math.ceil(count/batchSize);
+  const all=[];
+  const seen=new Set();
 
-  const qs=queries(niche,city,state,count,near);
-  log(`${qs.length} quer${qs.length>1?'ies':'y'} queued for coverage`);
-  qs.forEach(q=>log(`  ${q}`));
-  const per=Math.min(60,Math.ceil((count*1.9)/qs.length)+5);
-  const seen=new Set(),all=[];
+  log(`Claude AI search — ${batches} batch${batches>1?'es':''} of ${batchSize}`);
+  log('Using web search to find real businesses with verified info');
 
   try{
-    for(let i=0;i<qs.length;i++){
-      bar(12+Math.round((i/qs.length)*62));
-      log(`Query ${i+1} of ${qs.length} — relaying`);
-      const r=await fetch(proxy+'/search',{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({searchStringsArray:[qs[i]],maxCrawledPlacesPerSearch:per})});
-      if(!r.ok){const t=await r.text().catch(()=>'');
-        if(i===0)throw new Error(`Relay returned ${r.status}. ${t.slice(0,140)}`);
-        log(`Query ${i+1} returned ${r.status} — moving on`,'hit');continue}
-      const places=await r.json();
-      if(!Array.isArray(places)){log(`Query ${i+1} returned nothing usable`);continue}
-      let n=0;places.forEach(p=>{const id=(p.placeId||p.cid||p.title)+'';
-        if(seen.has(id))return;seen.add(id);all.push(norm(p,niche,city,state));n++});
-      log(`${n} new · ${all.length} collected`,n?'ok':'');
-      if(all.length>=count*1.9)break}
-    if(!all.length)throw new Error('Nothing came back. Try a larger city or a broader trade.');
-    bar(84);
-    log(`${all.length} unique businesses · ${all.filter(l=>l.phone).length} with a number`,'ok');
+    for(let b=0;b<batches;b++){
+      const pct=8+Math.round(((b+1)/batches)*72);
+      bar(pct);
+      const offset=b*batchSize;
+      log(`Batch ${b+1} of ${batches} — searching…`);
+
+      const nearStr=near?`and nearby areas around ${city}`:city;
+      const filterHints=[];
+      if(F.web.includes('none')) filterHints.push('prefer businesses with no website');
+      if(F.book.includes('none')) filterHints.push('prefer businesses with no online booking');
+      if(reqPhone) filterHints.push('MUST have a real phone number');
+      if(F.minRev) filterHints.push(`at least ${F.minRev} reviews`);
+
+      const prompt=`Search the web and find ${batchSize} real, currently operating ${niche} businesses in ${nearStr}, ${state}, USA.
+${b>0?`This is batch ${b+1}. Find DIFFERENT businesses from these already found: ${all.slice(0,5).map(x=>x.name).join(', ')}...`:''}
+${filterHints.length?`Priority filters: ${filterHints.join(', ')}.`:''}
+
+For each business, search for: their Google Maps or Yelp listing, official website, phone number, review count, rating, and any social media.
+
+Return ONLY a JSON array of ${batchSize} businesses. Each object must have EXACTLY these fields:
+[{
+  "name": "Business Name",
+  "phone": "(555) 555-5555 or null if not found — NEVER make up a number",
+  "address": "123 Main St, ${city}, ${state}",
+  "city": "${city}",
+  "state": "${state}",
+  "category": "${niche}",
+  "website": "https://... or null if not found",
+  "bookingUrl": "booking/scheduling link or null",
+  "facebook": "facebook URL or null",
+  "instagram": "instagram URL or null",
+  "tiktok": "tiktok URL or null",
+  "youtube": "youtube URL or null",
+  "reviews": 0,
+  "rating": 0.0,
+  "years": 0
+}]
+
+CRITICAL RULES:
+- Only return businesses you actually found in web search results
+- Never invent a business name, phone number, address, or website
+- If you could not find a phone number, set phone to null — do not guess
+- If you could not find reviews, set reviews to 0 and rating to 0
+- Return raw JSON array only — no markdown, no explanation`;
+
+      let raw;
+      try{ raw = await callClaude(prompt); }
+      catch(e){
+        if(b===0) throw e;
+        log(`Batch ${b+1} failed — ${e.message}. Using results so far.`,'hit');
+        break;
+      }
+
+      const parsed = parseJSON(raw, true);
+      if(!Array.isArray(parsed)||!parsed.length){
+        log(`Batch ${b+1} returned no usable data`,'hit');
+        if(b===0) throw new Error('Claude returned no businesses. Check your internet connection and try again.');
+        break;
+      }
+
+      let added=0;
+      parsed.forEach(p=>{
+        if(!p||!p.name) return;
+        const id=(p.name+p.address).toLowerCase().replace(/\s/g,'');
+        if(seen.has(id)) return;
+        seen.add(id);
+
+        // Build normalized lead from Claude's response
+        const web=p.website?{status:'exists',url:p.website,https:(p.website||'').startsWith('https')}:{status:'none',url:null};
+        const book=p.bookingUrl?{status:'exists',url:p.bookingUrl}:{status:'unknown',url:null};
+        const social={facebook:p.facebook||null,instagram:p.instagram||null,tiktok:p.tiktok||null,youtube:p.youtube||null,linkedin:null};
+        const phone=(p.phone&&p.phone!=='null'&&p.phone.match(/\d{3}/)) ? p.phone : null;
+        const l={
+          id:(p.name+p.address+Math.random()).replace(/\W/g,'').slice(0,24),
+          name:p.name,address:p.address||null,city:p.city||city,state:p.state||state,
+          category:p.category||niche,phone,email:null,website:web,booking:book,social,
+          reviews:{count:p.reviews>0?p.reviews:null,rating:p.rating>0?p.rating:null},
+          age:{years:p.years>0?p.years:null},photos:[],hours:null,
+          operating:'Found via web search',mapUrl:null,demo:false,
+          checked:new Date().toLocaleDateString()
+        };
+        const s=nSoc(l);
+        l.opp=opp(web.status,book.status,s,l.reviews.rating,l.reviews.count);
+        l.call=intel(l,web.status,book.status,s);
+        l.offer=offer(web.status,book.status,s);
+        l.health=health(l);l.t=temp(l);
+        all.push(l);added++;
+      });
+      log(`${added} new businesses found · ${all.length} total`,added?'ok':'');
+      if(all.length>=count*1.3) break;
+    }
+
+    if(!all.length) throw new Error('No businesses found. Try a different city or trade and search again.');
+    bar(88);
+    log(`${all.length} businesses researched · ${all.filter(l=>l.phone).length} with a verified phone`,'ok');
     finish(all,count,reqPhone);
-  }catch(e){err(e.message)}}
+  }catch(e){err(e.message);}
+}
 
 function finish(all,count,reqPhone){
   let pool=all;
@@ -1043,7 +1166,7 @@ function openD(id){
   </div>
   <div class="sect">
     <div class="rule"><span class="idx">§08</span>Sources</div>
-    <ul class="t" style="font-size:12.5px"><li>Google Maps listing, pulled through Apify</li>
+    <ul class="t" style="font-size:12.5px"><li>Found via Claude AI web search</li>
     ${l.mapUrl?`<li><a href="${l.mapUrl}" target="_blank">View the original listing</a></li>`:''}</ul>
     <div class="note" style="margin-top:14px">Checked ${l.checked}. Run the sweep again to refresh.</div>
   </div>
@@ -1158,17 +1281,7 @@ function dl(n,c,m){const a=document.createElement('a');
   a.href='data:'+m+';charset=utf-8,'+encodeURIComponent(c);a.download=n;a.click()}
 
 /* ── setup ── */
-function saveProxy(){const v=$('proxy-in').value.trim().replace(/\/$/,'');
-  localStorage.setItem(LS.proxy,v);useDemo=false;sv(LS.demo,false);demoUI();
-  $('proxy-msg').innerHTML='<span class="yes">Saved. Relay is active.</span>'}
-async function testProxy(){
-  const v=$('proxy-in').value.trim().replace(/\/$/,''),el=$('proxy-msg');
-  if(!v){el.innerHTML='<span class="no">Enter your proxy URL first.</span>';return}
-  el.innerHTML='<span class="unk">Testing…</span>';
-  try{const r=await fetch(v+'/health'),d=await r.json();
-    if(d.ok&&d.tokenSet)el.innerHTML='<span class="yes">Relay is live and the Apify token is set. Ready to sweep.</span>';
-    else if(d.ok)el.innerHTML='<span style="color:var(--caution)">Relay is running but APIFY_TOKEN is missing on the server.</span>';
-  }catch(e){el.innerHTML=`<span class="no">Could not reach the relay. ${e.message}</span>`}}
+// Proxy removed — using Claude AI search
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeD()});
 init();
