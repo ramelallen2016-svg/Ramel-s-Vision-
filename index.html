@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ramel's Vision</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#050506;color:#ecebe8;min-height:100vh}
+:root{--red:#c1121f;--red-hi:#e02434;--red-dim:#5a0a12;--bone:#ecebe8;--muted:#8b8b96;--line:#1e1e25;--ok:#63b58a;--amber:#d9a441;--steel:#7d8fa3;--panel:rgba(20,20,25,.8)}
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:12px 18px;background:rgba(6,6,8,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.brand{font-weight:800;letter-spacing:.2em;font-size:13px;text-transform:uppercase}.brand span{color:var(--red-hi)}
+.nav{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap}
+.nav button{background:none;border:1px solid transparent;color:var(--muted);font-family:inherit;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:7px 11px;border-radius:3px;cursor:pointer}
+.nav button:hover{color:var(--bone);background:rgba(255,255,255,.04)}
+.nav button.on{color:var(--bone);border-color:var(--red-dim);background:rgba(193,18,31,.1)}
+.page{max-width:1100px;margin:0 auto;padding:24px 18px 80px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;backdrop-filter:blur(10px)}
+.pad{padding:18px}
+label{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+input,select,textarea{width:100%;background:rgba(0,0,0,.5);border:1px solid var(--line);border-radius:3px;color:var(--bone);padding:11px 12px;font-size:14px;font-family:inherit;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--red)}
+input::placeholder{color:#55555f}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.btn{background:var(--red);color:#fff;border:none;border-radius:3px;padding:13px 22px;font-weight:700;font-size:12px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer}
+.btn:hover{background:var(--red-hi)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--bone)}
+.btn.ghost:hover{border-color:var(--red);background:rgba(193,18,31,.08)}
+.btn.sm{padding:8px 13px;font-size:10px}
+.hair{height:1px;background:var(--line);margin:14px 0}
+.sec{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.sec::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.term{background:rgba(4,4,6,.95);border:1px solid var(--line);border-radius:6px;padding:16px;font-family:ui-monospace,monospace;font-size:12px;line-height:2;max-height:260px;overflow:auto;margin-bottom:12px}
+.tline{color:var(--muted)}.tline.hit{color:var(--red-hi)}
+.bar{height:2px;background:var(--line);border-radius:2px;overflow:hidden;margin-bottom:16px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red-dim),var(--red-hi));transition:width .4s}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.stat{background:rgba(12,12,15,.7);border:1px solid var(--line);border-radius:5px;padding:12px;text-align:center}
+.stat .n{font-size:24px;font-weight:800}.stat .n.red{color:var(--red-hi)}
+.stat .l{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:15px;cursor:pointer;transition:.15s;border-left:3px solid transparent}
+.card:hover{border-color:#333;transform:translateY(-1px)}
+.card.hot{border-left-color:var(--red-hi)}
+.card.warm{border-left-color:var(--amber)}
+.card.cold{border-left-color:var(--steel)}
+.card h3{font-size:15px;font-weight:700;margin-bottom:3px}
+.card-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}
+.score{font-size:22px;font-weight:800;line-height:1}
+.score.hot{color:var(--red-hi)}.score.warm{color:var(--amber)}.score.cold{color:var(--steel)}
+.kv{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px solid rgba(30,30,37,.5)}
+.kv:last-child{border-bottom:none}
+.kl{color:var(--muted);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.yes{color:var(--ok)}.no{color:var(--red-hi)}.unk{color:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:2px;border:1px solid;white-space:nowrap}
+.pill-hot{color:#fff;background:var(--red);border-color:var(--red)}
+.pill-warm{color:var(--amber);border-color:rgba(217,164,65,.4);background:rgba(217,164,65,.1)}
+.pill-cold{color:var(--steel);border-color:rgba(125,143,163,.35);background:rgba(125,143,163,.08)}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:50;backdrop-filter:blur(3px)}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(720px,100%);background:#08080a;border-left:1px solid var(--line);z-index:51;overflow-y:auto}
+.dhead{position:sticky;top:0;background:rgba(8,8,10,.95);border-bottom:1px solid var(--line);padding:18px 22px;backdrop-filter:blur(8px)}
+.dbody{padding:8px 22px 60px}
+.block{border-top:1px solid var(--line);padding:16px 0}.block:first-child{border-top:none}
+.x{background:none;border:1px solid var(--line);color:var(--muted);border-radius:3px;width:28px;height:28px;font-size:14px;cursor:pointer}
+.x:hover{color:#fff;border-color:var(--red)}
+.reasons{list-style:none;padding:0;font-size:13px;line-height:1.9}
+.reasons li::before{content:"✓ ";color:var(--ok)}
+.reasons li.bad::before{content:"× ";color:var(--muted)}
+.reasons li.unk::before{content:"? ";color:var(--amber)}
+.meter{display:flex;align-items:center;gap:10px;font-size:11px;padding:4px 0}
+.meter .t{width:140px;color:var(--muted);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.meter .b{flex:1;height:3px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden}
+.meter .b i{display:block;height:100%;background:var(--red)}
+.meter .v{width:44px;text-align:right;font-family:ui-monospace;font-size:11px}
+.quote{border-left:2px solid var(--red);padding:8px 0 8px 14px;font-size:13px;line-height:1.7;color:#d6d6dc;font-style:italic;margin:8px 0}
+.warnbox{border:1px solid rgba(217,164,65,.3);background:rgba(217,164,65,.07);border-radius:4px;padding:11px 14px;font-size:12px;line-height:1.6;color:#e6c98a}
+.empty{text-align:center;padding:60px 20px;color:var(--muted)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#141419;border:1px solid var(--red-dim);border-radius:4px;padding:11px 18px;font-size:13px;z-index:90}
+.note{font-size:12px;color:var(--muted);line-height:1.6}
+@media(max-width:600px){.grid4,.grid2{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Ramel'<span>s</span> Vision</div>
+  <nav class="nav">
+    <button onclick="showTab('search')" id="tab-search" class="on">Search</button>
+    <button onclick="showTab('results')" id="tab-results">Results</button>
+    <button onclick="showTab('saved')" id="tab-saved">My Leads</button>
+    <button onclick="showTab('settings')" id="tab-settings">Settings</button>
+  </nav>
+</header>
+
+<!-- SEARCH -->
+<div class="page" id="view-search">
+  <div class="sec">New search</div>
+  <div class="panel pad">
+    <div class="grid4" style="margin-bottom:12px">
+      <div><label>Niche</label><input id="niche" value="Plumbers" list="niches"><datalist id="niches"><option>Plumbers</option><option>Roofers</option><option>HVAC</option><option>Dentists</option><option>Electricians</option><option>Landscapers</option><option>Auto Detailers</option><option>Barbers</option><option>Med Spas</option><option>Pressure Washers</option></datalist></div>
+      <div><label>State</label><input id="state" value="California"></div>
+      <div><label>City</label><input id="city" value="San Jose"></div>
+      <div><label>Leads</label><select id="count"><option value="5">5</option><option value="8">8</option><option value="10" selected>10</option><option value="15">15</option><option value="25">25</option></select></div>
+    </div>
+    <div class="hair"></div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <button class="btn" onclick="startSearch()">Find Leads</button>
+      <button class="btn ghost" onclick="loadDemo()">Load Demo</button>
+      <span class="note" id="provider-label" style="margin-left:auto"></span>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div class="page" id="view-results" style="display:none">
+  <div id="progress-area" style="display:none">
+    <div class="term" id="log"></div>
+    <div class="bar"><i id="bar" style="width:0%"></i></div>
+  </div>
+  <div id="results-area" style="display:none">
+    <div class="stats">
+      <div class="stat"><div class="n red" id="s-total">0</div><div class="l">Leads</div></div>
+      <div class="stat"><div class="n red" id="s-hot">0</div><div class="l">Hot</div></div>
+      <div class="stat"><div class="n" id="s-noweb">0</div><div class="l">No Web</div></div>
+      <div class="stat"><div class="n" id="s-avg">0</div><div class="l">Avg Score</div></div>
+    </div>
+    <div class="cards" id="cards"></div>
+    <div style="margin-top:14px;display:flex;gap:8px">
+      <button class="btn ghost sm" onclick="exportCSV()">Export CSV</button>
+      <button class="btn ghost sm" onclick="showTab('search')">New Search</button>
+    </div>
+  </div>
+  <div id="error-area" style="display:none" class="panel pad">
+    <div class="sec">Search stopped</div>
+    <p id="error-msg" style="color:var(--muted);font-size:14px;margin-bottom:14px"></p>
+    <div style="display:flex;gap:8px">
+      <button class="btn ghost sm" onclick="showTab('search')">Back to search</button>
+      <button class="btn ghost sm" onclick="loadDemo()">Load demo instead</button>
+    </div>
+  </div>
+</div>
+
+<!-- SAVED -->
+<div class="page" id="view-saved" style="display:none">
+  <div class="sec">My leads</div>
+  <div id="saved-cards" class="cards"></div>
+  <div id="saved-empty" class="empty" style="display:none"><h3 style="color:var(--bone);margin-bottom:8px">No saved leads yet</h3><p>Save a lead from any result card.</p></div>
+</div>
+
+<!-- SETTINGS -->
+<div class="page" id="view-settings" style="display:none">
+  <div class="sec">Data source</div>
+  <div class="panel pad" style="margin-bottom:14px">
+    <div style="font-size:15px;font-weight:700;margin-bottom:4px">Proxy Server (Render)</div>
+    <div class="note" style="margin-bottom:14px">Your Render proxy URL — real Google Maps leads via Apify</div>
+    <label>Proxy URL</label>
+    <input type="url" id="proxy-input" placeholder="https://ramel-s-vision-1.onrender.com" style="margin-bottom:10px">
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn ghost sm" onclick="saveProxy()">Save & activate</button>
+      <button class="btn ghost sm" onclick="testProxy()">Test connection</button>
+    </div>
+    <div id="proxy-result" style="margin-top:10px;font-size:13px"></div>
+    <div class="note" style="margin-top:10px">Paste your Render URL above. The app talks directly to your server — no Claude sandbox in the way.</div>
+  </div>
+  <div class="panel pad" style="margin-bottom:14px">
+    <div style="font-size:15px;font-weight:700;margin-bottom:4px">Demo data</div>
+    <div class="note" style="margin-bottom:12px">Fictional sample records for exploring the UI</div>
+    <button class="btn ghost sm" onclick="loadDemo();showTab('results')">Load demo</button>
+  </div>
+  <div class="note">This app runs directly in Safari — no Claude sandbox. Your proxy URL is saved in your browser only.</div>
+</div>
+
+<!-- DRAWER -->
+<div id="scrim" class="scrim" style="display:none" onclick="closeDrawer()"></div>
+<div id="drawer" class="drawer" style="display:none">
+  <div class="dhead">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <div>
+        <div id="d-pill" style="margin-bottom:8px"></div>
+        <div id="d-name" style="font-size:18px;font-weight:700;margin-bottom:4px"></div>
+        <div id="d-loc" style="font-size:11px;color:var(--muted)"></div>
+      </div>
+      <button class="x" onclick="closeDrawer()">✕</button>
+    </div>
+    <div style="height:10px"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn ghost sm" onclick="toggleSave()">☆ Save lead</button>
+      <button class="btn sm" id="d-call-btn"></button>
+    </div>
+  </div>
+  <div class="dbody" id="d-body"></div>
+</div>
+
+<div id="toast" class="toast" style="display:none"></div>
+
+<script>
+const PROXY_KEY = 'rv:proxy';
+const SAVED_KEY = 'rv:saved';
+let leads = [], saved = [], currentLead = null, currentIdx = -1;
+
+// Storage
+function getProxy() { return localStorage.getItem(PROXY_KEY) || ''; }
+function getSaved() { try { return JSON.parse(localStorage.getItem(SAVED_KEY) || '[]'); } catch { return []; } }
+function putSaved(arr) { localStorage.setItem(SAVED_KEY, JSON.stringify(arr)); }
+
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+  saved = getSaved();
+  const p = getProxy();
+  if (p) document.getElementById('proxy-input').value = p;
+  updateProviderLabel();
+  renderSaved();
+});
+
+function updateProviderLabel() {
+  const p = getProxy();
+  document.getElementById('provider-label').textContent = p ? '🟢 Apify via proxy' : '⚪ No proxy set — go to Settings';
+}
+
+// Tabs
+function showTab(t) {
+  ['search','results','saved','settings'].forEach(v => {
+    document.getElementById('view-'+v).style.display = v===t ? '' : 'none';
+    document.getElementById('tab-'+v).classList.toggle('on', v===t);
+  });
+  if (t==='saved') renderSaved();
+}
+
+// Scoring
+function scoreTemp(b) {
+  let s = 0;
+  if (b.website==='none') s+=20; else if (b.website==='unknown') s+=9; else s+=3;
+  if (b.booking==='none') s+=10; else if (b.booking==='unknown') s+=5;
+  const soc = (b.socials||[]).filter(x=>x&&x!=='null').length;
+  s += soc===0?10:soc===1?6:3;
+  const r = b.reviewsCount||b.reviews||0, g = b.totalScore||b.rating||0, y = b.yearsInBusiness||b.years||0;
+  s += r>200?18:r>50?12:r>0?6:4;
+  s += g>=4.5?14:g>=4?10:g>0?6:5;
+  s += y>=10?10:y>=5?7:y>0?4:3;
+  return {total:Math.min(100,Math.round(s)), temp:s>=72?'HOT':s>=50?'WARM':'COLD'};
+}
+
+function webStatus(b) {
+  if (b.website) return 'exists';
+  return 'unknown';
+}
+
+function bookingStatus(b) {
+  if (b.bookingLink || (b.reservationLinks&&b.reservationLinks.length)) return 'exists';
+  return 'unknown';
+}
+
+// Search
+async function startSearch() {
+  const proxy = getProxy();
+  if (!proxy) { alert('Go to Settings and add your proxy URL first.'); showTab('settings'); return; }
+  const niche = document.getElementById('niche').value.trim();
+  const city = document.getElementById('city').value.trim();
+  const state = document.getElementById('state').value.trim();
+  const count = parseInt(document.getElementById('count').value);
+  if (!niche||!city||!state) { alert('Fill in all fields.'); return; }
+
+  leads = [];
+  showTab('results');
+  document.getElementById('progress-area').style.display = '';
+  document.getElementById('results-area').style.display = 'none';
+  document.getElementById('error-area').style.display = 'none';
+  document.getElementById('log').innerHTML = '';
+  setBar(0);
+
+  log(`Searching: ${niche} in ${city}, ${state} · ${count} leads`);
+  log(`Proxy: ${proxy}`);
+  setBar(15);
+
+  try {
+    log('Calling Apify via proxy — takes 30-90 seconds…');
+    const res = await fetch(proxy + '/search', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        searchStringsArray: [`${niche} in ${city}, ${state}`],
+        maxCrawledPlacesPerSearch: Math.min(count+5, 60),
+      })
+    });
+    setBar(70);
+    if (!res.ok) {
+      const t = await res.text().catch(()=>'');
+      throw new Error(`Proxy returned ${res.status}: ${t.slice(0,120)}`);
+    }
+    const places = await res.json();
+    if (!Array.isArray(places)||!places.length) throw new Error('No businesses found. Try a different niche or city.');
+    log(`${places.length} businesses returned from Google Maps`, true);
+    setBar(85);
+
+    leads = places.slice(0,count).map(p => {
+      const web = webStatus(p);
+      const bk = bookingStatus(p);
+      const socials = (p.socialMediaLinks||[]).map(s=>s.link).filter(Boolean);
+      const score = scoreTemp({...p, website:web, booking:bk, socials, reviews:p.reviewsCount, rating:p.totalScore, years:p.yearsInBusiness});
+      return {
+        ...p,
+        _web: web, _bk: bk, _socials: socials, _score: score,
+        _name: p.title || p.name,
+        _phone: p.phone || p.phoneUnformatted,
+        _address: p.address,
+        _city: p.city || city,
+        _state: p.state || state,
+        _category: p.categoryName || niche,
+        _reviews: p.reviewsCount||0,
+        _rating: p.totalScore||0,
+        _years: p.yearsInBusiness||0,
+        _website_url: p.website,
+      };
+    }).sort((a,b)=>b._score.total-a._score.total);
+
+    leads.forEach(l => log(`${l._name} — ${l._web==='none'?'no web':l._web==='exists'?'has web':'web?'}, ${l._bk==='none'?'no booking':l._bk==='exists'?'has booking':'booking?'}, ${l._socials.length} socials`, l._score.temp==='HOT'));
+    setBar(100);
+    setTimeout(renderResults, 500);
+  } catch(e) {
+    document.getElementById('progress-area').style.display = 'none';
+    document.getElementById('error-area').style.display = '';
+    document.getElementById('error-msg').textContent = e.message;
+  }
+}
+
+function setBar(p) { document.getElementById('bar').style.width = p+'%'; }
+function log(t, hit) {
+  const el = document.getElementById('log');
+  const d = document.createElement('div');
+  d.className = 'tline'+(hit?' hit':'');
+  d.textContent = '› '+t;
+  el.appendChild(d);
+  el.scrollTop = el.scrollHeight;
+}
+
+function renderResults() {
+  document.getElementById('progress-area').style.display = 'none';
+  document.getElementById('results-area').style.display = '';
+  const hot = leads.filter(l=>l._score.temp==='HOT').length;
+  const noweb = leads.filter(l=>l._web==='none').length;
+  const avg = leads.length ? Math.round(leads.reduce((a,l)=>a+l._score.total,0)/leads.length) : 0;
+  document.getElementById('s-total').textContent = leads.length;
+  document.getElementById('s-hot').textContent = hot;
+  document.getElementById('s-noweb').textContent = noweb;
+  document.getElementById('s-avg').textContent = avg;
+  document.getElementById('cards').innerHTML = leads.map((l,i) => cardHTML(l,i)).join('');
+}
+
+function cardHTML(l, i) {
+  const t = l._score, cls = t.temp.toLowerCase();
+  const icon = t.temp==='HOT'?'🔥':t.temp==='WARM'?'🟡':'❄️';
+  return `<div class="card ${cls}" onclick="openDrawer(${i})">
+    <div class="card-top">
+      <div><h3>${l._name}</h3><div style="font-size:11px;color:var(--muted)">${l._city}, ${l._state}${l._category?' · '+l._category:''}</div></div>
+      <div style="text-align:right"><div class="score ${cls}">${t.total}</div><div style="font-size:9px;color:var(--muted)">/100</div></div>
+    </div>
+    <span class="pill pill-${cls}">${icon} ${t.temp}</span>
+    <div style="height:10px"></div>
+    <div class="kv"><span class="kl">Website</span><span class="${l._web==='none'?'no':l._web==='exists'?'yes':'unk'}">${l._web==='none'?'None found':l._web==='exists'?l._website_url||'Detected':'Unknown'}</span></div>
+    <div class="kv"><span class="kl">Booking</span><span class="${l._bk==='none'?'no':l._bk==='exists'?'yes':'unk'}">${l._bk==='none'?'None found':l._bk==='exists'?'Detected':'Unknown'}</span></div>
+    <div class="kv"><span class="kl">Social</span><span class="${l._socials.length===0?'no':''}">${l._socials.length===0?'None found':l._socials.length+' profile'+(l._socials.length>1?'s':'')}</span></div>
+    <div class="kv"><span class="kl">Phone</span><span>${l._phone||'<span class="unk">—</span>'}</span></div>
+    <div class="kv"><span class="kl">Reviews</span><span>${l._reviews?l._reviews+' · '+l._rating+'★':'<span class="unk">—</span>'}</span></div>
+  </div>`;
+}
+
+function openDrawer(i) {
+  const l = leads[i]; currentLead = l; currentIdx = i;
+  const t = l._score, cls = t.temp.toLowerCase();
+  const icon = t.temp==='HOT'?'🔥':t.temp==='WARM'?'🟡':'❄️';
+  const isSaved = saved.some(s=>s._name===l._name&&s._address===l._address);
+  document.getElementById('d-pill').innerHTML = `<span class="pill pill-${cls}">${icon} ${t.temp} · ${t.total}/100</span>`;
+  document.getElementById('d-name').textContent = l._name;
+  document.getElementById('d-loc').textContent = `${l._address||l._city+', '+l._state}`;
+  document.getElementById('d-call-btn').textContent = l._phone ? '📞 '+l._phone : 'No phone';
+  if (l._phone) document.getElementById('d-call-btn').onclick = ()=>window.location='tel:'+l._phone;
+  document.querySelector('[onclick="toggleSave()"]').textContent = isSaved ? '★ Saved' : '☆ Save lead';
+
+  const missing = [];
+  if (l._web==='none') missing.push('Website');
+  if (l._bk==='none') missing.push('Online booking');
+  if (l._socials.length===0) missing.push('Social media');
+  if (l._reviews<30) missing.push('Review generation');
+  const offer = l._web==='none'&&l._bk==='none'?'Website + Online Booking':l._web==='none'?'Professional Website':l._bk==='none'?'Online Booking System':'Social Media + Lead Capture';
+
+  const cats = [
+    {label:'Online opportunity',max:30,val:l._web==='none'?20:l._web==='unknown'?9:3},
+    {label:'Business strength',max:20,val:l._reviews>200?18:l._reviews>50?12:l._reviews>0?6:4},
+    {label:'Reputation',max:20,val:l._rating>=4.5?14:l._rating>=4?10:l._rating>0?6:5},
+    {label:'Business age',max:10,val:l._years>=10?10:l._years>=5?7:l._years>0?4:3},
+    {label:'Social gap',max:10,val:l._socials.length===0?10:l._socials.length===1?6:3},
+    {label:'Customer activity',max:10,val:l._reviews>50?8:4},
+  ];
+
+  document.getElementById('d-body').innerHTML = `
+    <div class="block">
+      <div class="sec">Lead score — ${t.total}/100</div>
+      ${cats.map(c=>`<div class="meter"><span class="t">${c.label}</span><span class="b"><i style="width:${Math.round(c.val/c.max*100)}%"></i></span><span class="v">${Math.round(c.val)}/${c.max}</span></div>`).join('')}
+    </div>
+    <div class="block">
+      <div class="sec">Business info</div>
+      <div class="kv"><span class="kl">Phone</span><span>${l._phone?`<a href="tel:${l._phone}" style="color:var(--ok)">${l._phone}</a>`:'<span class="unk">Not verified</span>'}</span></div>
+      <div class="kv"><span class="kl">Address</span><span>${l._address||'<span class="unk">Not verified</span>'}</span></div>
+      <div class="kv"><span class="kl">Category</span><span>${l._category||'—'}</span></div>
+      <div class="kv"><span class="kl">Reviews</span><span>${l._reviews?l._reviews+' · '+l._rating+'★':'<span class="unk">Not verified</span>'}</span></div>
+      <div class="kv"><span class="kl">Years open</span><span>${l._years||'<span class="unk">Not verified</span>'}</span></div>
+      ${l._website_url?`<div class="kv"><span class="kl">Website</span><span><a href="${l._website_url}" target="_blank" style="color:var(--ok)">${l._website_url.replace(/^https?:\/\//,'').slice(0,35)}</a></span></div>`:''}
+    </div>
+    <div class="block">
+      <div class="sec">Online presence</div>
+      <div class="kv"><span class="kl">Website</span><span class="${l._web==='none'?'no':l._web==='exists'?'yes':'unk'}">${l._web==='none'?'None found in sources':l._web==='exists'?'Detected':'Status unverified'}</span></div>
+      <div class="kv"><span class="kl">Booking</span><span class="${l._bk==='none'?'no':l._bk==='exists'?'yes':'unk'}">${l._bk==='none'?'None found in sources':l._bk==='exists'?'Detected':'Status unverified'}</span></div>
+      <div class="kv"><span class="kl">Social media</span><span class="${l._socials.length===0?'no':''}">${l._socials.length===0?'None found':l._socials.length+' profile'+(l._socials.length>1?'s':'')}</span></div>
+      ${l._socials.map(s=>`<div class="kv"><span class="kl"></span><span><a href="${s}" target="_blank" style="color:var(--steel);font-size:11px">${s.replace(/^https?:\/\//,'').slice(0,40)}</a></span></div>`).join('')}
+    </div>
+    <div class="block">
+      <div class="sec">Opportunity</div>
+      <div style="font-size:17px;font-weight:700;color:var(--red-hi);margin-bottom:8px">${offer}</div>
+      ${missing.length?`<p style="font-size:13px;color:#b8b8c0;line-height:1.7;margin-bottom:10px">Missing: <span style="color:var(--red-hi)">${missing.join(', ')}</span></p>`:''}
+    </div>
+    <div class="block">
+      <div class="sec">Call intelligence</div>
+      <div class="quote">${l._reviews>50?`"You have ${l._reviews} reviews and a ${l._rating}-star rating — clearly people trust you. `:''}${l._web==='none'?`I noticed customers can't find you online yet. `:''}${l._bk==='none'?`There's also no way to book directly. `:''}Let me show you how to fix that."</div>
+      <div class="warnbox" style="margin-top:10px">
+        <strong>Do NOT say:</strong> Revenue, profits, or customer counts. Owner name not verified — ask on the call.
+        ${l._web==='unknown'?' Do not say they have no website — not confirmed.':''}
+      </div>
+    </div>
+    <div class="block">
+      <div class="sec">Sources</div>
+      <p class="note">Google Maps via Apify (compass/crawler-google-places) · Checked ${new Date().toLocaleDateString()}</p>
+    </div>
+  `;
+  document.getElementById('scrim').style.display = '';
+  document.getElementById('drawer').style.display = '';
+}
+
+function closeDrawer() {
+  document.getElementById('scrim').style.display = 'none';
+  document.getElementById('drawer').style.display = 'none';
+}
+
+function toggleSave() {
+  if (!currentLead) return;
+  const idx = saved.findIndex(s=>s._name===currentLead._name&&s._address===currentLead._address);
+  if (idx>=0) { saved.splice(idx,1); toast('Removed from My Leads'); }
+  else { saved.push(currentLead); toast('Saved to My Leads'); }
+  putSaved(saved);
+  document.querySelector('[onclick="toggleSave()"]').textContent = saved.some(s=>s._name===currentLead._name)?'★ Saved':'☆ Save lead';
+  renderSaved();
+}
+
+function renderSaved() {
+  document.getElementById('saved-empty').style.display = saved.length ? 'none' : '';
+  document.getElementById('saved-cards').innerHTML = saved.map((l,i)=>cardHTML(l,i)).join('');
+  document.getElementById('tab-saved').textContent = `My Leads${saved.length?' ('+saved.length+')':''}`;
+}
+
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.style.display = '';
+  setTimeout(()=>el.style.display='none', 2500);
+}
+
+function exportCSV() {
+  const cols = ['Name','Phone','Address','City','State','Category','Website','Booking','Socials','Reviews','Rating','Years','Score','Temperature'];
+  const rows = leads.map(l=>[l._name,l._phone||'',l._address||'',l._city,l._state,l._category,l._web,l._bk,l._socials.join('|'),l._reviews,l._rating,l._years,l._score.total,l._score.temp].map(v=>'"'+String(v||'').replace(/"/g,'""')+'"').join(','));
+  const csv = [cols.join(','),...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download = 'ramels-vision-leads.csv';
+  a.click();
+}
+
+// Settings
+function saveProxy() {
+  const v = document.getElementById('proxy-input').value.trim().replace(/\/$/,'');
+  localStorage.setItem(PROXY_KEY, v);
+  updateProviderLabel();
+  document.getElementById('proxy-result').innerHTML = '<span style="color:var(--ok)">✓ Saved — '+v+'</span>';
+}
+
+async function testProxy() {
+  const v = document.getElementById('proxy-input').value.trim().replace(/\/$/,'');
+  if (!v) { document.getElementById('proxy-result').innerHTML = '<span style="color:var(--red-hi)">Enter a URL first</span>'; return; }
+  document.getElementById('proxy-result').innerHTML = 'Testing…';
+  try {
+    const r = await fetch(v+'/health');
+    const d = await r.json();
+    if (d.ok && d.tokenSet) {
+      document.getElementById('proxy-result').innerHTML = '<span style="color:var(--ok)">✓ Proxy is live and Apify token is set. Ready!</span>';
+      localStorage.setItem(PROXY_KEY, v);
+      updateProviderLabel();
+    } else if (d.ok && !d.tokenSet) {
+      document.getElementById('proxy-result').innerHTML = '<span style="color:var(--amber)">⚠ Proxy running but APIFY_TOKEN not set on server</span>';
+    }
+  } catch(e) {
+    document.getElementById('proxy-result').innerHTML = '<span style="color:var(--red-hi)">✕ Cannot reach proxy: '+e.message+'</span>';
+  }
+}
+
+// Demo
+function loadDemo() {
+  leads = [
+    {_name:'Martinez Plumbing & Drain',_phone:'(408) 555-0143',_address:'847 Industrial Blvd, San Jose, CA',_city:'San Jose',_state:'CA',_category:'Plumber',_web:'none',_bk:'none',_socials:[],_reviews:287,_rating:4.8,_years:11,_website_url:null},
+    {_name:'Pro Roof Solutions',_phone:'(408) 555-0271',_address:'1204 Commerce Dr, San Jose, CA',_city:'San Jose',_state:'CA',_category:'Roofing',_web:'exists',_bk:'none',_socials:['https://facebook.com/proroofca'],_reviews:142,_rating:4.6,_years:8,_website_url:'https://proroofca.com'},
+    {_name:'Bay Area HVAC Pros',_phone:null,_address:'3301 Technology Dr, San Jose, CA',_city:'San Jose',_state:'CA',_category:'HVAC',_web:'exists',_bk:'none',_socials:['https://facebook.com/bahvac','https://instagram.com/bahvac'],_reviews:512,_rating:4.7,_years:15,_website_url:'https://bahvac.com'},
+    {_name:'Lopez Electric',_phone:'(408) 555-0388',_address:'556 N 1st St, San Jose, CA',_city:'San Jose',_state:'CA',_category:'Electrician',_web:'none',_bk:'none',_socials:[],_reviews:89,_rating:4.9,_years:6,_website_url:null},
+    {_name:'Green Valley Landscaping',_phone:'(408) 555-0512',_address:'2201 Monterey Rd, San Jose, CA',_city:'San Jose',_state:'CA',_category:'Landscaper',_web:'none',_bk:'unknown',_socials:['https://facebook.com/greenvalley'],_reviews:204,_rating:4.5,_years:9,_website_url:null},
+  ].map(l=>({...l,_score:scoreTemp(l)})).sort((a,b)=>b._score.total-a._score.total);
+  showTab('results');
+  renderResults();
+}
+</script>
+</body>
+</html>
