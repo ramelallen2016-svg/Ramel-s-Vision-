@@ -5,514 +5,1022 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ramel's Vision</title>
 <style>
+:root{--ink:#050506;--panel:#0d0d11;--line:#1e1e25;--red:#c1121f;--red-hi:#e02434;--red-dim:#5a0a12;
+--bone:#ecebe8;--muted:#8b8b96;--amber:#d9a441;--steel:#7d8fa3;--ok:#63b58a;
+--mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+--sans:"Helvetica Neue",Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#050506;color:#ecebe8;min-height:100vh}
-:root{--red:#c1121f;--red-hi:#e02434;--red-dim:#5a0a12;--bone:#ecebe8;--muted:#8b8b96;--line:#1e1e25;--ok:#63b58a;--amber:#d9a441;--steel:#7d8fa3;--panel:rgba(20,20,25,.8)}
-.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;padding:12px 18px;background:rgba(6,6,8,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.brand{font-weight:800;letter-spacing:.2em;font-size:13px;text-transform:uppercase}.brand span{color:var(--red-hi)}
+body{position:relative;min-height:100vh;background:var(--ink);color:var(--bone);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit}
+::selection{background:var(--red);color:#fff}
+
+.smoke{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.smoke i{position:absolute;display:block;border-radius:50%;filter:blur(70px);opacity:.5}
+.s1{width:70vw;height:70vw;left:-20vw;top:-20vw;background:radial-gradient(circle,rgba(120,12,22,.42),transparent 66%);animation:drift1 46s ease-in-out infinite}
+.s2{width:60vw;height:60vw;right:-15vw;top:10vh;background:radial-gradient(circle,rgba(60,60,70,.30),transparent 66%);animation:drift2 62s ease-in-out infinite}
+.s3{width:80vw;height:60vw;left:10vw;bottom:-25vh;background:radial-gradient(circle,rgba(150,18,28,.24),transparent 68%);animation:drift3 54s ease-in-out infinite}
+.s4{width:45vw;height:45vw;right:5vw;bottom:5vh;background:radial-gradient(circle,rgba(40,40,48,.34),transparent 66%);animation:drift2 70s ease-in-out infinite reverse}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(9vw,7vh) scale(1.16)}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1.06)}50%{transform:translate(-8vw,5vh) scale(.92)}}
+@keyframes drift3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-6vw,-6vh) scale(1.12)}}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.045;background-image:radial-gradient(rgba(255,255,255,.8) .5px,transparent .5px);background-size:3px 3px}
+.wrap{position:relative;z-index:2}
+
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+.brand{font-size:clamp(30px,6vw,64px);font-weight:800;letter-spacing:.16em;text-transform:uppercase;line-height:1}
+.brand em{font-style:normal;color:var(--red-hi)}
+.h1{font-size:clamp(26px,4.6vw,52px);font-weight:800;letter-spacing:-.015em;line-height:1.04}
+.h2{font-size:19px;font-weight:700;letter-spacing:.01em}
+.lede{color:#b8b8c0;font-size:15px;line-height:1.65;max-width:62ch}
+.mono{font-family:var(--mono)}
+.dim{color:var(--muted)}
+.sec-label{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px;margin:0 0 14px}
+.sec-label:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:18px;padding:12px 22px;background:rgba(6,6,8,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.tb-brand{font-weight:800;letter-spacing:.2em;font-size:13px;text-transform:uppercase;background:none;border:none;color:inherit}
+.tb-brand span{color:var(--red-hi)}
 .nav{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap}
-.nav button{background:none;border:1px solid transparent;color:var(--muted);font-family:inherit;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:7px 11px;border-radius:3px;cursor:pointer}
+.nav button{background:none;border:1px solid transparent;color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:7px 12px;border-radius:3px;transition:.16s}
 .nav button:hover{color:var(--bone);background:rgba(255,255,255,.04)}
 .nav button.on{color:var(--bone);border-color:var(--red-dim);background:rgba(193,18,31,.1)}
-.page{max-width:1100px;margin:0 auto;padding:24px 18px 80px}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;backdrop-filter:blur(10px)}
-.pad{padding:18px}
-label{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-input,select,textarea{width:100%;background:rgba(0,0,0,.5);border:1px solid var(--line);border-radius:3px;color:var(--bone);padding:11px 12px;font-size:14px;font-family:inherit;outline:none}
-input:focus,select:focus,textarea:focus{border-color:var(--red)}
-input::placeholder{color:#55555f}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.btn{background:var(--red);color:#fff;border:none;border-radius:3px;padding:13px 22px;font-weight:700;font-size:12px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer}
-.btn:hover{background:var(--red-hi)}
-.btn:disabled{opacity:.4;cursor:not-allowed}
+.page{max-width:1240px;margin:0 auto;padding:30px 22px 90px}
+
+.panel{background:linear-gradient(180deg,rgba(20,20,25,.72),rgba(10,10,13,.72));border:1px solid var(--line);border-radius:6px;backdrop-filter:blur(12px)}
+.pad{padding:20px}
+.hair{height:1px;background:var(--line);margin:16px 0}
+
+.btn{background:var(--red);color:#fff;border:none;border-radius:3px;padding:13px 24px;font-weight:700;font-size:12px;letter-spacing:.18em;text-transform:uppercase;transition:.18s}
+.btn:hover{background:var(--red-hi);box-shadow:0 0 26px rgba(193,18,31,.42)}
+.btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
 .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--bone)}
-.btn.ghost:hover{border-color:var(--red);background:rgba(193,18,31,.08)}
-.btn.sm{padding:8px 13px;font-size:10px}
-.hair{height:1px;background:var(--line);margin:14px 0}
-.sec{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px;margin-bottom:12px}
-.sec::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
-.term{background:rgba(4,4,6,.95);border:1px solid var(--line);border-radius:6px;padding:16px;font-family:ui-monospace,monospace;font-size:12px;line-height:2;max-height:260px;overflow:auto;margin-bottom:12px}
-.tline{color:var(--muted)}.tline.hit{color:var(--red-hi)}
-.bar{height:2px;background:var(--line);border-radius:2px;overflow:hidden;margin-bottom:16px}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red-dim),var(--red-hi));transition:width .4s}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
-.stat{background:rgba(12,12,15,.7);border:1px solid var(--line);border-radius:5px;padding:12px;text-align:center}
-.stat .n{font-size:24px;font-weight:800}.stat .n.red{color:var(--red-hi)}
-.stat .l{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:5px}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:15px;cursor:pointer;transition:.15s;border-left:3px solid transparent}
-.card:hover{border-color:#333;transform:translateY(-1px)}
-.card.hot{border-left-color:var(--red-hi)}
-.card.warm{border-left-color:var(--amber)}
-.card.cold{border-left-color:var(--steel)}
-.card h3{font-size:15px;font-weight:700;margin-bottom:3px}
-.card-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}
-.score{font-size:22px;font-weight:800;line-height:1}
-.score.hot{color:var(--red-hi)}.score.warm{color:var(--amber)}.score.cold{color:var(--steel)}
-.kv{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px solid rgba(30,30,37,.5)}
-.kv:last-child{border-bottom:none}
-.kl{color:var(--muted);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
-.yes{color:var(--ok)}.no{color:var(--red-hi)}.unk{color:var(--muted)}
-.pill{display:inline-flex;align-items:center;gap:5px;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:2px;border:1px solid;white-space:nowrap}
-.pill-hot{color:#fff;background:var(--red);border-color:var(--red)}
-.pill-warm{color:var(--amber);border-color:rgba(217,164,65,.4);background:rgba(217,164,65,.1)}
-.pill-cold{color:var(--steel);border-color:rgba(125,143,163,.35);background:rgba(125,143,163,.08)}
-.scrim{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:50;backdrop-filter:blur(3px)}
-.drawer{position:fixed;top:0;right:0;bottom:0;width:min(720px,100%);background:#08080a;border-left:1px solid var(--line);z-index:51;overflow-y:auto}
-.dhead{position:sticky;top:0;background:rgba(8,8,10,.95);border-bottom:1px solid var(--line);padding:18px 22px;backdrop-filter:blur(8px)}
-.dbody{padding:8px 22px 60px}
-.block{border-top:1px solid var(--line);padding:16px 0}.block:first-child{border-top:none}
-.x{background:none;border:1px solid var(--line);color:var(--muted);border-radius:3px;width:28px;height:28px;font-size:14px;cursor:pointer}
+.btn.ghost:hover{border-color:var(--red);background:rgba(193,18,31,.08);box-shadow:none}
+.btn.sm{padding:8px 14px;font-size:10px;letter-spacing:.14em}
+
+.field label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.inp{width:100%;background:rgba(0,0,0,.5);border:1px solid var(--line);border-radius:3px;color:var(--bone);padding:12px 13px;font-size:14px;outline:none;transition:.16s}
+.inp:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(193,18,31,.14)}
+.inp::placeholder{color:#55555f}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{background:rgba(255,255,255,.03);border:1px solid var(--line);color:#a5a5b0;border-radius:3px;padding:7px 11px;font-size:11px;font-family:var(--mono);letter-spacing:.05em;transition:.14s}
+.chip:hover{border-color:#3a3a45;color:var(--bone)}
+.chip.on{background:rgba(193,18,31,.16);border-color:var(--red);color:#fff}
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:2px;border:1px solid;white-space:nowrap}
+.p-hot{color:#fff;border-color:var(--red);background:var(--red)}
+.p-warm{color:var(--amber);border-color:rgba(217,164,65,.5);background:rgba(217,164,65,.1)}
+.p-cold{color:var(--steel);border-color:rgba(125,143,163,.4);background:rgba(125,143,163,.08)}
+
+.term{position:relative;border:1px solid var(--line);border-radius:6px;background:rgba(4,4,6,.9);overflow:hidden}
+.term:before{content:"";position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--red-hi),transparent);animation:sweep 2.6s linear infinite}
+@keyframes sweep{0%{top:0;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:100%;opacity:0}}
+.term-body{padding:22px;font-family:var(--mono);font-size:12.5px;line-height:2.05;max-height:340px;overflow:auto}
+.tline{display:flex;gap:12px;color:var(--muted)}
+.tline b{color:var(--bone);font-weight:400}
+.tline.hit b{color:var(--red-hi)}
+.bar{height:2px;background:var(--line);border-radius:2px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red-dim),var(--red-hi));transition:width .5s}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.stat{border:1px solid var(--line);border-radius:5px;padding:15px;background:rgba(12,12,15,.6)}
+.stat .n{font-size:29px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.stat .l{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.stat.red .n{color:var(--red-hi)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+.card{border:1px solid var(--line);border-radius:6px;background:linear-gradient(180deg,rgba(20,20,25,.7),rgba(9,9,12,.7));padding:17px;cursor:pointer;transition:.18s;position:relative;overflow:hidden;text-align:left;width:100%}
+.card:hover{border-color:#33333d;transform:translateY(-2px)}
+.card.hot{border-left:2px solid var(--red)}
+.card.warm{border-left:2px solid var(--amber)}
+.card.cold{border-left:2px solid var(--steel)}
+.card-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.card h3{margin:0 0 3px;font-size:15.5px;font-weight:700;line-height:1.3}
+.score{font-family:var(--mono);font-size:22px;font-weight:700;line-height:1}
+.kv{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:4px 0}
+.kv span:first-child{color:var(--muted);font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase}
+.no{color:var(--red-hi)}.yes{color:var(--ok)}.unk{color:var(--muted)}
+
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(4px);z-index:60}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(760px,100%);background:#08080a;border-left:1px solid var(--line);z-index:61;overflow-y:auto}
+.dhead{position:sticky;top:0;background:rgba(8,8,10,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:20px 24px;z-index:2}
+.dbody{padding:8px 24px 60px}
+.block{border-top:1px solid var(--line);padding:20px 0}
+.block:first-child{border-top:none}
+.x{background:none;border:1px solid var(--line);color:var(--muted);border-radius:3px;width:30px;height:30px;font-size:15px}
 .x:hover{color:#fff;border-color:var(--red)}
-.reasons{list-style:none;padding:0;font-size:13px;line-height:1.9}
-.reasons li::before{content:"✓ ";color:var(--ok)}
-.reasons li.bad::before{content:"× ";color:var(--muted)}
-.reasons li.unk::before{content:"? ";color:var(--amber)}
-.meter{display:flex;align-items:center;gap:10px;font-size:11px;padding:4px 0}
-.meter .t{width:140px;color:var(--muted);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
-.meter .b{flex:1;height:3px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden}
+ul.tight{margin:0;padding-left:17px;line-height:1.75;font-size:13.5px}
+ul.tight li{margin-bottom:3px}
+.reasons{list-style:none;padding:0;margin:0;font-size:13.5px;line-height:1.9}
+.reasons li:before{content:"✓";color:var(--ok);margin-right:9px;font-family:var(--mono)}
+.reasons li.bad:before{content:"×";color:var(--muted)}
+.reasons li.unk:before{content:"?";color:var(--amber)}
+.meter{display:flex;align-items:center;gap:11px;font-size:12.5px;padding:5px 0}
+.meter .t{width:150px;color:var(--muted);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
+.meter .b{flex:1;height:4px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden}
 .meter .b i{display:block;height:100%;background:var(--red)}
-.meter .v{width:44px;text-align:right;font-family:ui-monospace;font-size:11px}
-.quote{border-left:2px solid var(--red);padding:8px 0 8px 14px;font-size:13px;line-height:1.7;color:#d6d6dc;font-style:italic;margin:8px 0}
-.warnbox{border:1px solid rgba(217,164,65,.3);background:rgba(217,164,65,.07);border-radius:4px;padding:11px 14px;font-size:12px;line-height:1.6;color:#e6c98a}
-.empty{text-align:center;padding:60px 20px;color:var(--muted)}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#141419;border:1px solid var(--red-dim);border-radius:4px;padding:11px 18px;font-size:13px;z-index:90}
+.meter .v{width:52px;text-align:right;font-family:var(--mono);color:var(--bone)}
+.quote{border-left:2px solid var(--red);padding:10px 0 10px 15px;font-size:14px;line-height:1.7;color:#d6d6dc;font-style:italic}
+.warnbox{border:1px solid rgba(217,164,65,.35);background:rgba(217,164,65,.07);border-radius:4px;padding:13px 15px;font-size:13px;line-height:1.6}
+.empty{text-align:center;padding:70px 20px;color:var(--muted)}
+.empty h3{color:var(--bone);margin:0 0 8px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#141419;border:1px solid var(--red-dim);border-radius:4px;padding:12px 20px;font-size:13px;z-index:90}
 .note{font-size:12px;color:var(--muted);line-height:1.6}
-@media(max-width:600px){.grid4,.grid2{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+.status-sel{background:rgba(0,0,0,.5);border:1px solid var(--line);color:var(--bone);border-radius:3px;padding:7px 9px;font-size:12px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:rgba(9,9,12,.6)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:900px}
+th{text-align:left;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:12px 13px;border-bottom:1px solid var(--line);white-space:nowrap;cursor:pointer;background:rgba(0,0,0,.35)}
+th:hover{color:var(--bone)}
+td{padding:11px 13px;border-bottom:1px solid rgba(30,30,37,.6);vertical-align:middle}
+tbody tr{cursor:pointer;transition:.12s}
+tbody tr:hover{background:rgba(193,18,31,.06)}
+
+.hero{padding:clamp(40px,9vh,90px) 22px 50px;max-width:1240px;margin:0 auto}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.step{background:#0a0a0d;padding:20px 16px}
+.step .n{font-family:var(--mono);font-size:10px;color:var(--red-hi);letter-spacing:.24em}
+.step h4{margin:10px 0 6px;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.step p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.6}
+
+@media(max-width:820px){.grid4{grid-template-columns:repeat(2,1fr)}.page{padding:22px 15px 70px}}
+@media(max-width:520px){.grid4,.grid2{grid-template-columns:1fr}.nav button{padding:6px 8px}}
 </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="brand">Ramel'<span>s</span> Vision</div>
-  <nav class="nav">
-    <button onclick="showTab('search')" id="tab-search" class="on">Search</button>
-    <button onclick="showTab('results')" id="tab-results">Results</button>
-    <button onclick="showTab('saved')" id="tab-saved">My Leads</button>
-    <button onclick="showTab('settings')" id="tab-settings">Settings</button>
-  </nav>
-</header>
+<div class="smoke"><i class="s1"></i><i class="s2"></i><i class="s3"></i><i class="s4"></i></div>
+<div class="grain"></div>
 
-<!-- SEARCH -->
-<div class="page" id="view-search">
-  <div class="sec">New search</div>
-  <div class="panel pad">
-    <div class="grid4" style="margin-bottom:12px">
-      <div><label>Niche</label><input id="niche" value="Plumbers" list="niches"><datalist id="niches"><option>Plumbers</option><option>Roofers</option><option>HVAC</option><option>Dentists</option><option>Electricians</option><option>Landscapers</option><option>Auto Detailers</option><option>Barbers</option><option>Med Spas</option><option>Pressure Washers</option></datalist></div>
-      <div><label>State</label><input id="state" value="California"></div>
-      <div><label>City</label><input id="city" value="San Jose"></div>
-      <div><label>Leads</label><select id="count"><option value="5">5</option><option value="8">8</option><option value="10" selected>10</option><option value="15">15</option><option value="25">25</option></select></div>
-    </div>
-    <div class="hair"></div>
-    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-      <button class="btn" onclick="startSearch()">Find Leads</button>
-      <button class="btn ghost" onclick="loadDemo()">Load Demo</button>
-      <span class="note" id="provider-label" style="margin-left:auto"></span>
+<div class="wrap" id="app">
+
+<!-- LANDING -->
+<div id="view-landing">
+  <div class="hero">
+    <div class="eyebrow" style="margin-bottom:18px">AI-Powered Business Intelligence</div>
+    <h1 class="brand">Ramel'<em>s</em> Vision</h1>
+    <div style="height:26px"></div>
+    <h2 class="h1">Find the lead.<br>Know the business.<br><span style="color:var(--red-hi)">Close the deal.</span></h2>
+    <div style="height:20px"></div>
+    <p class="lede">Search businesses across the United States and uncover their owner, reputation, online presence, booking systems, social channels, and sales potential — with a source behind every field.</p>
+    <div style="height:28px"></div>
+    <button class="btn" onclick="go('app')">Start finding leads</button>
+  </div>
+  <div class="page" style="padding-top:0">
+    <div class="sec-label">How it runs</div>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><h4>Find</h4><p>Discover real businesses via Google Maps.</p></div>
+      <div class="step"><div class="n">02</div><h4>Verify</h4><p>Check websites, booking, socials, reviews.</p></div>
+      <div class="step"><div class="n">03</div><h4>Score</h4><p>Transparent 100-point lead model.</p></div>
+      <div class="step"><div class="n">04</div><h4>Prioritize</h4><p>Best opportunities float to the top.</p></div>
+      <div class="step"><div class="n">05</div><h4>Close</h4><p>Call intelligence for every lead.</p></div>
     </div>
   </div>
 </div>
 
-<!-- RESULTS -->
-<div class="page" id="view-results" style="display:none">
-  <div id="progress-area" style="display:none">
-    <div class="term" id="log"></div>
-    <div class="bar"><i id="bar" style="width:0%"></i></div>
-  </div>
-  <div id="results-area" style="display:none">
-    <div class="stats">
-      <div class="stat"><div class="n red" id="s-total">0</div><div class="l">Leads</div></div>
-      <div class="stat"><div class="n red" id="s-hot">0</div><div class="l">Hot</div></div>
-      <div class="stat"><div class="n" id="s-noweb">0</div><div class="l">No Web</div></div>
-      <div class="stat"><div class="n" id="s-avg">0</div><div class="l">Avg Score</div></div>
+<!-- APP -->
+<div id="view-app" style="display:none">
+  <header class="topbar">
+    <button class="tb-brand" onclick="go('landing')">Ramel'<span>s</span> Vision</button>
+    <nav class="nav">
+      <button onclick="tab('search')" id="tab-search" class="on">Search</button>
+      <button onclick="tab('results')" id="tab-results">Results</button>
+      <button onclick="tab('saved')" id="tab-saved">My leads</button>
+      <button onclick="tab('history')" id="tab-history">History</button>
+      <button onclick="tab('settings')" id="tab-settings">Settings</button>
+    </nav>
+  </header>
+
+  <main class="page">
+
+    <!-- SEARCH -->
+    <div id="pane-search">
+      <div class="sec-label">New search</div>
+      <div class="panel pad">
+        <div class="grid4">
+          <div class="field"><label>Niche</label><input class="inp" id="f-niche" value="Plumbers" list="niches">
+            <datalist id="niches"><option>Plumbers</option><option>Roofers</option><option>HVAC</option><option>Dentists</option><option>Electricians</option><option>Landscapers</option><option>Auto Detailers</option><option>Barbers</option><option>Med Spas</option><option>Pressure Washers</option></datalist></div>
+          <div class="field"><label>State</label><input class="inp" id="f-state" value="California"></div>
+          <div class="field"><label>City</label><input class="inp" id="f-city" value="San Jose"></div>
+          <div class="field"><label>Number of leads</label><select class="inp" id="f-count"><option value="5">5 leads</option><option value="10" selected>10 leads</option><option value="15">15 leads</option><option value="25">25 leads</option></select></div>
+        </div>
+        <div class="hair"></div>
+        <div class="sec-label">Filters</div>
+        <div class="grid2">
+          <div class="field"><label>Website</label><div class="chips" id="filt-website">
+            <button class="chip" data-v="none">No website only</button>
+            <button class="chip" data-v="exists">Website exists</button>
+            <button class="chip" data-v="unknown">Unverified</button>
+          </div></div>
+          <div class="field"><label>Booking</label><div class="chips" id="filt-booking">
+            <button class="chip" data-v="none">No booking</button>
+            <button class="chip" data-v="exists">Booking exists</button>
+            <button class="chip" data-v="unknown">Unverified</button>
+          </div></div>
+        </div>
+        <div style="height:14px"></div>
+        <div class="grid2">
+          <div class="field"><label>Social media</label><div class="chips" id="filt-social">
+            <button class="chip" data-v="none">None detected</button>
+            <button class="chip" data-v="multi">Multiple missing</button>
+          </div></div>
+          <div class="field"><label>Lead temperature</label><div class="chips" id="filt-temp">
+            <button class="chip" data-v="HOT">🔥 Hot</button>
+            <button class="chip" data-v="WARM">🟡 Warm</button>
+            <button class="chip" data-v="COLD">❄️ Cold</button>
+          </div></div>
+        </div>
+        <div class="hair"></div>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <button class="btn" onclick="startSearch()">Find leads</button>
+          <button class="btn ghost" onclick="loadDemo()">Load demo data</button>
+          <button class="btn ghost" onclick="clearFilters()">Clear filters</button>
+          <span class="note" id="provider-label" style="margin-left:auto"></span>
+        </div>
+      </div>
     </div>
-    <div class="cards" id="cards"></div>
-    <div style="margin-top:14px;display:flex;gap:8px">
-      <button class="btn ghost sm" onclick="exportCSV()">Export CSV</button>
-      <button class="btn ghost sm" onclick="showTab('search')">New Search</button>
+
+    <!-- RESULTS -->
+    <div id="pane-results" style="display:none">
+      <div id="progress-area" style="display:none">
+        <div class="sec-label" id="progress-label">Running</div>
+        <div class="term"><div class="term-body" id="log"></div></div>
+        <div style="height:14px"></div>
+        <div class="bar"><i id="bar" style="width:0%"></i></div>
+      </div>
+      <div id="results-area" style="display:none">
+        <div class="sec-label" id="results-count"></div>
+        <div class="stats">
+          <div class="stat"><div class="n red" id="s-total">0</div><div class="l">Leads found</div></div>
+          <div class="stat"><div class="n red" id="s-hot">0</div><div class="l">Hot leads</div></div>
+          <div class="stat"><div class="n" id="s-warm">0</div><div class="l">Warm leads</div></div>
+          <div class="stat"><div class="n" id="s-cold">0</div><div class="l">Cold leads</div></div>
+          <div class="stat"><div class="n red" id="s-noweb">0</div><div class="l">No website</div></div>
+          <div class="stat"><div class="n red" id="s-nobook">0</div><div class="l">No booking</div></div>
+          <div class="stat"><div class="n red" id="s-nosoc">0</div><div class="l">No social</div></div>
+          <div class="stat"><div class="n" id="s-avg">0</div><div class="l">Avg score</div></div>
+        </div>
+        <div style="height:20px"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <button class="chip on" id="lay-cards" onclick="setLayout('cards')">Cards</button>
+          <button class="chip" id="lay-table" onclick="setLayout('table')">Table</button>
+          <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn ghost sm" onclick="exportCSV()">Export CSV</button>
+            <button class="btn ghost sm" onclick="exportJSON()">Export JSON</button>
+            <button class="btn ghost sm" onclick="exportReport()">Export report</button>
+          </div>
+        </div>
+        <div style="height:16px"></div>
+        <div class="cards" id="cards"></div>
+        <div class="tblwrap" id="tablewrap" style="display:none"></div>
+      </div>
+      <div id="error-area" style="display:none" class="panel pad">
+        <div class="sec-label">Search stopped</div>
+        <p id="error-msg" style="color:var(--muted);font-size:14px;margin-bottom:16px"></p>
+        <button class="btn ghost sm" onclick="tab('search')">Back to search</button>
+        <span style="display:inline-block;width:8px"></span>
+        <button class="btn ghost sm" onclick="loadDemo()">Load demo instead</button>
+      </div>
+      <div id="empty-results" class="empty" style="display:none">
+        <h3>No results yet</h3><p>Run a search to fill this screen.</p>
+        <div style="height:16px"></div>
+        <button class="btn" onclick="tab('search')">Go to search</button>
+      </div>
     </div>
-  </div>
-  <div id="error-area" style="display:none" class="panel pad">
-    <div class="sec">Search stopped</div>
-    <p id="error-msg" style="color:var(--muted);font-size:14px;margin-bottom:14px"></p>
-    <div style="display:flex;gap:8px">
-      <button class="btn ghost sm" onclick="showTab('search')">Back to search</button>
-      <button class="btn ghost sm" onclick="loadDemo()">Load demo instead</button>
+
+    <!-- SAVED -->
+    <div id="pane-saved" style="display:none">
+      <div class="tabs" id="saved-tabs" style="margin-bottom:18px"></div>
+      <div id="saved-cards" class="cards"></div>
+      <div id="saved-empty" class="empty" style="display:none"><h3>No saved leads yet</h3><p>Save a lead from any result card.</p></div>
     </div>
-  </div>
+
+    <!-- HISTORY -->
+    <div id="pane-history" style="display:none">
+      <div class="sec-label" style="flex:1">Search history</div>
+      <div id="history-cards" class="cards"></div>
+      <div id="history-empty" class="empty" style="display:none"><h3>No searches yet</h3><p>Every search is saved here.</p></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="pane-settings" style="display:none">
+      <div class="sec-label">API settings</div>
+      <div class="panel pad" style="margin-bottom:18px">
+        <div class="eyebrow">Why this exists</div>
+        <p class="lede" style="margin:8px 0 0;font-size:13.5px">This app runs standalone in Safari — no Claude sandbox. Your proxy holds your Apify token server-side; the app only talks to your proxy.</p>
+      </div>
+      <div class="sec-label">Data source</div>
+      <div class="panel pad" style="margin-bottom:14px" id="proxy-panel">
+        <div class="h2" style="font-size:15px;margin-bottom:4px">Proxy Server <span id="proxy-active-pill"></span></div>
+        <div class="note" style="margin-bottom:14px">Your Render proxy URL — connects to Apify for real Google Maps leads</div>
+        <div class="field"><label>Proxy URL</label><input class="inp" type="url" id="proxy-input" placeholder="https://ramel-s-vision-1.onrender.com"></div>
+        <div style="height:10px"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn ghost sm" onclick="testProxy()">Test connection</button>
+          <button class="btn sm" onclick="saveProxy()">Save & activate</button>
+        </div>
+        <div id="proxy-result" style="margin-top:10px;font-size:13px"></div>
+      </div>
+      <div class="panel pad" id="demo-panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+          <div>
+            <div class="h2" style="font-size:15px">Demo data <span id="demo-active-pill"></span></div>
+            <div class="note" style="margin-top:4px">Fictional sample records. No connection needed.</div>
+          </div>
+          <button class="btn ghost sm" onclick="toggleDemo()" id="demo-toggle-btn">Switch to demo</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
 </div>
 
-<!-- SAVED -->
-<div class="page" id="view-saved" style="display:none">
-  <div class="sec">My leads</div>
-  <div id="saved-cards" class="cards"></div>
-  <div id="saved-empty" class="empty" style="display:none"><h3 style="color:var(--bone);margin-bottom:8px">No saved leads yet</h3><p>Save a lead from any result card.</p></div>
 </div>
 
-<!-- SETTINGS -->
-<div class="page" id="view-settings" style="display:none">
-  <div class="sec">Data source</div>
-  <div class="panel pad" style="margin-bottom:14px">
-    <div style="font-size:15px;font-weight:700;margin-bottom:4px">Proxy Server (Render)</div>
-    <div class="note" style="margin-bottom:14px">Your Render proxy URL — real Google Maps leads via Apify</div>
-    <label>Proxy URL</label>
-    <input type="url" id="proxy-input" placeholder="https://ramel-s-vision-1.onrender.com" style="margin-bottom:10px">
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn ghost sm" onclick="saveProxy()">Save & activate</button>
-      <button class="btn ghost sm" onclick="testProxy()">Test connection</button>
-    </div>
-    <div id="proxy-result" style="margin-top:10px;font-size:13px"></div>
-    <div class="note" style="margin-top:10px">Paste your Render URL above. The app talks directly to your server — no Claude sandbox in the way.</div>
-  </div>
-  <div class="panel pad" style="margin-bottom:14px">
-    <div style="font-size:15px;font-weight:700;margin-bottom:4px">Demo data</div>
-    <div class="note" style="margin-bottom:12px">Fictional sample records for exploring the UI</div>
-    <button class="btn ghost sm" onclick="loadDemo();showTab('results')">Load demo</button>
-  </div>
-  <div class="note">This app runs directly in Safari — no Claude sandbox. Your proxy URL is saved in your browser only.</div>
-</div>
-
-<!-- DRAWER -->
 <div id="scrim" class="scrim" style="display:none" onclick="closeDrawer()"></div>
-<div id="drawer" class="drawer" style="display:none">
+<aside id="drawer" class="drawer" style="display:none">
   <div class="dhead">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+    <div style="display:flex;justify-content:space-between;gap:14px;align-items:flex-start">
       <div>
-        <div id="d-pill" style="margin-bottom:8px"></div>
-        <div id="d-name" style="font-size:18px;font-weight:700;margin-bottom:4px"></div>
-        <div id="d-loc" style="font-size:11px;color:var(--muted)"></div>
+        <div id="d-pill" style="margin-bottom:10px"></div>
+        <div id="d-name" class="h2"></div>
+        <div id="d-loc" class="dim mono" style="font-size:11px;margin-top:5px"></div>
       </div>
       <button class="x" onclick="closeDrawer()">✕</button>
     </div>
-    <div style="height:10px"></div>
+    <div style="height:14px"></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn ghost sm" onclick="toggleSave()">☆ Save lead</button>
-      <button class="btn sm" id="d-call-btn"></button>
+      <button class="btn ghost sm" onclick="toggleSave()" id="d-save-btn">☆ Save lead</button>
+      <select class="status-sel" id="d-status-sel" onchange="updateStatus()"></select>
+      <a id="d-call-link" class="btn ghost sm" style="text-decoration:none;display:none">Call</a>
     </div>
   </div>
   <div class="dbody" id="d-body"></div>
-</div>
+</aside>
 
 <div id="toast" class="toast" style="display:none"></div>
 
 <script>
-const PROXY_KEY = 'rv:proxy';
-const SAVED_KEY = 'rv:saved';
-let leads = [], saved = [], currentLead = null, currentIdx = -1;
+/* ============================= STATE ============================= */
+const LS_SAVED = 'rv:saved', LS_CRM = 'rv:crm', LS_HISTORY = 'rv:history', LS_PROXY = 'rv:proxy', LS_DEMO = 'rv:demo';
+let leads = [], saved = [], crm = {}, history = [], useDemo = false, layout = 'cards', currentLead = null, dropped = 0;
+const filters = { website: [], booking: [], social: [], temp: [] };
 
-// Storage
-function getProxy() { return localStorage.getItem(PROXY_KEY) || ''; }
-function getSaved() { try { return JSON.parse(localStorage.getItem(SAVED_KEY) || '[]'); } catch { return []; } }
-function putSaved(arr) { localStorage.setItem(SAVED_KEY, JSON.stringify(arr)); }
+function load(key, fallback) { try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } }
+function save(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
 
-// Init
-document.addEventListener('DOMContentLoaded', () => {
-  saved = getSaved();
-  const p = getProxy();
+function init() {
+  saved = load(LS_SAVED, []);
+  crm = load(LS_CRM, {});
+  history = load(LS_HISTORY, []);
+  useDemo = load(LS_DEMO, false);
+  const p = localStorage.getItem(LS_PROXY) || '';
   if (p) document.getElementById('proxy-input').value = p;
+  document.querySelectorAll('.chips .chip').forEach(c => c.onclick = () => toggleFilter(c));
   updateProviderLabel();
+  updateDemoUI();
   renderSaved();
-});
-
-function updateProviderLabel() {
-  const p = getProxy();
-  document.getElementById('provider-label').textContent = p ? '🟢 Apify via proxy' : '⚪ No proxy set — go to Settings';
+  renderHistory();
+  go('landing');
 }
 
-// Tabs
-function showTab(t) {
-  ['search','results','saved','settings'].forEach(v => {
-    document.getElementById('view-'+v).style.display = v===t ? '' : 'none';
+function go(v) {
+  document.getElementById('view-landing').style.display = v === 'landing' ? '' : 'none';
+  document.getElementById('view-app').style.display = v === 'app' ? '' : 'none';
+  if (v === 'app') tab('search');
+}
+
+function tab(t) {
+  ['search','results','saved','history','settings'].forEach(v => {
+    document.getElementById('pane-'+v).style.display = v===t ? '' : 'none';
     document.getElementById('tab-'+v).classList.toggle('on', v===t);
   });
   if (t==='saved') renderSaved();
-}
-
-// Scoring
-function scoreTemp(b) {
-  let s = 0;
-  if (b.website==='none') s+=20; else if (b.website==='unknown') s+=9; else s+=3;
-  if (b.booking==='none') s+=10; else if (b.booking==='unknown') s+=5;
-  const soc = (b.socials||[]).filter(x=>x&&x!=='null').length;
-  s += soc===0?10:soc===1?6:3;
-  const r = b.reviewsCount||b.reviews||0, g = b.totalScore||b.rating||0, y = b.yearsInBusiness||b.years||0;
-  s += r>200?18:r>50?12:r>0?6:4;
-  s += g>=4.5?14:g>=4?10:g>0?6:5;
-  s += y>=10?10:y>=5?7:y>0?4:3;
-  return {total:Math.min(100,Math.round(s)), temp:s>=72?'HOT':s>=50?'WARM':'COLD'};
-}
-
-function webStatus(b) {
-  if (b.website) return 'exists';
-  return 'unknown';
-}
-
-function bookingStatus(b) {
-  if (b.bookingLink || (b.reservationLinks&&b.reservationLinks.length)) return 'exists';
-  return 'unknown';
-}
-
-// Search
-async function startSearch() {
-  const proxy = getProxy();
-  if (!proxy) { alert('Go to Settings and add your proxy URL first.'); showTab('settings'); return; }
-  const niche = document.getElementById('niche').value.trim();
-  const city = document.getElementById('city').value.trim();
-  const state = document.getElementById('state').value.trim();
-  const count = parseInt(document.getElementById('count').value);
-  if (!niche||!city||!state) { alert('Fill in all fields.'); return; }
-
-  leads = [];
-  showTab('results');
-  document.getElementById('progress-area').style.display = '';
-  document.getElementById('results-area').style.display = 'none';
-  document.getElementById('error-area').style.display = 'none';
-  document.getElementById('log').innerHTML = '';
-  setBar(0);
-
-  log(`Searching: ${niche} in ${city}, ${state} · ${count} leads`);
-  log(`Proxy: ${proxy}`);
-  setBar(15);
-
-  try {
-    log('Calling Apify via proxy — takes 30-90 seconds…');
-    const res = await fetch(proxy + '/search', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        searchStringsArray: [`${niche} in ${city}, ${state}`],
-        maxCrawledPlacesPerSearch: Math.min(count+5, 60),
-      })
-    });
-    setBar(70);
-    if (!res.ok) {
-      const t = await res.text().catch(()=>'');
-      throw new Error(`Proxy returned ${res.status}: ${t.slice(0,120)}`);
-    }
-    const places = await res.json();
-    if (!Array.isArray(places)||!places.length) throw new Error('No businesses found. Try a different niche or city.');
-    log(`${places.length} businesses returned from Google Maps`, true);
-    setBar(85);
-
-    leads = places.slice(0,count).map(p => {
-      const web = webStatus(p);
-      const bk = bookingStatus(p);
-      const socials = (p.socialMediaLinks||[]).map(s=>s.link).filter(Boolean);
-      const score = scoreTemp({...p, website:web, booking:bk, socials, reviews:p.reviewsCount, rating:p.totalScore, years:p.yearsInBusiness});
-      return {
-        ...p,
-        _web: web, _bk: bk, _socials: socials, _score: score,
-        _name: p.title || p.name,
-        _phone: p.phone || p.phoneUnformatted,
-        _address: p.address,
-        _city: p.city || city,
-        _state: p.state || state,
-        _category: p.categoryName || niche,
-        _reviews: p.reviewsCount||0,
-        _rating: p.totalScore||0,
-        _years: p.yearsInBusiness||0,
-        _website_url: p.website,
-      };
-    }).sort((a,b)=>b._score.total-a._score.total);
-
-    leads.forEach(l => log(`${l._name} — ${l._web==='none'?'no web':l._web==='exists'?'has web':'web?'}, ${l._bk==='none'?'no booking':l._bk==='exists'?'has booking':'booking?'}, ${l._socials.length} socials`, l._score.temp==='HOT'));
-    setBar(100);
-    setTimeout(renderResults, 500);
-  } catch(e) {
+  if (t==='history') renderHistory();
+  if (t==='results' && !leads.length) {
+    document.getElementById('empty-results').style.display = '';
+    document.getElementById('results-area').style.display = 'none';
     document.getElementById('progress-area').style.display = 'none';
-    document.getElementById('error-area').style.display = '';
-    document.getElementById('error-msg').textContent = e.message;
+    document.getElementById('error-area').style.display = 'none';
   }
 }
 
-function setBar(p) { document.getElementById('bar').style.width = p+'%'; }
-function log(t, hit) {
-  const el = document.getElementById('log');
-  const d = document.createElement('div');
-  d.className = 'tline'+(hit?' hit':'');
-  d.textContent = '› '+t;
+function toggleFilter(el) {
+  el.classList.toggle('on');
+}
+function getFilterVals(id) {
+  return Array.from(document.querySelectorAll('#'+id+' .chip.on')).map(c=>c.dataset.v);
+}
+function clearFilters() {
+  document.querySelectorAll('.chips .chip').forEach(c=>c.classList.remove('on'));
+}
+
+function updateProviderLabel() {
+  const p = localStorage.getItem(LS_PROXY);
+  const lbl = document.getElementById('provider-label');
+  if (useDemo) lbl.innerHTML = 'Active source: <strong>Demo data</strong>';
+  else if (p) lbl.innerHTML = 'Active source: <strong>Apify via proxy</strong>';
+  else lbl.innerHTML = 'Active source: <strong>None</strong> — go to Settings';
+}
+
+function updateDemoUI() {
+  document.getElementById('demo-active-pill').innerHTML = useDemo ? '<span class="pill p-hot">Active</span>' : '';
+  document.getElementById('proxy-active-pill').innerHTML = !useDemo ? '<span class="pill p-hot">Active</span>' : '';
+  document.getElementById('demo-toggle-btn').textContent = useDemo ? 'Using demo' : 'Switch to demo';
+  updateProviderLabel();
+}
+function toggleDemo() { useDemo = !useDemo; save(LS_DEMO, useDemo); updateDemoUI(); }
+
+/* ============================= SCORING ============================= */
+const SOCIAL_KEYS=['facebook','instagram','tiktok','youtube','linkedin'];
+function countSocials(l){return SOCIAL_KEYS.filter(k=>l.social&&l.social[k]).length}
+
+function healthScore(l){
+  const g=l.reviews.rating,r=l.reviews.count,y=l.age.years;
+  const web=l.website.status,bk=l.booking.status,soc=countSocials(l);
+  let s=0;
+  if(g!=null)s+=Math.max(0,Math.min(30,((g-3)/1.9)*30));
+  if(r!=null)s+=Math.max(0,Math.min(25,(Math.log10(r+1)/Math.log10(600))*25));
+  if(y!=null)s+=Math.min(15,(y/10)*15);
+  s+=web==='exists'?15:web==='outdated'?7:web==='none'?0:5;
+  s+=bk==='exists'?5:bk==='none'?0:2;
+  s+=Math.min(10,soc*3.5);
+  return Math.round(Math.max(0,Math.min(100,s)));
+}
+
+function tempScore(l){
+  const web=l.website.status,bk=l.booking.status,soc=countSocials(l);
+  const r=l.reviews.count,g=l.reviews.rating,y=l.age.years;
+  let opp=0;
+  opp+=web==='none'?20:web==='outdated'?13:web==='unknown'?9:3;
+  opp+=bk==='none'?10:bk==='unknown'?5:0;
+  const cats=[
+    {label:'Online opportunity',max:30,val:Math.min(30,opp)},
+    {label:'Business strength',max:20,val:r!=null?Math.min(20,(Math.log10(r+1)/Math.log10(400))*20):8},
+    {label:'Reputation',max:20,val:g!=null?Math.max(0,Math.min(20,((g-3.2)/1.6)*20)):8},
+    {label:'Business age',max:10,val:y!=null?Math.min(10,(y/8)*10):4},
+    {label:'Social gap',max:10,val:soc===0?10:soc===1?6:soc===2?3:1},
+    {label:'Customer activity',max:10,val:r!=null?Math.min(10,(r/40)*10):4},
+  ];
+  const total=Math.round(cats.reduce((a,c)=>a+c.val,0));
+  const temp=total>=75?'HOT':total>=50?'WARM':'COLD';
+  const reasons=[];
+  if(y!=null)reasons.push({ok:true,t:`${y}+ years in business`});
+  if(r!=null)reasons.push({ok:true,t:`${r} reviews`});
+  if(g!=null)reasons.push({ok:true,t:`${g.toFixed(1)}-star rating`});
+  if(web==='none')reasons.push({ok:true,t:'No website found in sources checked'});
+  else if(web==='exists')reasons.push({ok:false,t:'Website already in place'});
+  else reasons.push({ok:null,t:'Website status could not be verified'});
+  if(bk==='none')reasons.push({ok:true,t:'No booking system found in sources checked'});
+  else if(bk==='exists')reasons.push({ok:false,t:'Online booking already in place'});
+  else reasons.push({ok:null,t:'Booking status could not be verified'});
+  if(soc===0)reasons.push({ok:true,t:'No social profiles found in sources checked'});
+  else reasons.push({ok:false,t:`${soc} active social channels`});
+  return {total,temp,cats,reasons};
+}
+
+function socialStrength(l){const n=countSocials(l);return n>=3?'Strong':n===2?'Average':n===1?'Weak':'None detected'}
+
+function ruleBasedOpportunity(web,bk,socCount,rating,reviewCount){
+  const doingWell=[],doingPoorly=[],missing=[],couldSell=[];
+  if(reviewCount>100)doingWell.push(`${reviewCount}+ reviews on record`);
+  if(rating>=4.5)doingWell.push(`Strong ${rating}-star reputation`);
+  if(web==='none'){doingPoorly.push('No website found');missing.push('Website');couldSell.push('Website build');}
+  if(bk==='none'){missing.push('Online booking');couldSell.push('Online booking system');}
+  if(web!=='none'&&bk==='none')couldSell.push('Lead capture / contact form');
+  if(socCount===0){missing.push('Social media');couldSell.push('Social media presence');}
+  if(reviewCount<30)couldSell.push('Review generation system');
+  return {doingWell,doingPoorly,missing,couldSell};
+}
+
+function ruleBasedCall(biz,web,bk,socCount){
+  const mention=[],avoid=[];
+  if(biz.reviews.count)mention.push(`Their ${biz.reviews.count}+ reviews and reputation`);
+  if(biz.age.years)mention.push(`Being established for ${biz.age.years}+ years`);
+  if(web==='none')mention.push('How easy it would be for customers to find them online');
+  if(bk==='none')mention.push('Making it easier for customers to book directly');
+  avoid.push('Revenue, profit, or customer-count claims — not verified');
+  avoid.push("Owner's name — not verified");
+  if(web==='unknown')avoid.push('Claiming they have no website — not confirmed');
+  const pitch=web==='none'?"You've built a strong reputation — let's make it easy for people to reach and book you.":
+    bk==='none'?"Your customers already trust you — online booking would let more of them convert.":
+    "There are a few digital gaps that would be straightforward to close.";
+  return {summary:`${biz.name}, ${biz.city}, ${biz.state}. Sourced via Apify/Google Maps.`,mention,avoid,pitch};
+}
+
+function ruleBasedOffer(web,bk,socCount){
+  if(web==='none'&&bk==='none')return{headline:'Website + Online Booking',why:'No web presence or booking system found.'};
+  if(web==='none')return{headline:'Professional Website',why:'No website found in sources checked.'};
+  if(bk==='none')return{headline:'Online Booking System',why:'No booking system detected.'};
+  if(socCount===0)return{headline:'Social Media Presence',why:'No social profiles detected.'};
+  return{headline:'Lead Generation / SEO',why:'Core digital infrastructure is in place.'};
+}
+
+/* ============================= NORMALIZE ============================= */
+function normalize(place, niche, city, state) {
+  const website = place.website ? {status:'exists', url:place.website, https:place.website.startsWith('https'), confidence:'verified'} : {status:'none', url:null, confidence:'verified'};
+  const bookingUrl = place.bookingLink || (place.reservationLinks&&place.reservationLinks[0]&&place.reservationLinks[0].link);
+  const booking = bookingUrl ? {status:'exists', url:bookingUrl, confidence:'verified'} : {status:'unknown', url:null, confidence:'unverified'};
+  const social = {};
+  SOCIAL_KEYS.forEach(k=>social[k]=null);
+  (place.socialMediaLinks||[]).forEach(s=>{
+    const p=(s.platform||'').toLowerCase();
+    SOCIAL_KEYS.forEach(k=>{if(p.includes(k)&&!social[k])social[k]=s.link;});
+  });
+  const reviews = {count:place.reviewsCount??null, rating:place.totalScore??null, confidence:'verified'};
+  const age = {years:place.yearsInBusiness??null, confidence:place.yearsInBusiness?'likely':'unverified'};
+  const l = {
+    id: (place.placeId||place.title||Math.random())+'',
+    name: place.title || 'Unnamed business',
+    address: place.address || null,
+    city: place.city || city, state: place.state || state,
+    category: place.categoryName || niche,
+    phone: place.phone || place.phoneUnformatted || null,
+    website, booking, social, reviews, age,
+    photos: (place.imageUrls||[]).slice(0,3),
+    hours: null, operating: place.permanentlyClosed?'Permanently closed':'Listed on Google Maps',
+    owner: {name:null, confidence:'unverified'},
+    demo:false, checkedAt: new Date().toLocaleDateString(),
+  };
+  const socCount = countSocials(l);
+  l.opportunity = ruleBasedOpportunity(website.status,booking.status,socCount,reviews.rating,reviews.count);
+  l.call = ruleBasedCall(l,website.status,booking.status,socCount);
+  l.offer = ruleBasedOffer(website.status,booking.status,socCount);
+  l.health = healthScore(l);
+  l.temp = tempScore(l);
+  return l;
+}
+
+function passesFilters(l, f) {
+  const w=l.website.status,b=l.booking.status,soc=countSocials(l);
+  if(f.website.length && !f.website.includes(w)) return false;
+  if(f.booking.length && !f.booking.includes(b)) return false;
+  if(f.social.length){
+    const ok=f.social.some(k=>k==='none'?soc===0:k==='multi'?soc<=1:!l.social[k]);
+    if(!ok) return false;
+  }
+  if(f.temp.length && !f.temp.includes(l.temp.temp)) return false;
+  return true;
+}
+
+/* ============================= SEARCH ============================= */
+const STAGES=['Finding businesses','Verifying businesses','Checking websites','Checking booking systems','Checking social media','Analyzing reviews','Ranking leads'];
+
+function logLine(t,hit){
+  const el=document.getElementById('log');
+  const d=document.createElement('div');
+  d.className='tline'+(hit?' hit':'');
+  d.innerHTML='<span style="opacity:.4">›</span> <b>'+t+'</b>';
   el.appendChild(d);
-  el.scrollTop = el.scrollHeight;
+  el.scrollTop=el.scrollHeight;
+}
+function setBar(p){document.getElementById('bar').style.width=p+'%'}
+
+async function startSearch(demo) {
+  const niche=document.getElementById('f-niche').value.trim();
+  const city=document.getElementById('f-city').value.trim();
+  const state=document.getElementById('f-state').value.trim();
+  const count=parseInt(document.getElementById('f-count').value);
+  filters.website=getFilterVals('filt-website');
+  filters.booking=getFilterVals('filt-booking');
+  filters.social=getFilterVals('filt-social');
+  filters.temp=getFilterVals('filt-temp');
+
+  if(!demo && (!niche||!city||!state)){ alert('Fill in all fields.'); return; }
+
+  leads=[]; dropped=0;
+  tab('results');
+  document.getElementById('progress-area').style.display='';
+  document.getElementById('results-area').style.display='none';
+  document.getElementById('error-area').style.display='none';
+  document.getElementById('empty-results').style.display='none';
+  document.getElementById('log').innerHTML='';
+  setBar(5);
+
+  const proxy=localStorage.getItem(LS_PROXY)||'';
+  const filtered = filters.website.length||filters.booking.length||filters.social.length||filters.temp.length;
+  const overfetch = filtered ? Math.min(60, Math.ceil(count*1.7)) : count;
+
+  logLine(`Query: ${niche} · ${city}, ${state} · up to ${overfetch} candidates`);
+  if(filtered) logLine('Filters active — fetching wider to find qualifying matches');
+
+  if(demo || useDemo){
+    logLine('Data source: Demo data');
+    await new Promise(r=>setTimeout(r,400));
+    setBar(50);
+    const rows=demoRows(city,state).slice(0,overfetch);
+    rows.forEach(r=>logLine(`${r.name} — ${r.website.status} website, ${r.booking.status} booking`, r.temp.temp==='HOT'));
+    setBar(90);
+    finishSearch(rows, count, filtered);
+    return;
+  }
+
+  if(!proxy){
+    showError('No proxy configured. Go to Settings and add your Render proxy URL, or use Load Demo.');
+    return;
+  }
+
+  try {
+    logLine('Calling Apify via proxy — this can take 30-90 seconds…');
+    setBar(20);
+    const res = await fetch(proxy.replace(/\/$/,'')+'/search', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({searchStringsArray:[`${niche} in ${city}, ${state}`], maxCrawledPlacesPerSearch: Math.min(overfetch+5,60)})
+    });
+    setBar(65);
+    if(!res.ok){
+      const t=await res.text().catch(()=>'');
+      throw new Error(`Proxy returned ${res.status}: ${t.slice(0,150)}`);
+    }
+    const places = await res.json();
+    if(!Array.isArray(places)||!places.length) throw new Error('No businesses returned. Try a broader city or different niche.');
+    logLine(`${places.length} businesses returned`, true);
+    setBar(80);
+
+    const all = places.map(p=>normalize(p,niche,city,state));
+    all.forEach(l=>logLine(`${l.name} — website ${l.website.status}, booking ${l.booking.status}, ${countSocials(l)} socials`, l.temp.temp==='HOT'));
+    setBar(95);
+    finishSearch(all, count, filtered);
+  } catch(e) {
+    showError(e.message);
+  }
 }
 
+function finishSearch(all, count, filtered) {
+  const pass = all.filter(l=>passesFilters(l,filters)).sort((a,b)=>b.temp.total-a.temp.total);
+  const final = pass.slice(0,count);
+  dropped = all.length - pass.length;
+  leads = final;
+  setBar(100);
+  logLine(`${final.length} lead${final.length===1?'':'s'} qualified${filtered?` · ${dropped} filtered out`:''}`, true);
+  const entry={at:new Date().toLocaleString(),q:{niche:document.getElementById('f-niche').value,city:document.getElementById('f-city').value,state:document.getElementById('f-state').value,count},leads:final};
+  history.unshift(entry); history=history.slice(0,20); save(LS_HISTORY,history);
+  setTimeout(renderResults, 500);
+}
+
+function showError(msg) {
+  document.getElementById('progress-area').style.display='none';
+  document.getElementById('error-area').style.display='';
+  document.getElementById('error-msg').textContent=msg;
+}
+
+function loadDemo() { startSearch(true); }
+
+function demoRows(city,state) {
+  const rows=[
+    ['Demo Plumbing & Drain Co.','none','unknown',[],327,4.8,8,'Plumber'],
+    ['Sample Ridge Roofing (demo)','exists','unknown',['facebook'],142,4.6,12,'Roofing contractor'],
+    ['Example HVAC Services (demo)','exists','exists',['facebook','instagram'],511,4.7,15,'HVAC contractor'],
+    ['Placeholder Electric (demo)','none','unknown',['facebook'],89,4.9,5,'Electrician'],
+    ['Testbed Auto Detailing (demo)','unknown','unknown',['instagram'],61,4.4,3,'Auto detailing'],
+    ['Fixture Landscaping (demo)','none','unknown',[],204,4.5,11,'Landscaper'],
+    ['Mockup Med Spa (demo)','exists','exists',['instagram','tiktok','facebook'],388,4.8,6,'Med spa'],
+    ['Dummy Pressure Washing (demo)','none','unknown',['facebook','instagram'],47,5.0,2,'Pressure washing'],
+  ];
+  return rows.map((r,i)=>{
+    const social={}; SOCIAL_KEYS.forEach(k=>social[k]=r[3].includes(k)?`https://example.com/${k}`:null);
+    const l={
+      id:'demo-'+i, name:r[0], address:`${100+i*37} Example Ave, ${city}, ${state}`, city, state, category:r[7],
+      phone:null, website:{status:r[1],url:r[1]==='exists'?'https://example.com':null,confidence:'verified'},
+      booking:{status:r[2],confidence:'unverified'}, social, reviews:{count:r[4],rating:r[5],confidence:'verified'},
+      age:{years:r[6],confidence:'verified'}, photos:[], hours:null, operating:'Demo record',
+      owner:{name:null,confidence:'unverified'}, demo:true, checkedAt:new Date().toLocaleDateString(),
+    };
+    const socCount=countSocials(l);
+    l.opportunity=ruleBasedOpportunity(l.website.status,l.booking.status,socCount,r[5],r[4]);
+    l.call=ruleBasedCall(l,l.website.status,l.booking.status,socCount);
+    l.offer=ruleBasedOffer(l.website.status,l.booking.status,socCount);
+    l.health=healthScore(l); l.temp=tempScore(l);
+    return l;
+  }).sort((a,b)=>b.temp.total-a.temp.total);
+}
+
+/* ============================= RESULTS RENDER ============================= */
 function renderResults() {
-  document.getElementById('progress-area').style.display = 'none';
-  document.getElementById('results-area').style.display = '';
-  const hot = leads.filter(l=>l._score.temp==='HOT').length;
-  const noweb = leads.filter(l=>l._web==='none').length;
-  const avg = leads.length ? Math.round(leads.reduce((a,l)=>a+l._score.total,0)/leads.length) : 0;
-  document.getElementById('s-total').textContent = leads.length;
-  document.getElementById('s-hot').textContent = hot;
-  document.getElementById('s-noweb').textContent = noweb;
-  document.getElementById('s-avg').textContent = avg;
-  document.getElementById('cards').innerHTML = leads.map((l,i) => cardHTML(l,i)).join('');
+  document.getElementById('progress-area').style.display='none';
+  document.getElementById('results-area').style.display='';
+  document.getElementById('results-count').textContent=`${leads.length} qualified lead${leads.length===1?'':'s'}${dropped?` · ${dropped} filtered out`:''}`;
+  const hot=leads.filter(l=>l.temp.temp==='HOT').length;
+  const warm=leads.filter(l=>l.temp.temp==='WARM').length;
+  const cold=leads.filter(l=>l.temp.temp==='COLD').length;
+  const noweb=leads.filter(l=>l.website.status==='none').length;
+  const nobook=leads.filter(l=>l.booking.status==='none').length;
+  const nosoc=leads.filter(l=>countSocials(l)===0).length;
+  const avg=leads.length?Math.round(leads.reduce((a,l)=>a+l.temp.total,0)/leads.length):0;
+  document.getElementById('s-total').textContent=leads.length;
+  document.getElementById('s-hot').textContent=hot;
+  document.getElementById('s-warm').textContent=warm;
+  document.getElementById('s-cold').textContent=cold;
+  document.getElementById('s-noweb').textContent=noweb;
+  document.getElementById('s-nobook').textContent=nobook;
+  document.getElementById('s-nosoc').textContent=nosoc;
+  document.getElementById('s-avg').textContent=avg;
+  renderCards();
+  renderTable();
 }
 
-function cardHTML(l, i) {
-  const t = l._score, cls = t.temp.toLowerCase();
-  const icon = t.temp==='HOT'?'🔥':t.temp==='WARM'?'🟡':'❄️';
-  return `<div class="card ${cls}" onclick="openDrawer(${i})">
+function statusText(status,url,noneLabel){
+  if(status==='none')return `<span class="no">${noneLabel}</span>`;
+  if(status==='unknown')return `<span class="unk">Not verified</span>`;
+  return `<span class="yes">${url?url.replace(/^https?:\/\//,'').slice(0,30):'Detected'}</span>`;
+}
+
+function cardHTML(l,idx) {
+  const t=l.temp,cls=t.temp.toLowerCase();
+  const icon=t.temp==='HOT'?'🔥':t.temp==='WARM'?'🟡':'❄️';
+  const isSaved = saved.some(s=>s.id===l.id);
+  return `<div class="card ${cls}" onclick="openDrawer('${l.id}')">
     <div class="card-top">
-      <div><h3>${l._name}</h3><div style="font-size:11px;color:var(--muted)">${l._city}, ${l._state}${l._category?' · '+l._category:''}</div></div>
-      <div style="text-align:right"><div class="score ${cls}">${t.total}</div><div style="font-size:9px;color:var(--muted)">/100</div></div>
+      <div><h3>${l.name}</h3><div class="dim mono" style="font-size:11px">${l.city}, ${l.state}${l.category?' · '+l.category:''}</div></div>
+      <div style="text-align:right"><div class="score" style="color:${t.temp==='HOT'?'var(--red-hi)':t.temp==='WARM'?'var(--amber)':'var(--steel)'}">${t.total}</div><div class="dim mono" style="font-size:9px">/100</div></div>
     </div>
-    <span class="pill pill-${cls}">${icon} ${t.temp}</span>
-    <div style="height:10px"></div>
-    <div class="kv"><span class="kl">Website</span><span class="${l._web==='none'?'no':l._web==='exists'?'yes':'unk'}">${l._web==='none'?'None found':l._web==='exists'?l._website_url||'Detected':'Unknown'}</span></div>
-    <div class="kv"><span class="kl">Booking</span><span class="${l._bk==='none'?'no':l._bk==='exists'?'yes':'unk'}">${l._bk==='none'?'None found':l._bk==='exists'?'Detected':'Unknown'}</span></div>
-    <div class="kv"><span class="kl">Social</span><span class="${l._socials.length===0?'no':''}">${l._socials.length===0?'None found':l._socials.length+' profile'+(l._socials.length>1?'s':'')}</span></div>
-    <div class="kv"><span class="kl">Phone</span><span>${l._phone||'<span class="unk">—</span>'}</span></div>
-    <div class="kv"><span class="kl">Reviews</span><span>${l._reviews?l._reviews+' · '+l._rating+'★':'<span class="unk">—</span>'}</span></div>
+    <div style="height:12px"></div>
+    <span class="pill p-${cls}">${icon} ${t.temp}</span>
+    <div style="height:12px"></div>
+    <div class="kv"><span>Owner</span><span>${l.owner.name||'<em class="unk">Not verified</em>'}</span></div>
+    <div class="kv"><span>Website</span><span>${statusText(l.website.status,l.website.url,'None detected')}</span></div>
+    <div class="kv"><span>Booking</span><span>${statusText(l.booking.status,null,'None detected')}</span></div>
+    <div class="kv"><span>Social</span><span class="${countSocials(l)?'':'no'}">${socialStrength(l)}</span></div>
+    <div class="kv"><span>Reviews</span><span>${l.reviews.count!=null?l.reviews.count+' · '+l.reviews.rating+'★':'<em class="unk">Not verified</em>'}</span></div>
+    <div class="kv"><span>Health</span><span>${l.health}/100</span></div>
+    <div style="height:12px"></div>
+    <button class="btn ghost sm" onclick="event.stopPropagation();toggleSaveById('${l.id}')">${isSaved?'★ Saved':'☆ Save lead'}</button>
   </div>`;
 }
 
-function openDrawer(i) {
-  const l = leads[i]; currentLead = l; currentIdx = i;
-  const t = l._score, cls = t.temp.toLowerCase();
-  const icon = t.temp==='HOT'?'🔥':t.temp==='WARM'?'🟡':'❄️';
-  const isSaved = saved.some(s=>s._name===l._name&&s._address===l._address);
-  document.getElementById('d-pill').innerHTML = `<span class="pill pill-${cls}">${icon} ${t.temp} · ${t.total}/100</span>`;
-  document.getElementById('d-name').textContent = l._name;
-  document.getElementById('d-loc').textContent = `${l._address||l._city+', '+l._state}`;
-  document.getElementById('d-call-btn').textContent = l._phone ? '📞 '+l._phone : 'No phone';
-  if (l._phone) document.getElementById('d-call-btn').onclick = ()=>window.location='tel:'+l._phone;
-  document.querySelector('[onclick="toggleSave()"]').textContent = isSaved ? '★ Saved' : '☆ Save lead';
+function renderCards() {
+  document.getElementById('cards').innerHTML = leads.map(l=>cardHTML(l)).join('');
+}
 
-  const missing = [];
-  if (l._web==='none') missing.push('Website');
-  if (l._bk==='none') missing.push('Online booking');
-  if (l._socials.length===0) missing.push('Social media');
-  if (l._reviews<30) missing.push('Review generation');
-  const offer = l._web==='none'&&l._bk==='none'?'Website + Online Booking':l._web==='none'?'Professional Website':l._bk==='none'?'Online Booking System':'Social Media + Lead Capture';
+const COLS=[['Lead',l=>l.name],['Owner',l=>l.owner.name||'—'],['Location',l=>l.city+', '+l.state],
+['Website',l=>l.website.status==='none'?'✕':l.website.status==='unknown'?'?':'✓'],
+['Booking',l=>l.booking.status==='none'?'✕':l.booking.status==='unknown'?'?':'✓'],
+['Social',l=>countSocials(l)],['Reviews',l=>l.reviews.count??'—'],['Rating',l=>l.reviews.rating??'—'],
+['Health',l=>l.health],['Score',l=>l.temp.total],['Temp',l=>l.temp.temp==='HOT'?'🔥':l.temp.temp==='WARM'?'🟡':'❄️']];
 
-  const cats = [
-    {label:'Online opportunity',max:30,val:l._web==='none'?20:l._web==='unknown'?9:3},
-    {label:'Business strength',max:20,val:l._reviews>200?18:l._reviews>50?12:l._reviews>0?6:4},
-    {label:'Reputation',max:20,val:l._rating>=4.5?14:l._rating>=4?10:l._rating>0?6:5},
-    {label:'Business age',max:10,val:l._years>=10?10:l._years>=5?7:l._years>0?4:3},
-    {label:'Social gap',max:10,val:l._socials.length===0?10:l._socials.length===1?6:3},
-    {label:'Customer activity',max:10,val:l._reviews>50?8:4},
-  ];
+function renderTable() {
+  const rows=[...leads].sort((a,b)=>b.temp.total-a.temp.total);
+  let html='<table><thead><tr>'+COLS.map(c=>`<th>${c[0]}</th>`).join('')+'</tr></thead><tbody>';
+  rows.forEach(l=>{
+    html+=`<tr onclick="openDrawer('${l.id}')">`+COLS.map(c=>`<td>${c[1](l)}</td>`).join('')+'</tr>';
+  });
+  html+='</tbody></table>';
+  document.getElementById('tablewrap').innerHTML=html;
+}
 
-  document.getElementById('d-body').innerHTML = `
+function setLayout(l) {
+  layout=l;
+  document.getElementById('lay-cards').classList.toggle('on',l==='cards');
+  document.getElementById('lay-table').classList.toggle('on',l==='table');
+  document.getElementById('cards').style.display=l==='cards'?'':'none';
+  document.getElementById('tablewrap').style.display=l==='table'?'':'none';
+}
+
+/* ============================= DRAWER ============================= */
+const PIPELINE=['New','Contacted','Follow up','Interested','Proposal','Won','Lost'];
+
+function findLead(id){return leads.find(l=>l.id===id)||saved.find(l=>l.id===id)}
+
+function openDrawer(id) {
+  const l=findLead(id); if(!l) return;
+  currentLead=l;
+  const t=l.temp,cls=t.temp.toLowerCase();
+  const icon=t.temp==='HOT'?'🔥':t.temp==='WARM'?'🟡':'❄️';
+  const isSaved=saved.some(s=>s.id===l.id);
+  const c=crm[l.id]||{status:'New',note:''};
+
+  document.getElementById('d-pill').innerHTML=`<span class="pill p-${cls}">${icon} ${t.temp}</span>`;
+  document.getElementById('d-name').textContent=l.name;
+  document.getElementById('d-loc').textContent=`${l.address||l.city+', '+l.state} · Checked ${l.checkedAt}`;
+  document.getElementById('d-save-btn').textContent=isSaved?'★ Saved':'☆ Save lead';
+  const sel=document.getElementById('d-status-sel');
+  sel.innerHTML=PIPELINE.map(s=>`<option ${s===c.status?'selected':''}>${s}</option>`).join('');
+  const callLink=document.getElementById('d-call-link');
+  if(l.phone){callLink.style.display='';callLink.href='tel:'+l.phone;callLink.textContent='Call '+l.phone;}
+  else callLink.style.display='none';
+
+  const socials=SOCIAL_KEYS.filter(k=>l.social[k]);
+
+  document.getElementById('d-body').innerHTML=`
     <div class="block">
-      <div class="sec">Lead score — ${t.total}/100</div>
-      ${cats.map(c=>`<div class="meter"><span class="t">${c.label}</span><span class="b"><i style="width:${Math.round(c.val/c.max*100)}%"></i></span><span class="v">${Math.round(c.val)}/${c.max}</span></div>`).join('')}
+      <div class="sec-label">Lead score — ${t.total}/100</div>
+      <ul class="reasons">${t.reasons.map(r=>`<li class="${r.ok===false?'bad':r.ok===null?'unk':''}">${r.t}</li>`).join('')}</ul>
+      <div style="height:14px"></div>
+      ${t.cats.map(c2=>`<div class="meter"><span class="t">${c2.label}</span><span class="b"><i style="width:${(c2.val/c2.max)*100}%"></i></span><span class="v">${Math.round(c2.val)}/${c2.max}</span></div>`).join('')}
     </div>
     <div class="block">
-      <div class="sec">Business info</div>
-      <div class="kv"><span class="kl">Phone</span><span>${l._phone?`<a href="tel:${l._phone}" style="color:var(--ok)">${l._phone}</a>`:'<span class="unk">Not verified</span>'}</span></div>
-      <div class="kv"><span class="kl">Address</span><span>${l._address||'<span class="unk">Not verified</span>'}</span></div>
-      <div class="kv"><span class="kl">Category</span><span>${l._category||'—'}</span></div>
-      <div class="kv"><span class="kl">Reviews</span><span>${l._reviews?l._reviews+' · '+l._rating+'★':'<span class="unk">Not verified</span>'}</span></div>
-      <div class="kv"><span class="kl">Years open</span><span>${l._years||'<span class="unk">Not verified</span>'}</span></div>
-      ${l._website_url?`<div class="kv"><span class="kl">Website</span><span><a href="${l._website_url}" target="_blank" style="color:var(--ok)">${l._website_url.replace(/^https?:\/\//,'').slice(0,35)}</a></span></div>`:''}
+      <div class="sec-label">Owner / decision maker</div>
+      <div style="font-size:17px;color:${l.owner.name?'var(--bone)':'var(--muted)'}">${l.owner.name||'Owner not verified'}</div>
+      <div class="hair"></div>
+      <div class="kv"><span>Phone</span><span>${l.phone||'<em class="unk">Not verified</em>'}</span></div>
+      <div class="kv"><span>Address</span><span>${l.address||'<em class="unk">Not verified</em>'}</span></div>
+      <div class="kv"><span>Category</span><span>${l.category||'—'}</span></div>
+      <div class="kv"><span>Business age</span><span>${l.age.years!=null?l.age.years+' years':'<em class="unk">Not verified</em>'}</span></div>
     </div>
     <div class="block">
-      <div class="sec">Online presence</div>
-      <div class="kv"><span class="kl">Website</span><span class="${l._web==='none'?'no':l._web==='exists'?'yes':'unk'}">${l._web==='none'?'None found in sources':l._web==='exists'?'Detected':'Status unverified'}</span></div>
-      <div class="kv"><span class="kl">Booking</span><span class="${l._bk==='none'?'no':l._bk==='exists'?'yes':'unk'}">${l._bk==='none'?'None found in sources':l._bk==='exists'?'Detected':'Status unverified'}</span></div>
-      <div class="kv"><span class="kl">Social media</span><span class="${l._socials.length===0?'no':''}">${l._socials.length===0?'None found':l._socials.length+' profile'+(l._socials.length>1?'s':'')}</span></div>
-      ${l._socials.map(s=>`<div class="kv"><span class="kl"></span><span><a href="${s}" target="_blank" style="color:var(--steel);font-size:11px">${s.replace(/^https?:\/\//,'').slice(0,40)}</a></span></div>`).join('')}
+      <div class="sec-label">Website analysis</div>
+      ${l.website.status==='none'?'<div class="no" style="font-family:var(--mono);font-size:13px">NO WEBSITE DETECTED FROM SOURCES CHECKED</div>':
+        l.website.status==='exists'?`<a href="${l.website.url}" target="_blank" style="color:var(--red-hi);font-size:14px">${l.website.url}</a>`:
+        '<div class="unk" style="font-size:13px">Website status could not be verified.</div>'}
     </div>
     <div class="block">
-      <div class="sec">Opportunity</div>
-      <div style="font-size:17px;font-weight:700;color:var(--red-hi);margin-bottom:8px">${offer}</div>
-      ${missing.length?`<p style="font-size:13px;color:#b8b8c0;line-height:1.7;margin-bottom:10px">Missing: <span style="color:var(--red-hi)">${missing.join(', ')}</span></p>`:''}
+      <div class="sec-label">Booking analysis</div>
+      ${l.booking.status==='none'?'<div class="no" style="font-family:var(--mono);font-size:13px">NO BOOKING SYSTEM DETECTED</div>':
+        l.booking.status==='exists'?`<div class="yes" style="font-size:14px">Booking detected${l.booking.url?': <a href="'+l.booking.url+'" target="_blank" style="color:var(--red-hi)">'+l.booking.url+'</a>':''}</div>`:
+        '<div class="unk" style="font-size:13px">Booking status could not be verified.</div>'}
     </div>
     <div class="block">
-      <div class="sec">Call intelligence</div>
-      <div class="quote">${l._reviews>50?`"You have ${l._reviews} reviews and a ${l._rating}-star rating — clearly people trust you. `:''}${l._web==='none'?`I noticed customers can't find you online yet. `:''}${l._bk==='none'?`There's also no way to book directly. `:''}Let me show you how to fix that."</div>
-      <div class="warnbox" style="margin-top:10px">
-        <strong>Do NOT say:</strong> Revenue, profits, or customer counts. Owner name not verified — ask on the call.
-        ${l._web==='unknown'?' Do not say they have no website — not confirmed.':''}
-      </div>
+      <div class="sec-label">Social media — ${socialStrength(l)}</div>
+      ${socials.length?`<div class="chips">${socials.map(k=>`<a class="chip" href="${l.social[k]}" target="_blank" style="text-decoration:none">${k[0].toUpperCase()+k.slice(1)}</a>`).join('')}</div>`:
+        '<div class="no" style="font-family:var(--mono);font-size:13px">NO SOCIAL PROFILES DETECTED</div>'}
     </div>
     <div class="block">
-      <div class="sec">Sources</div>
-      <p class="note">Google Maps via Apify (compass/crawler-google-places) · Checked ${new Date().toLocaleDateString()}</p>
+      <div class="sec-label">Reviews & reputation</div>
+      ${l.reviews.count==null?'<div class="unk" style="font-size:13px">Review data not verified.</div>':`
+      <div style="display:flex;gap:26px;align-items:baseline">
+        <div><div class="score">${l.reviews.rating}</div><div class="dim mono" style="font-size:9.5px;margin-top:5px">RATING</div></div>
+        <div><div class="score">${l.reviews.count}</div><div class="dim mono" style="font-size:9.5px;margin-top:5px">REVIEWS</div></div>
+      </div>`}
+    </div>
+    <div class="block">
+      <div class="sec-label">Business health — ${l.health}/100</div>
+      <div class="note">Reflects observable public signals only. Revenue and customer counts are private and not estimated.</div>
+    </div>
+    <div class="block">
+      <div class="sec-label">AI opportunity analysis</div>
+      ${['doingWell','doingPoorly','missing','couldSell'].map(k=>{
+        const titles={doingWell:'Doing well',doingPoorly:'Doing poorly',missing:'Missing',couldSell:'What you could sell them'};
+        const arr=l.opportunity[k]||[];
+        return `<div style="margin-bottom:12px"><div class="eyebrow">${titles[k]}</div>${arr.length?'<ul class="tight" style="margin-top:6px">'+arr.map(x=>`<li>${x}</li>`).join('')+'</ul>':'<div class="unk" style="font-size:13px;margin-top:5px">Nothing established.</div>'}</div>`;
+      }).join('')}
+    </div>
+    <div class="block">
+      <div class="sec-label">Recommended offer</div>
+      <div style="font-size:17px;font-weight:700;color:var(--red-hi)">${l.offer.headline}</div>
+      <p class="lede" style="font-size:13.5px;margin-top:9px">${l.offer.why}</p>
+    </div>
+    <div class="block">
+      <div class="sec-label">Call intelligence</div>
+      <div class="eyebrow">Who am I calling?</div>
+      <div style="font-size:15px;margin-top:6px">${l.owner.name||'Unknown — ask for the owner or decision maker.'}</div>
+      <div class="eyebrow" style="margin-top:14px">What should I mention?</div>
+      <ul class="tight" style="margin-top:6px">${l.call.mention.map(x=>`<li>${x}</li>`).join('')}</ul>
+      <div class="eyebrow" style="margin-top:14px">What should I not say?</div>
+      <div class="warnbox" style="margin-top:7px"><ul class="tight" style="font-size:13px">${l.call.avoid.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    </div>
+    <div class="block">
+      <div class="sec-label">Sources</div>
+      <ul class="tight" style="font-size:12.5px"><li>Google Maps via Apify (compass/crawler-google-places)</li></ul>
+      <div class="note" style="margin-top:12px">Last checked ${l.checkedAt}</div>
+    </div>
+    <div class="block">
+      <div class="sec-label">Notes</div>
+      <textarea class="inp" rows="4" placeholder="Called... Owner interested..." id="d-note">${c.note||''}</textarea>
     </div>
   `;
-  document.getElementById('scrim').style.display = '';
-  document.getElementById('drawer').style.display = '';
+  document.getElementById('d-note') && (document.getElementById('d-note').onblur = saveNote);
+  document.getElementById('scrim').style.display='';
+  document.getElementById('drawer').style.display='';
 }
 
-function closeDrawer() {
-  document.getElementById('scrim').style.display = 'none';
-  document.getElementById('drawer').style.display = 'none';
-}
+function closeDrawer(){document.getElementById('scrim').style.display='none';document.getElementById('drawer').style.display='none'}
 
-function toggleSave() {
-  if (!currentLead) return;
-  const idx = saved.findIndex(s=>s._name===currentLead._name&&s._address===currentLead._address);
-  if (idx>=0) { saved.splice(idx,1); toast('Removed from My Leads'); }
-  else { saved.push(currentLead); toast('Saved to My Leads'); }
-  putSaved(saved);
-  document.querySelector('[onclick="toggleSave()"]').textContent = saved.some(s=>s._name===currentLead._name)?'★ Saved':'☆ Save lead';
+function saveNote(){
+  if(!currentLead)return;
+  const c=crm[currentLead.id]||{status:'New',note:''};
+  c.note=document.getElementById('d-note').value;
+  crm[currentLead.id]=c; save(LS_CRM,crm);
+}
+function updateStatus(){
+  if(!currentLead)return;
+  const c=crm[currentLead.id]||{status:'New',note:''};
+  c.status=document.getElementById('d-status-sel').value;
+  crm[currentLead.id]=c; save(LS_CRM,crm);
   renderSaved();
 }
 
-function renderSaved() {
-  document.getElementById('saved-empty').style.display = saved.length ? 'none' : '';
-  document.getElementById('saved-cards').innerHTML = saved.map((l,i)=>cardHTML(l,i)).join('');
-  document.getElementById('tab-saved').textContent = `My Leads${saved.length?' ('+saved.length+')':''}`;
+function toggleSave(){if(currentLead)toggleSaveById(currentLead.id)}
+function toggleSaveById(id){
+  const l=findLead(id); if(!l)return;
+  const idx=saved.findIndex(s=>s.id===id);
+  if(idx>=0){saved.splice(idx,1);toast('Removed from My Leads');}
+  else{saved.push(l);toast('Saved to My Leads');}
+  save(LS_SAVED,saved);
+  renderCards(); renderTable(); renderSaved();
+  if(currentLead&&currentLead.id===id)document.getElementById('d-save-btn').textContent=saved.some(s=>s.id===id)?'★ Saved':'☆ Save lead';
 }
 
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg; el.style.display = '';
-  setTimeout(()=>el.style.display='none', 2500);
-}
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.style.display='';setTimeout(()=>el.style.display='none',2500)}
 
-function exportCSV() {
-  const cols = ['Name','Phone','Address','City','State','Category','Website','Booking','Socials','Reviews','Rating','Years','Score','Temperature'];
-  const rows = leads.map(l=>[l._name,l._phone||'',l._address||'',l._city,l._state,l._category,l._web,l._bk,l._socials.join('|'),l._reviews,l._rating,l._years,l._score.total,l._score.temp].map(v=>'"'+String(v||'').replace(/"/g,'""')+'"').join(','));
-  const csv = [cols.join(','),...rows].join('\n');
-  const a = document.createElement('a');
-  a.href = 'data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
-  a.download = 'ramels-vision-leads.csv';
-  a.click();
+/* ============================= SAVED / CRM ============================= */
+function renderSaved(){
+  const tabsEl=document.getElementById('saved-tabs');
+  const counts={};['All',...PIPELINE].forEach(s=>counts[s]=s==='All'?saved.length:saved.filter(l=>(crm[l.id]?.status||'New')===s).length);
+  tabsEl.innerHTML=['All',...PIPELINE].map(s=>`<button class="chip ${s===(window._savedTab||'All')?'on':''}" onclick="setSavedTab('${s}')">${s} · ${counts[s]}</button>`).join('');
+  const activeTab=window._savedTab||'All';
+  const list=activeTab==='All'?saved:saved.filter(l=>(crm[l.id]?.status||'New')===activeTab);
+  document.getElementById('saved-empty').style.display=saved.length?'none':'';
+  document.getElementById('saved-cards').innerHTML=list.map(l=>{
+    const c=crm[l.id]||{status:'New',note:''};
+    return `<div class="card ${l.temp.temp.toLowerCase()}">
+      <div class="card-top"><div><h3>${l.name}</h3><div class="dim mono" style="font-size:11px">${l.city}, ${l.state}</div></div><span class="pill p-${l.temp.temp.toLowerCase()}">${l.temp.temp==='HOT'?'🔥':l.temp.temp==='WARM'?'🟡':'❄️'} ${l.temp.temp}</span></div>
+      <div style="height:10px"></div>
+      <div class="kv"><span>Owner</span><span>${l.owner.name||'Not verified'}</span></div>
+      <div class="kv"><span>Phone</span><span>${l.phone||'Not verified'}</span></div>
+      <div class="kv"><span>Score</span><span>${l.temp.total}/100</span></div>
+      <div style="height:10px"></div>
+      <select class="status-sel" style="width:100%" onchange="setLeadStatus('${l.id}',this.value)">${PIPELINE.map(s=>`<option ${s===c.status?'selected':''}>${s}</option>`).join('')}</select>
+      ${c.note?`<p class="note" style="margin-top:10px">${c.note}</p>`:''}
+      <div style="height:10px;display:flex"></div>
+      <div style="display:flex;gap:7px"><button class="btn ghost sm" onclick="openDrawer('${l.id}')">Open</button><button class="btn ghost sm" onclick="toggleSaveById('${l.id}')">Remove</button></div>
+    </div>`;
+  }).join('');
 }
+function setSavedTab(t){window._savedTab=t;renderSaved()}
+function setLeadStatus(id,status){const c=crm[id]||{status:'New',note:''};c.status=status;crm[id]=c;save(LS_CRM,crm);renderSaved()}
 
-// Settings
-function saveProxy() {
-  const v = document.getElementById('proxy-input').value.trim().replace(/\/$/,'');
-  localStorage.setItem(PROXY_KEY, v);
-  updateProviderLabel();
-  document.getElementById('proxy-result').innerHTML = '<span style="color:var(--ok)">✓ Saved — '+v+'</span>';
+/* ============================= HISTORY ============================= */
+function renderHistory(){
+  document.getElementById('history-empty').style.display=history.length?'none':'';
+  document.getElementById('history-cards').innerHTML=history.map((h,i)=>`
+    <div class="card" onclick='reopenHistory(${i})'>
+      <div class="mono dim" style="font-size:10px;letter-spacing:.16em">SEARCH #${history.length-i}</div>
+      <div style="height:8px"></div><h3>${h.q.niche}</h3>
+      <div class="dim" style="font-size:13px">${h.q.city}, ${h.q.state} · ${h.q.count} requested</div>
+      <div style="height:10px"></div>
+      <div class="kv"><span>Qualified</span><span>${h.leads.length}</span></div>
+      <div class="kv"><span>Hot</span><span>${h.leads.filter(l=>l.temp.temp==='HOT').length}</span></div>
+      <div class="kv"><span>Run</span><span>${h.at}</span></div>
+    </div>`).join('');
 }
-
-async function testProxy() {
-  const v = document.getElementById('proxy-input').value.trim().replace(/\/$/,'');
-  if (!v) { document.getElementById('proxy-result').innerHTML = '<span style="color:var(--red-hi)">Enter a URL first</span>'; return; }
-  document.getElementById('proxy-result').innerHTML = 'Testing…';
-  try {
-    const r = await fetch(v+'/health');
-    const d = await r.json();
-    if (d.ok && d.tokenSet) {
-      document.getElementById('proxy-result').innerHTML = '<span style="color:var(--ok)">✓ Proxy is live and Apify token is set. Ready!</span>';
-      localStorage.setItem(PROXY_KEY, v);
-      updateProviderLabel();
-    } else if (d.ok && !d.tokenSet) {
-      document.getElementById('proxy-result').innerHTML = '<span style="color:var(--amber)">⚠ Proxy running but APIFY_TOKEN not set on server</span>';
-    }
-  } catch(e) {
-    document.getElementById('proxy-result').innerHTML = '<span style="color:var(--red-hi)">✕ Cannot reach proxy: '+e.message+'</span>';
-  }
-}
-
-// Demo
-function loadDemo() {
-  leads = [
-    {_name:'Martinez Plumbing & Drain',_phone:'(408) 555-0143',_address:'847 Industrial Blvd, San Jose, CA',_city:'San Jose',_state:'CA',_category:'Plumber',_web:'none',_bk:'none',_socials:[],_reviews:287,_rating:4.8,_years:11,_website_url:null},
-    {_name:'Pro Roof Solutions',_phone:'(408) 555-0271',_address:'1204 Commerce Dr, San Jose, CA',_city:'San Jose',_state:'CA',_category:'Roofing',_web:'exists',_bk:'none',_socials:['https://facebook.com/proroofca'],_reviews:142,_rating:4.6,_years:8,_website_url:'https://proroofca.com'},
-    {_name:'Bay Area HVAC Pros',_phone:null,_address:'3301 Technology Dr, San Jose, CA',_city:'San Jose',_state:'CA',_category:'HVAC',_web:'exists',_bk:'none',_socials:['https://facebook.com/bahvac','https://instagram.com/bahvac'],_reviews:512,_rating:4.7,_years:15,_website_url:'https://bahvac.com'},
-    {_name:'Lopez Electric',_phone:'(408) 555-0388',_address:'556 N 1st St, San Jose, CA',_city:'San Jose',_state:'CA',_category:'Electrician',_web:'none',_bk:'none',_socials:[],_reviews:89,_rating:4.9,_years:6,_website_url:null},
-    {_name:'Green Valley Landscaping',_phone:'(408) 555-0512',_address:'2201 Monterey Rd, San Jose, CA',_city:'San Jose',_state:'CA',_category:'Landscaper',_web:'none',_bk:'unknown',_socials:['https://facebook.com/greenvalley'],_reviews:204,_rating:4.5,_years:9,_website_url:null},
-  ].map(l=>({...l,_score:scoreTemp(l)})).sort((a,b)=>b._score.total-a._score.total);
-  showTab('results');
+function reopenHistory(i){
+  const h=history[i]; leads=h.leads; dropped=0;
+  document.getElementById('f-niche').value=h.q.niche;
+  document.getElementById('f-city').value=h.q.city;
+  document.getElementById('f-state').value=h.q.state;
+  tab('results');
+  document.getElementById('progress-area').style.display='none';
+  document.getElementById('empty-results').style.display='none';
   renderResults();
 }
+
+/* ============================= EXPORT ============================= */
+function csvCell(v){const s=v==null?'':String(v);return /[",\n]/.test(s)?`"${s.replace(/"/g,'""')}"`:s}
+function exportCSV(){
+  const cols=[['Business',l=>l.name],['Owner',l=>l.owner.name||'Owner not verified'],['Phone',l=>l.phone],['Address',l=>l.address],
+    ['City',l=>l.city],['State',l=>l.state],['Website',l=>l.website.status],['Website URL',l=>l.website.url],
+    ['Booking',l=>l.booking.status],['Reviews',l=>l.reviews.count],['Rating',l=>l.reviews.rating],['Health',l=>l.health],
+    ['Score',l=>l.temp.total],['Temp',l=>l.temp.temp],['Offer',l=>l.offer.headline]];
+  const head=cols.map(c=>csvCell(c[0])).join(',');
+  const rows=leads.map(l=>cols.map(c=>csvCell(c[1](l))).join(','));
+  downloadFile('ramels-vision-leads.csv',[head,...rows].join('\n'),'text/csv');
+}
+function exportJSON(){downloadFile('ramels-vision-leads.json',JSON.stringify(leads,null,2),'application/json')}
+function exportReport(){
+  const rows=leads.map(l=>`<article><h2>${l.temp.temp} · ${l.temp.total}/100 — ${l.name}</h2>
+  <p>${l.address||l.city+', '+l.state}</p>
+  <table><tr><td>Owner</td><td>${l.owner.name||'Not verified'}</td></tr>
+  <tr><td>Phone</td><td>${l.phone||'Not verified'}</td></tr>
+  <tr><td>Website</td><td>${l.website.status}</td></tr>
+  <tr><td>Booking</td><td>${l.booking.status}</td></tr>
+  <tr><td>Reviews</td><td>${l.reviews.count||'—'} · ${l.reviews.rating||'—'}</td></tr>
+  <tr><td>Offer</td><td>${l.offer.headline}</td></tr></table></article>`).join('');
+  const html=`<!doctype html><meta charset="utf-8"><title>Ramel's Vision Report</title>
+  <style>body{font:14px/1.6 -apple-system,Arial;margin:40px}article{border-top:2px solid #c1121f;padding:16px 0}table{border-collapse:collapse;font-size:13px}td{border:1px solid #ddd;padding:5px 9px}</style>
+  <h1>Ramel's Vision — Lead Report</h1><p>${leads.length} leads · ${new Date().toLocaleDateString()}</p>${rows}`;
+  downloadFile('ramels-vision-report.html',html,'text/html');
+}
+function downloadFile(name,content,mime){
+  const a=document.createElement('a');
+  a.href='data:'+mime+';charset=utf-8,'+encodeURIComponent(content);
+  a.download=name; a.click();
+}
+
+/* ============================= SETTINGS ============================= */
+function saveProxy(){
+  const v=document.getElementById('proxy-input').value.trim().replace(/\/$/,'');
+  localStorage.setItem(LS_PROXY,v);
+  useDemo=false; save(LS_DEMO,false);
+  updateDemoUI();
+  document.getElementById('proxy-result').innerHTML='<span style="color:var(--ok)">✓ Saved and activated</span>';
+}
+async function testProxy(){
+  const v=document.getElementById('proxy-input').value.trim().replace(/\/$/,'');
+  const resEl=document.getElementById('proxy-result');
+  if(!v){resEl.innerHTML='<span style="color:var(--red-hi)">Enter a URL first</span>';return;}
+  resEl.textContent='Testing…';
+  try{
+    const r=await fetch(v+'/health');
+    const d=await r.json();
+    if(d.ok&&d.tokenSet)resEl.innerHTML='<span style="color:var(--ok)">✓ Proxy live, Apify token set. Ready!</span>';
+    else if(d.ok)resEl.innerHTML='<span style="color:var(--amber)">⚠ Proxy running but APIFY_TOKEN not set on server</span>';
+  }catch(e){resEl.innerHTML='<span style="color:var(--red-hi)">✕ Cannot reach proxy: '+e.message+'</span>';}
+}
+
+init();
 </script>
 </body>
 </html>
