@@ -2,509 +2,559 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Ramel's Vision — Lead Intelligence</title>
+<meta name="theme-color" content="#04060D">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --void:#060507; --carbon:#0E0D11; --slab:#131218; --ash:#221F27; --ash2:#2E2A35;
-  --blood:#B0111F; --ember:#FF3B47; --blood-dim:#4A0910;
-  --bone:#EDEAE4; --smoke:#7A7680; --smoke2:#55525C;
-  --live:#4FA97C; --caution:#C9922F; --steel:#6E8298;
-  --disp:'Archivo',-apple-system,sans-serif;
-  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
-  --r:2px;
+  --void:#04060D; --deep:#070B16; --panel:#0C1220; --rise:#111A2C;
+  --rim:rgba(255,255,255,.07); --rim2:rgba(255,255,255,.14);
+
+  --navy:#0F2A4A; --navy2:#1B4A7A; --navy-lt:#3D82C4;
+  --crim:#5A0E14; --crim2:#8B1520; --crim-lt:#D6444F;
+  --forest:#0D3320; --forest2:#155238; --forest-lt:#3FA574;
+
+  --gold:#C9A227; --gold2:#F0CE5A; --gold3:#FFE9A3;
+  --silver:#9AA8B8; --silver2:#D8E4F0;
+
+  --bone:#ECEAE5; --mut:#6E7688; --mut2:#454C5C;
+
+  --sans:'Outfit',system-ui,sans-serif;
+  --disp:'Cinzel',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%}
-body{min-height:100vh;background:var(--void);color:var(--bone);font-family:var(--disp);
-  font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-button,input,select,textarea{font-family:inherit;color:inherit}
-button{cursor:pointer;background:none;border:none}
-a{color:var(--ember);text-decoration:none}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{min-height:100vh;background:var(--void);color:var(--bone);font-family:var(--sans);
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font-family:inherit;cursor:pointer;background:none;border:none;color:inherit}
+input,select,textarea{font-family:inherit;color:inherit}
+a{color:var(--gold2);text-decoration:none}
 a:hover{text-decoration:underline}
-::selection{background:var(--blood);color:#fff}
-:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+::selection{background:var(--gold);color:#1A1200}
+:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
 
-/* ── atmosphere : smoke ───────────────────────────── */
-.atmos{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:var(--void)}
-.atmos i{position:absolute;display:block;border-radius:50%;filter:blur(80px)}
-.a1{width:78vw;height:78vw;left:-24vw;top:-28vw;background:radial-gradient(circle,rgba(176,17,31,.30),transparent 65%);animation:f1 52s ease-in-out infinite}
-.a2{width:62vw;height:62vw;right:-18vw;top:8vh;background:radial-gradient(circle,rgba(60,58,70,.30),transparent 66%);animation:f2 68s ease-in-out infinite}
-.a3{width:86vw;height:62vw;left:8vw;bottom:-30vh;background:radial-gradient(circle,rgba(140,14,26,.20),transparent 68%);animation:f3 60s ease-in-out infinite}
-@keyframes f1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(8vw,6vh) scale(1.18)}}
-@keyframes f2{0%,100%{transform:translate(0,0) scale(1.05)}50%{transform:translate(-7vw,5vh) scale(.9)}}
-@keyframes f3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-5vw,-5vh) scale(1.14)}}
+/* ══ ATMOSPHERE ══ */
+.atmos{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.atmos::before{content:'';position:absolute;inset:-30%;
+  background:
+    radial-gradient(ellipse 55% 45% at 12% 12%,rgba(90,14,20,.42),transparent 62%),
+    radial-gradient(ellipse 50% 55% at 88% 78%,rgba(15,42,74,.48),transparent 64%),
+    radial-gradient(ellipse 45% 40% at 78% 15%,rgba(13,51,32,.38),transparent 60%),
+    radial-gradient(ellipse 70% 50% at 45% 55%,rgba(10,14,30,.6),transparent 70%),
+    radial-gradient(ellipse 38% 34% at 20% 88%,rgba(201,162,39,.10),transparent 62%);
+  filter:blur(40px);animation:drift 64s ease-in-out infinite alternate}
+.atmos::after{content:'';position:absolute;inset:-25%;
+  background:
+    radial-gradient(ellipse 40% 55% at 70% 30%,rgba(139,21,32,.20),transparent 60%),
+    radial-gradient(ellipse 55% 32% at 28% 68%,rgba(21,82,56,.18),transparent 60%);
+  filter:blur(64px);animation:drift2 88s ease-in-out infinite alternate}
+@keyframes drift{
+  0%{transform:translate(0,0) scale(1) rotate(0)}
+  33%{transform:translate(3vw,-4vh) scale(1.07) rotate(1.5deg)}
+  66%{transform:translate(-4vw,3vh) scale(.95) rotate(-1deg)}
+  100%{transform:translate(2vw,5vh) scale(1.05) rotate(1deg)}}
+@keyframes drift2{
+  0%{transform:translate(0,0) scale(1) rotate(0)}
+  50%{transform:translate(-5vw,4vh) scale(1.1) rotate(-2deg)}
+  100%{transform:translate(4vw,-3vh) scale(.93) rotate(1.5deg)}}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:190px}
+.vig{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 28%,transparent 24%,rgba(2,3,8,.8) 100%)}
+.z{position:relative;z-index:2}
 
-/* layered drifting smoke — soft irregular plumes, several depths */
-.smoke{position:fixed;inset:-10%;z-index:1;pointer-events:none;overflow:hidden}
-.smoke .plume{position:absolute;border-radius:44% 56% 60% 40%/50% 45% 55% 50%;
-  filter:blur(46px);mix-blend-mode:screen;will-change:transform,border-radius}
-.p1{width:60vw;height:44vw;left:-10vw;top:6vh;
-  background:radial-gradient(ellipse at 40% 40%,rgba(150,148,158,.10),rgba(90,9,16,.05) 55%,transparent 75%);
-  animation:pl1 46s ease-in-out infinite}
-.p2{width:52vw;height:52vw;right:-14vw;top:30vh;
-  background:radial-gradient(ellipse at 60% 50%,rgba(176,17,31,.09),rgba(60,58,70,.05) 55%,transparent 75%);
-  animation:pl2 58s ease-in-out infinite}
-.p3{width:70vw;height:40vw;left:12vw;bottom:-6vh;
-  background:radial-gradient(ellipse at 50% 60%,rgba(122,118,128,.09),transparent 72%);
-  animation:pl3 64s ease-in-out infinite}
-.p4{width:44vw;height:44vw;left:50vw;top:-8vh;
-  background:radial-gradient(ellipse at 45% 45%,rgba(176,17,31,.07),transparent 70%);
-  animation:pl4 50s ease-in-out infinite}
-.p5{width:56vw;height:30vw;left:-8vw;bottom:12vh;
-  background:radial-gradient(ellipse at 55% 50%,rgba(90,9,16,.10),transparent 74%);
-  animation:pl5 70s ease-in-out infinite}
-@keyframes pl1{
-  0%{transform:translate(0,0) rotate(0deg) scale(1);border-radius:44% 56% 60% 40%/50% 45% 55% 50%}
-  33%{transform:translate(6vw,4vh) rotate(8deg) scale(1.12);border-radius:60% 40% 44% 56%/40% 60% 45% 55%}
-  66%{transform:translate(-4vw,7vh) rotate(-6deg) scale(.94);border-radius:50% 50% 38% 62%/58% 42% 60% 40%}
-  100%{transform:translate(0,0) rotate(0deg) scale(1);border-radius:44% 56% 60% 40%/50% 45% 55% 50%}}
-@keyframes pl2{
-  0%{transform:translate(0,0) rotate(0deg) scale(1)}
-  40%{transform:translate(-7vw,-5vh) rotate(-10deg) scale(1.15)}
-  70%{transform:translate(3vw,6vh) rotate(6deg) scale(.9)}
-  100%{transform:translate(0,0) rotate(0deg) scale(1)}}
-@keyframes pl3{
-  0%{transform:translate(0,0) rotate(0deg) scale(1)}
-  50%{transform:translate(5vw,-6vh) rotate(9deg) scale(1.1)}
-  100%{transform:translate(0,0) rotate(0deg) scale(1)}}
-@keyframes pl4{
-  0%{transform:translate(0,0) scale(1)}
-  50%{transform:translate(-6vw,8vh) scale(1.2)}
-  100%{transform:translate(0,0) scale(1)}}
-@keyframes pl5{
-  0%{transform:translate(0,0) rotate(0deg) scale(1)}
-  50%{transform:translate(8vw,-3vh) rotate(-7deg) scale(1.08)}
-  100%{transform:translate(0,0) rotate(0deg) scale(1)}}
+/* ══ AURA WORDMARK ══ */
+.aura-stage{position:relative;text-align:center;padding:clamp(52px,12vh,120px) 20px clamp(30px,5vh,54px)}
+.halo{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);
+  width:min(120vw,1180px);height:min(70vh,560px);pointer-events:none;
+  background:radial-gradient(ellipse at center,rgba(240,206,90,.24) 0%,rgba(201,162,39,.13) 26%,rgba(201,162,39,.05) 46%,transparent 68%);
+  filter:blur(46px);animation:breathe 7s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.75;transform:translate(-50%,-50%) scale(1)}
+  50%{opacity:1;transform:translate(-50%,-50%) scale(1.09)}}
+.aura-mark{position:relative;font-family:var(--disp);font-weight:900;
+  font-size:clamp(38px,9.4vw,124px);letter-spacing:.07em;line-height:1;text-transform:uppercase;
+  background:linear-gradient(178deg,var(--gold3) 0%,var(--gold2) 32%,var(--gold) 58%,#8C6E12 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 22px rgba(240,206,90,.42)) drop-shadow(0 0 58px rgba(201,162,39,.26));
+  animation:shimmer 5.5s ease-in-out infinite}
+@keyframes shimmer{0%,100%{filter:drop-shadow(0 0 20px rgba(240,206,90,.36)) drop-shadow(0 0 52px rgba(201,162,39,.22))}
+  50%{filter:drop-shadow(0 0 32px rgba(240,206,90,.6)) drop-shadow(0 0 84px rgba(201,162,39,.4))}}
+.aura-mark .ap{color:var(--silver2);-webkit-text-fill-color:var(--silver2)}
+.aura-sub{margin-top:20px;font-family:var(--mono);font-size:clamp(8.5px,1.5vw,11px);
+  letter-spacing:.44em;text-transform:uppercase;color:var(--silver);opacity:.85}
+.gold-line{width:min(320px,64%);height:1px;margin:26px auto 0;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  box-shadow:0 0 14px rgba(201,162,39,.55)}
 
-/* faint drifting wisp texture riding above the plumes */
-.wisps{position:fixed;inset:-15%;z-index:1;pointer-events:none;opacity:.5;mix-blend-mode:screen;
-  background-image:
-    radial-gradient(ellipse 30% 14% at 20% 30%,rgba(200,196,204,.05),transparent 70%),
-    radial-gradient(ellipse 24% 18% at 70% 60%,rgba(200,196,204,.04),transparent 70%),
-    radial-gradient(ellipse 34% 12% at 45% 80%,rgba(200,196,204,.045),transparent 70%),
-    radial-gradient(ellipse 20% 22% at 85% 20%,rgba(200,196,204,.04),transparent 70%);
-  animation:wispdrift 90s linear infinite;filter:blur(18px)}
-@keyframes wispdrift{
-  0%{transform:translate(0,0) rotate(0deg)}
-  25%{transform:translate(-3vw,2vh) rotate(1deg)}
-  50%{transform:translate(2vw,-3vh) rotate(-1deg)}
-  75%{transform:translate(3vw,3vh) rotate(.6deg)}
-  100%{transform:translate(0,0) rotate(0deg)}}
-
-.grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.05;
-  background-image:radial-gradient(rgba(255,255,255,.9) .5px,transparent .5px);background-size:3px 3px}
-.vig{position:fixed;inset:0;z-index:2;pointer-events:none;
-  background:radial-gradient(ellipse at 50% 40%,transparent 38%,rgba(0,0,0,.62) 100%)}
-.wrap{position:relative;z-index:3}
-@media(prefers-reduced-motion:reduce){.smoke .plume,.wisps{animation:none!important}}
-
-/* ── type system ──────────────────────────────────── */
-.wordmark{font-weight:900;letter-spacing:.14em;text-transform:uppercase;line-height:.92}
-.wordmark em{font-style:normal;color:var(--ember)}
-.tag{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.32em;
-  text-transform:uppercase;color:var(--smoke)}
-.rule{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.3em;
-  text-transform:uppercase;color:var(--smoke);display:flex;align-items:center;gap:12px;margin-bottom:16px}
-.rule::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--ash2),transparent)}
-.rule .idx{color:var(--blood);font-weight:700}
-.prose{color:#B5B1B9;font-size:14.5px;line-height:1.7;max-width:64ch}
+/* ══ TYPE ══ */
+.rule{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--mut);display:flex;align-items:center;gap:11px;margin-bottom:18px}
+.rule::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--rim2),transparent)}
+.rule .ix{color:var(--gold)}
+.prose{color:#AEB4C2;font-size:14.5px;line-height:1.75;max-width:64ch}
 .mono{font-family:var(--mono)}
-.dim{color:var(--smoke)}
-.num{font-family:var(--mono);font-weight:700;font-variant-numeric:tabular-nums}
+.mut{color:var(--mut)}
+.h-serif{font-family:var(--disp);font-weight:800;letter-spacing:.02em}
 
-/* ── chrome ───────────────────────────────────────── */
-.bar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:20px;
-  padding:14px 24px;background:rgba(6,5,7,.86);backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--ash)}
-.bar-mark{font-weight:900;letter-spacing:.2em;font-size:12.5px;text-transform:uppercase}
-.bar-mark em{font-style:normal;color:var(--ember)}
+/* ══ NAV ══ */
+.bar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:14px;
+  padding:12px 20px;background:rgba(4,6,13,.9);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--rim)}
+.bar-mark{font-family:var(--disp);font-weight:900;font-size:13.5px;letter-spacing:.16em;
+  text-transform:uppercase;
+  background:linear-gradient(180deg,var(--gold3),var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 9px rgba(201,162,39,.5));white-space:nowrap}
 .nav{display:flex;gap:1px;margin-left:auto;flex-wrap:wrap}
-.nav button{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--smoke);padding:8px 13px;border:1px solid transparent;
-  border-radius:var(--r);transition:.18s}
-.nav button:hover{color:var(--bone);background:rgba(255,255,255,.035)}
-.nav button.on{color:var(--bone);border-color:var(--blood-dim);background:rgba(176,17,31,.12)}
-.nav .ct{color:var(--ember);margin-left:5px}
-.page{max-width:1320px;margin:0 auto;padding:36px 24px 100px}
+.nav button{font-family:var(--mono);font-size:9.5px;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--mut);padding:8px 11px;border:1px solid transparent;
+  border-radius:3px;transition:.16s}
+.nav button:hover{color:var(--bone);background:rgba(255,255,255,.04)}
+.nav button.on{color:var(--gold2);border-color:rgba(201,162,39,.4);background:rgba(201,162,39,.1)}
+.nav .bdg{color:var(--gold);margin-left:4px;font-size:9px}
+.pg{max-width:1340px;margin:0 auto;padding:34px 20px 110px}
 
-/* ── surfaces ─────────────────────────────────────── */
-.slab{background:linear-gradient(168deg,rgba(24,22,29,.7),rgba(11,10,14,.78));
-  border:1px solid var(--ash);border-radius:var(--r);backdrop-filter:blur(14px)}
-.p{padding:24px}
-.hr{height:1px;background:var(--ash);margin:22px 0}
+/* ══ QUOTA ══ */
+.quota{display:flex;align-items:center;gap:11px;padding:7px 13px;
+  border:1px solid rgba(201,162,39,.28);border-radius:4px;background:rgba(201,162,39,.06);
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;white-space:nowrap}
+.quota .qn{color:var(--gold2);font-weight:700}
+.quota .qbar{width:52px;height:3px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.quota .qbar i{display:block;height:100%;background:linear-gradient(90deg,var(--forest-lt),var(--gold2));transition:width .5s}
+.quota.warn{border-color:rgba(214,68,79,.45);background:rgba(139,21,32,.14)}
+.quota.warn .qn{color:var(--crim-lt)}
+.quota.warn .qbar i{background:linear-gradient(90deg,var(--gold),var(--crim-lt))}
 
-/* ── controls ─────────────────────────────────────── */
-.btn{background:var(--blood);color:#fff;border-radius:var(--r);padding:14px 26px;
-  font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.22em;
-  text-transform:uppercase;transition:.2s;border:1px solid var(--blood)}
-.btn:hover{background:var(--ember);border-color:var(--ember);box-shadow:0 0 32px rgba(176,17,31,.45)}
-.btn:disabled{opacity:.35;cursor:not-allowed;box-shadow:none}
-.btn.line{background:none;border-color:var(--ash2);color:var(--bone)}
-.btn.line:hover{border-color:var(--blood);background:rgba(176,17,31,.1);box-shadow:none}
-.btn.live{background:var(--live);border-color:var(--live);color:#05130C}
-.btn.live:hover{background:#63c491;border-color:#63c491;box-shadow:0 0 26px rgba(79,169,124,.4)}
-.btn.s{padding:9px 15px;font-size:9.5px;letter-spacing:.16em}
+/* ══ SURFACES ══ */
+.slab{background:linear-gradient(158deg,rgba(17,26,44,.72),rgba(7,11,22,.82));
+  border:1px solid var(--rim);border-radius:7px;backdrop-filter:blur(18px)}
+.pd{padding:24px}
+.hr{height:1px;background:var(--rim);margin:20px 0}
 
-.fld label{display:block;font-family:var(--mono);font-size:9.5px;font-weight:500;
-  letter-spacing:.24em;text-transform:uppercase;color:var(--smoke);margin-bottom:8px}
-.in{width:100%;background:rgba(0,0,0,.55);border:1px solid var(--ash);border-radius:var(--r);
-  padding:13px 14px;font-size:14.5px;outline:none;transition:.18s}
-.in:focus{border-color:var(--blood);box-shadow:0 0 0 3px rgba(176,17,31,.16);background:rgba(0,0,0,.7)}
-.in::placeholder{color:var(--smoke2)}
-select.in{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--smoke) 50%),linear-gradient(135deg,var(--smoke) 50%,transparent 50%);
-  background-position:calc(100% - 18px) center,calc(100% - 13px) center;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
-.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+/* ══ BUTTONS ══ */
+.btn{background:linear-gradient(140deg,var(--gold2),var(--gold));color:#150F00;
+  border-radius:4px;padding:14px 28px;font-weight:800;font-size:11px;
+  letter-spacing:.17em;text-transform:uppercase;transition:.2s;white-space:nowrap}
+.btn:hover{box-shadow:0 0 34px rgba(201,162,39,.42);filter:brightness(1.07)}
+.btn:disabled{opacity:.32;cursor:not-allowed;box-shadow:none;filter:none}
+.btn.ln{background:none;border:1px solid rgba(154,168,184,.3);color:var(--silver2)}
+.btn.ln:hover{border-color:var(--gold);color:var(--gold2);background:rgba(201,162,39,.08);box-shadow:none}
+.btn.grn{background:linear-gradient(140deg,var(--forest-lt),var(--forest2));color:#02120A}
+.btn.grn:hover{box-shadow:0 0 26px rgba(63,165,116,.38)}
+.btn.blu{background:linear-gradient(140deg,var(--navy-lt),var(--navy2));color:#01121F}
+.btn.blu:hover{box-shadow:0 0 26px rgba(61,130,196,.38)}
+.btn.red{background:linear-gradient(140deg,var(--crim-lt),var(--crim2));color:#fff}
+.btn.red:hover{box-shadow:0 0 26px rgba(214,68,79,.38)}
+.btn.s{padding:9px 15px;font-size:9.5px;letter-spacing:.14em}
+
+/* ══ FIELDS ══ */
+.lb{display:block;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+.in{width:100%;background:rgba(0,0,0,.5);border:1px solid var(--rim);border-radius:4px;
+  padding:12px 14px;font-size:14.5px;outline:none;transition:.18s}
+.in:focus{border-color:rgba(201,162,39,.5);box-shadow:0 0 0 3px rgba(201,162,39,.12);background:rgba(0,0,0,.66)}
+.in::placeholder{color:var(--mut2)}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
 
 .chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{background:rgba(255,255,255,.025);border:1px solid var(--ash);color:#9A96A2;
-  border-radius:var(--r);padding:8px 12px;font-family:var(--mono);font-size:10.5px;
-  letter-spacing:.06em;transition:.16s}
-.chip:hover{border-color:var(--ash2);color:var(--bone)}
-.chip.on{background:rgba(176,17,31,.18);border-color:var(--blood);color:#fff}
+.chip{background:rgba(255,255,255,.03);border:1px solid var(--rim);color:#7C8496;
+  border-radius:4px;padding:8px 12px;font-family:var(--mono);font-size:10px;transition:.15s}
+.chip:hover{border-color:var(--rim2);color:var(--bone)}
+.chip.on{background:rgba(201,162,39,.14);border-color:rgba(201,162,39,.5);color:var(--gold2)}
 
-.sw{display:flex;align-items:center;gap:12px;padding:14px 15px;background:rgba(0,0,0,.42);
-  border:1px solid var(--ash);border-radius:var(--r);cursor:pointer;transition:.18s}
-.sw:hover{border-color:var(--ash2)}
-.sw.on{border-color:rgba(79,169,124,.5);background:rgba(79,169,124,.07)}
-.sw .box{width:16px;height:16px;border:1px solid var(--ash2);border-radius:1px;flex-shrink:0;
+.sw{display:flex;align-items:center;gap:12px;padding:14px 15px;background:rgba(0,0,0,.4);
+  border:1px solid var(--rim);border-radius:4px;cursor:pointer;transition:.16s}
+.sw.on{border-color:rgba(63,165,116,.42);background:rgba(13,51,32,.3)}
+.sw .bx{width:17px;height:17px;border:1px solid var(--rim2);border-radius:3px;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;transition:.18s}
-.sw.on .box{background:var(--live);border-color:var(--live);color:#05130C}
-.sw .t{font-size:13px;font-weight:500}
-.sw .s{font-family:var(--mono);font-size:10px;color:var(--smoke);margin-top:3px;letter-spacing:.04em}
+.sw.on .bx{background:var(--forest-lt);border-color:var(--forest-lt);color:#02120A}
+.sw .t{font-size:13px;font-weight:600}
+.sw .s{font-family:var(--mono);font-size:10px;color:var(--mut);margin-top:3px}
 
-/* ── status marks ─────────────────────────────────── */
-.mark{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9px;
-  font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:4px 8px;
-  border-radius:1px;border:1px solid;white-space:nowrap}
-.m-hot{color:#fff;border-color:var(--blood);background:var(--blood)}
-.m-warm{color:var(--caution);border-color:rgba(201,146,47,.45);background:rgba(201,146,47,.1)}
-.m-cold{color:var(--steel);border-color:rgba(110,130,152,.4);background:rgba(110,130,152,.08)}
-.m-live{color:var(--live);border-color:rgba(79,169,124,.45);background:rgba(79,169,124,.09)}
-.yes{color:var(--live)}.no{color:var(--ember)}.unk{color:var(--smoke)}
+/* ══ MARKS ══ */
+.mk{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:8.5px;
+  font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:4px 9px;
+  border-radius:3px;border:1px solid;white-space:nowrap}
+.mk-hot{color:#150F00;border-color:var(--gold);background:linear-gradient(135deg,var(--gold2),var(--gold))}
+.mk-warm{color:var(--silver2);border-color:rgba(154,168,184,.42);background:rgba(154,168,184,.1)}
+.mk-cold{color:var(--navy-lt);border-color:rgba(61,130,196,.4);background:rgba(15,42,74,.32)}
+.mk-go{color:var(--forest-lt);border-color:rgba(63,165,116,.42);background:rgba(13,51,32,.4)}
+.mk-no{color:var(--crim-lt);border-color:rgba(214,68,79,.4);background:rgba(90,14,20,.35)}
+.yes{color:var(--forest-lt)}.no{color:var(--crim-lt)}.unk{color:var(--mut)}
 
-/* ── SIGNATURE: signal meter ──────────────────────── */
-.sig{display:flex;gap:2px;align-items:flex-end;height:16px}
-.sig s{display:block;width:100%;flex:1;background:var(--ash2);border-radius:.5px;
-  transform-origin:bottom;transition:background .3s}
-.sig s.f{background:var(--steel)}
-.sig.hot s.f{background:var(--ember);box-shadow:0 0 6px rgba(255,59,71,.5)}
-.sig.warm s.f{background:var(--caution)}
-.sig-wrap{display:flex;align-items:center;gap:12px}
-.sig-val{font-family:var(--mono);font-weight:700;font-size:13px;font-variant-numeric:tabular-nums;
-  min-width:52px;text-align:right;letter-spacing:.04em}
+/* ══ SIGNAL METER ══ */
+.sig{display:flex;gap:2px;align-items:flex-end;height:20px;flex:1}
+.sig s{display:block;flex:1;min-width:2px;background:var(--rim2);border-radius:.5px;transition:.3s}
+.sig s.f{background:var(--navy-lt)}
+.sig.warm s.f{background:var(--silver)}
+.sig.hot s.f{background:linear-gradient(180deg,var(--gold3),var(--gold));box-shadow:0 0 6px rgba(240,206,90,.55)}
+.sigrow{display:flex;align-items:center;gap:12px;margin:14px 0}
+.sigv{font-family:var(--mono);font-weight:700;font-size:14px;min-width:54px;text-align:right;
+  font-variant-numeric:tabular-nums}
 
-/* ── file stamp ───────────────────────────────────── */
-.stamp{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.2em;
-  color:var(--smoke2);text-transform:uppercase}
-
-/* ── hero ─────────────────────────────────────────── */
-.hero{max-width:1320px;margin:0 auto;padding:clamp(56px,13vh,140px) 24px 64px}
-.hero .wordmark{font-size:clamp(38px,9.5vw,116px);animation:settle 1.2s cubic-bezier(.2,.8,.2,1) both}
-@keyframes settle{from{letter-spacing:.34em;opacity:0}to{letter-spacing:.14em;opacity:1}}
-.thesis{font-size:clamp(24px,4.4vw,46px);font-weight:800;letter-spacing:-.02em;line-height:1.06;
-  animation:rise .9s .3s cubic-bezier(.2,.8,.2,1) both}
-@keyframes rise{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
-.hero .prose{animation:rise .9s .45s cubic-bezier(.2,.8,.2,1) both}
-.hero .cta{animation:rise .9s .6s cubic-bezier(.2,.8,.2,1) both}
-.readout{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--ash);border-radius:var(--r);
-  overflow:hidden;animation:rise .9s .75s cubic-bezier(.2,.8,.2,1) both}
-.readout div{flex:1;min-width:150px;padding:18px 20px;border-right:1px solid var(--ash);background:rgba(10,9,13,.55)}
-.readout div:last-child{border-right:none}
-.readout .k{font-family:var(--mono);font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--smoke)}
-.readout .v{font-size:13.5px;margin-top:8px;color:#C6C2CA;line-height:1.5}
-
-/* ── scan terminal ────────────────────────────────── */
-.scan{position:relative;border:1px solid var(--ash);border-radius:var(--r);
-  background:rgba(3,3,5,.94);overflow:hidden}
-.scan::before{content:"";position:absolute;left:0;right:0;height:1px;z-index:2;
-  background:linear-gradient(90deg,transparent,var(--ember),transparent);
-  box-shadow:0 0 12px var(--ember);animation:sweep 3s linear infinite}
+/* ══ TERMINAL ══ */
+.scan{position:relative;border:1px solid rgba(201,162,39,.24);border-radius:7px;
+  background:rgba(2,3,9,.96);overflow:hidden}
+.scan::before{content:'';position:absolute;left:0;right:0;height:1px;z-index:2;
+  background:linear-gradient(90deg,transparent,var(--gold2),transparent);
+  box-shadow:0 0 12px rgba(240,206,90,.7);animation:sweep 3s linear infinite}
 @keyframes sweep{0%{top:-1px;opacity:0}8%{opacity:1}92%{opacity:1}100%{top:100%;opacity:0}}
-.scan-hd{display:flex;align-items:center;gap:10px;padding:12px 20px;border-bottom:1px solid var(--ash);
-  font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--smoke)}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--ember);animation:blink 1.4s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-.scan-body{padding:20px;font-family:var(--mono);font-size:12px;line-height:2.1;max-height:380px;overflow:auto}
-.ln{display:flex;gap:14px;color:var(--smoke)}
-.ln .ts{color:var(--smoke2);flex-shrink:0}
-.ln b{font-weight:400;color:#B8B4BE}
-.ln.hit b{color:var(--ember)}
-.ln.ok b{color:var(--live)}
-.cursor::after{content:"▊";color:var(--ember);animation:blink 1s infinite;margin-left:2px}
-.track{height:1px;background:var(--ash);overflow:hidden}
-.track i{display:block;height:100%;background:linear-gradient(90deg,var(--blood-dim),var(--ember));
-  box-shadow:0 0 10px rgba(255,59,71,.5);transition:width .6s cubic-bezier(.4,0,.2,1)}
+.scan-hd{display:flex;align-items:center;gap:9px;padding:11px 19px;border-bottom:1px solid var(--rim);
+  font-family:var(--mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--mut)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--gold2);
+  box-shadow:0 0 8px var(--gold2);animation:blink 1.3s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.scan-bd{padding:19px;font-family:var(--mono);font-size:11.5px;line-height:2.05;
+  max-height:380px;overflow-y:auto}
+.scan-bd::-webkit-scrollbar{width:4px}
+.scan-bd::-webkit-scrollbar-thumb{background:var(--rim2);border-radius:2px}
+.ln{display:flex;gap:13px}
+.ln .ts{color:var(--mut2);flex-shrink:0;font-size:10px}
+.ln b{font-weight:400;color:#96A0B4}
+.ln.ok b{color:var(--forest-lt)}
+.ln.hit b{color:var(--gold2)}
+.ln.err b{color:var(--crim-lt)}
+.track{height:2px;background:var(--rim);overflow:hidden;margin-top:15px;border-radius:2px}
+.track i{display:block;height:100%;
+  background:linear-gradient(90deg,var(--crim2),var(--gold),var(--forest-lt));
+  box-shadow:0 0 10px rgba(201,162,39,.5);transition:width .6s cubic-bezier(.4,0,.2,1)}
 
-/* ── metrics ──────────────────────────────────────── */
-.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:1px;
-  background:var(--ash);border:1px solid var(--ash);border-radius:var(--r);overflow:hidden}
-.met{background:var(--carbon);padding:18px 16px;position:relative}
-.met::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--ash2)}
-.met.hot::before{background:var(--blood)}
-.met.live::before{background:var(--live)}
-.met .n{font-family:var(--mono);font-weight:700;font-size:27px;line-height:1;font-variant-numeric:tabular-nums}
-.met.hot .n{color:var(--ember)}
-.met.live .n{color:var(--live)}
-.met .k{font-family:var(--mono);font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--smoke);margin-top:10px}
+/* ══ METRICS ══ */
+.mets{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;
+  background:var(--rim);border:1px solid var(--rim);border-radius:7px;overflow:hidden}
+.met{background:var(--panel);padding:17px 15px;position:relative}
+.met::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--rim2)}
+.met.g::before{background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.met.b::before{background:linear-gradient(90deg,var(--navy2),var(--navy-lt))}
+.met.r::before{background:linear-gradient(90deg,var(--crim2),var(--crim-lt))}
+.met.e::before{background:linear-gradient(90deg,var(--forest2),var(--forest-lt))}
+.met .n{font-family:var(--mono);font-weight:700;font-size:26px;line-height:1;font-variant-numeric:tabular-nums}
+.met.g .n{color:var(--gold2)}.met.b .n{color:var(--navy-lt)}
+.met.r .n{color:var(--crim-lt)}.met.e .n{color:var(--forest-lt)}
+.met .k{font-family:var(--mono);font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--mut);margin-top:10px}
 
-/* ── dossier cards ────────────────────────────────── */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
-.file{position:relative;background:linear-gradient(168deg,rgba(24,22,29,.72),rgba(10,9,13,.8));
-  border:1px solid var(--ash);border-left:3px solid var(--ash2);border-radius:var(--r);
-  padding:20px;cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s}
-.file:hover{transform:translateY(-3px);border-color:var(--ash2)}
-.file.hot{border-left-color:var(--blood)}
-.file.hot:hover{border-left-color:var(--ember);box-shadow:0 8px 40px rgba(176,17,31,.22)}
-.file.warm{border-left-color:var(--caution)}
-.file.cold{border-left-color:var(--steel)}
-.file-hd{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:14px}
-.file h3{font-size:16px;font-weight:700;line-height:1.25;letter-spacing:-.01em;margin-bottom:5px}
-.file .loc{font-family:var(--mono);font-size:10.5px;color:var(--smoke);letter-spacing:.04em}
-.rows{border-top:1px solid var(--ash);padding-top:12px;margin-top:14px}
-.row{display:flex;justify-content:space-between;gap:12px;padding:5px 0;font-size:13px}
-.row .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--smoke);white-space:nowrap}
-.row .v{text-align:right}
-.dial{display:block;margin-top:14px;padding:11px;border:1px solid rgba(79,169,124,.35);
-  background:rgba(79,169,124,.08);border-radius:var(--r);text-align:center;
-  font-family:var(--mono);font-size:12.5px;font-weight:700;letter-spacing:.06em;color:var(--live);transition:.16s}
-.dial:hover{background:rgba(79,169,124,.18);text-decoration:none}
-.dial.off{border-color:var(--ash);background:none;color:var(--smoke2);font-weight:400;cursor:default}
+/* ══ CARDS ══ */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px}
+.card{background:linear-gradient(158deg,rgba(17,26,44,.74),rgba(6,9,18,.84));
+  border:1px solid var(--rim);border-left:3px solid var(--mut2);border-radius:7px;
+  padding:21px;cursor:pointer;display:flex;flex-direction:column;
+  transition:transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-3px);border-color:var(--rim2)}
+.card.hot{border-left-color:var(--gold)}
+.card.hot:hover{box-shadow:0 14px 52px rgba(201,162,39,.2)}
+.card.warm{border-left-color:var(--silver)}
+.card.cold{border-left-color:var(--navy-lt)}
+.card h3{font-size:16px;font-weight:700;line-height:1.25;margin-bottom:5px;letter-spacing:-.01em}
+.card .loc{font-family:var(--mono);font-size:10px;color:var(--mut);letter-spacing:.04em}
+.rows{border-top:1px solid var(--rim);padding-top:12px;margin-top:14px;flex:1}
+.row{display:flex;justify-content:space-between;gap:11px;padding:5px 0;font-size:12.5px}
+.row .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--mut);white-space:nowrap}
+.row .v{text-align:right;min-width:0;overflow-wrap:anywhere}
+.dial{display:block;margin-top:14px;padding:12px;text-align:center;border-radius:4px;
+  border:1px solid rgba(63,165,116,.38);background:rgba(13,51,32,.38);
+  font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--forest-lt);transition:.16s}
+.dial:hover{background:rgba(21,82,56,.55);text-decoration:none}
+.dial.off{border-color:var(--rim);background:none;color:var(--mut2);font-weight:400;cursor:default}
 
-/* ── table ────────────────────────────────────────── */
-.tbl{overflow-x:auto;border:1px solid var(--ash);border-radius:var(--r);background:rgba(10,9,13,.6)}
-table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:960px}
+/* ══ TABLE ══ */
+.tbl{overflow-x:auto;border:1px solid var(--rim);border-radius:7px;background:rgba(7,11,22,.66)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:1000px}
 th{text-align:left;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--smoke);padding:14px;border-bottom:1px solid var(--ash2);
-  white-space:nowrap;cursor:pointer;background:rgba(0,0,0,.45);position:sticky;top:0}
-th:hover{color:var(--bone)}
-td{padding:12px 14px;border-bottom:1px solid rgba(34,31,39,.7)}
+  text-transform:uppercase;color:var(--mut);padding:14px;border-bottom:1px solid var(--rim2);
+  white-space:nowrap;cursor:pointer;background:rgba(0,0,0,.5);position:sticky;top:0}
+th:hover{color:var(--gold2)}
+td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.04)}
 td.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
-tbody tr{cursor:pointer;transition:.14s}
-tbody tr:hover{background:rgba(176,17,31,.07)}
+tbody tr{cursor:pointer;transition:.13s}
+tbody tr:hover{background:rgba(201,162,39,.06)}
 
-/* ── drawer ───────────────────────────────────────── */
-.scrim{position:fixed;inset:0;background:rgba(3,3,5,.82);backdrop-filter:blur(5px);z-index:60;
-  animation:fade .22s}
+/* ══ DRAWER ══ */
+.scrim{position:fixed;inset:0;background:rgba(2,3,9,.86);backdrop-filter:blur(6px);
+  z-index:70;animation:fade .22s}
 @keyframes fade{from{opacity:0}to{opacity:1}}
-.dossier{position:fixed;top:0;right:0;bottom:0;width:min(780px,100%);background:#08070A;
-  border-left:1px solid var(--ash2);z-index:61;overflow-y:auto;
-  animation:slide .3s cubic-bezier(.2,.8,.2,1)}
-@keyframes slide{from{transform:translateX(30px);opacity:.5}to{transform:none;opacity:1}}
-.d-hd{position:sticky;top:0;z-index:2;padding:24px 28px;background:rgba(8,7,10,.96);
-  backdrop-filter:blur(12px);border-bottom:1px solid var(--ash)}
-.d-body{padding:0 28px 80px}
-.sect{border-top:1px solid var(--ash);padding:26px 0}
+.dsr{position:fixed;top:0;right:0;bottom:0;width:min(820px,100%);
+  background:linear-gradient(180deg,#0A0F1C,#06080F);border-left:1px solid rgba(201,162,39,.2);
+  z-index:71;overflow-y:auto;animation:slide .3s cubic-bezier(.2,.8,.2,1)}
+@keyframes slide{from{transform:translateX(34px);opacity:.4}to{transform:none;opacity:1}}
+.dsr::-webkit-scrollbar{width:4px}
+.dsr::-webkit-scrollbar-thumb{background:var(--rim2)}
+.dhd{position:sticky;top:0;z-index:2;padding:24px 27px;background:rgba(8,11,20,.97);
+  backdrop-filter:blur(16px);border-bottom:1px solid rgba(201,162,39,.16)}
+.dbd{padding:0 27px 90px}
+.sect{border-top:1px solid var(--rim);padding:26px 0}
 .sect:first-child{border-top:none}
-.x{border:1px solid var(--ash);color:var(--smoke);border-radius:var(--r);width:32px;height:32px;
+.xb{border:1px solid var(--rim);color:var(--mut);border-radius:4px;width:33px;height:33px;
   font-size:15px;transition:.16s;flex-shrink:0}
-.x:hover{color:#fff;border-color:var(--blood);background:rgba(176,17,31,.12)}
-ul.t{margin:0;padding-left:18px;line-height:1.8;font-size:13.5px}
+.xb:hover{color:#fff;border-color:rgba(201,162,39,.5);background:rgba(201,162,39,.1)}
+.ev{list-style:none;padding:0;font-size:13.5px;line-height:1.95}
+.ev li::before{content:"✓";color:var(--forest-lt);margin-right:10px;font-family:var(--mono);font-size:11px}
+.ev li.b::before{content:"×";color:var(--mut2)}
+.ev li.q::before{content:"?";color:var(--gold)}
+.gauge{display:flex;align-items:center;gap:14px;padding:6px 0}
+.gauge .gk{width:140px;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--mut)}
+.gauge .gb{flex:1;height:3px;background:var(--rim);border-radius:2px;overflow:hidden}
+.gauge .gb i{display:block;height:100%;border-radius:2px;
+  background:linear-gradient(90deg,var(--crim2),var(--gold))}
+.gauge .gv{width:52px;text-align:right;font-family:var(--mono);font-size:11px;font-variant-numeric:tabular-nums}
+.pull{border-left:2px solid var(--gold);padding:13px 0 13px 19px;font-size:14.5px;
+  line-height:1.72;color:#CFD4DE;font-style:italic}
+.warnb{border:1px solid rgba(214,68,79,.28);background:rgba(90,14,20,.2);border-radius:5px;
+  padding:15px 17px;font-size:13px;line-height:1.68}
+.infob{border:1px solid rgba(63,165,116,.3);background:rgba(13,51,32,.3);border-radius:5px;
+  padding:15px 17px;font-size:13.5px;line-height:1.65;color:#9FD8BB}
+.goldb{border:1px solid rgba(201,162,39,.32);background:rgba(201,162,39,.07);border-radius:5px;
+  padding:15px 17px;font-size:13.5px;line-height:1.68;color:var(--gold3)}
+ul.t{margin:0;padding-left:19px;line-height:1.85;font-size:13.5px}
 ul.t li{margin-bottom:4px}
-.ev{list-style:none;padding:0;font-size:13.5px;line-height:2}
-.ev li::before{content:"✓";color:var(--live);margin-right:10px;font-family:var(--mono);font-size:11px}
-.ev li.n::before{content:"×";color:var(--smoke2)}
-.ev li.q::before{content:"?";color:var(--caution)}
-.gauge{display:flex;align-items:center;gap:14px;padding:6px 0;font-size:12.5px}
-.gauge .g-k{width:158px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--smoke)}
-.gauge .g-b{flex:1;height:3px;background:rgba(255,255,255,.055);overflow:hidden}
-.gauge .g-b i{display:block;height:100%;background:var(--blood)}
-.gauge .g-v{width:54px;text-align:right;font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums}
-.pull{border-left:2px solid var(--blood);padding:12px 0 12px 18px;font-size:14.5px;line-height:1.7;
-  color:#CFCAD4;font-style:italic}
-.caution{border:1px solid rgba(201,146,47,.32);background:rgba(201,146,47,.06);border-radius:var(--r);
-  padding:15px 17px;font-size:13px;line-height:1.65}
-.confirm{border:1px solid rgba(79,169,124,.32);background:rgba(79,169,124,.06);border-radius:var(--r);
-  padding:15px 17px;font-size:13.5px;line-height:1.6;color:#9FD3B7}
-.big{font-family:var(--mono);font-weight:700;font-size:30px;line-height:1;font-variant-numeric:tabular-nums}
+.big{font-family:var(--mono);font-weight:700;font-size:30px;line-height:1;
+  font-variant-numeric:tabular-nums;color:var(--gold2)}
 
-/* ── misc ─────────────────────────────────────────── */
-.void{text-align:center;padding:88px 20px;color:var(--smoke)}
-.void h3{color:var(--bone);font-size:19px;margin-bottom:10px;font-weight:700}
-.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--slab);
-  border:1px solid var(--blood-dim);border-radius:var(--r);padding:13px 22px;
-  font-family:var(--mono);font-size:12px;letter-spacing:.06em;z-index:90;animation:fade .2s}
-.note{font-family:var(--mono);font-size:10.5px;color:var(--smoke);line-height:1.7;letter-spacing:.02em}
-.sel{background:rgba(0,0,0,.5);border:1px solid var(--ash);border-radius:var(--r);
-  padding:8px 10px;font-family:var(--mono);font-size:11px}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(184px,1fr));gap:1px;
-  background:var(--ash);border:1px solid var(--ash);border-radius:var(--r);overflow:hidden}
-.stp{background:#0A090D;padding:24px 20px}
-.stp .i{font-family:var(--mono);font-size:9.5px;color:var(--blood);letter-spacing:.28em;font-weight:700}
-.stp h4{margin:12px 0 8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
-.stp p{font-size:12.5px;color:var(--smoke);line-height:1.65}
+/* ══ BRIEF BOX ══ */
+.brief{background:rgba(2,4,10,.7);border:1px solid rgba(201,162,39,.22);border-radius:6px;
+  padding:18px;font-family:var(--mono);font-size:11.5px;line-height:1.85;color:#B6BECC;
+  white-space:pre-wrap;max-height:420px;overflow-y:auto}
+.brief::-webkit-scrollbar{width:4px}
+.brief::-webkit-scrollbar-thumb{background:var(--rim2)}
 
-@media(max-width:860px){.g4,.g3{grid-template-columns:repeat(2,1fr)}.page{padding:26px 16px 80px}
-  .d-hd,.d-body{padding-left:18px;padding-right:18px}}
-@media(max-width:540px){.g4,.g3,.g2{grid-template-columns:1fr}.nav button{padding:7px 9px;font-size:9px}
-  .bar{padding:12px 16px;gap:12px}.gauge .g-k{width:110px}}
+/* ══ MOTIVATION ══ */
+.motiv{position:relative;border:1px solid rgba(201,162,39,.22);border-radius:7px;
+  padding:24px 26px;background:linear-gradient(140deg,rgba(201,162,39,.07),rgba(7,11,22,.55));
+  overflow:hidden}
+.motiv::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,var(--gold2),transparent)}
+.motiv .mk-lbl{font-family:var(--mono);font-size:8.5px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:12px}
+.motiv p{font-family:var(--disp);font-size:clamp(15px,2.1vw,19px);line-height:1.6;
+  color:var(--gold3);font-weight:700}
+.motiv .sub{font-family:var(--sans);font-size:13px;color:var(--mut);margin-top:12px;
+  line-height:1.65;font-weight:400}
+
+/* ══ MISC ══ */
+.void-st{text-align:center;padding:92px 20px;color:var(--mut)}
+.void-st h3{color:var(--bone);font-size:20px;margin-bottom:10px;font-weight:700}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--rise);
+  border:1px solid rgba(201,162,39,.4);border-radius:4px;padding:13px 22px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;z-index:95;
+  color:var(--gold2);animation:fade .2s;white-space:nowrap;max-width:92vw;overflow:hidden;
+  text-overflow:ellipsis}
+.note{font-family:var(--mono);font-size:10.5px;color:var(--mut);line-height:1.72}
+.sel{background:rgba(0,0,0,.5);border:1px solid var(--rim);border-radius:4px;padding:8px 11px;
+  font-family:var(--mono);font-size:10.5px;cursor:pointer}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:1px;
+  background:var(--rim);border:1px solid var(--rim);border-radius:7px;overflow:hidden}
+.stp{background:#080C17;padding:23px 19px}
+.stp .si{font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:.3em;
+  font-weight:700;margin-bottom:12px}
+.stp h4{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;margin-bottom:8px}
+.stp p{font-size:12.5px;color:var(--mut);line-height:1.68}
+.readout{display:flex;flex-wrap:wrap;border:1px solid var(--rim);border-radius:7px;
+  overflow:hidden;margin-bottom:42px}
+.readout>div{flex:1;min-width:168px;padding:19px 21px;border-right:1px solid var(--rim);
+  background:rgba(9,13,25,.6)}
+.readout>div:last-child{border-right:none}
+.readout .rk{font-family:var(--mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:9px}
+.readout .rv{font-size:13px;color:#AEB4C2;line-height:1.6}
+
+@media(max-width:880px){.g4,.g3{grid-template-columns:repeat(2,1fr)}.pg{padding:26px 15px 90px}
+  .dhd,.dbd{padding-left:18px;padding-right:18px}}
+@media(max-width:560px){.g4,.g3,.g2{grid-template-columns:1fr}
+  .nav button{padding:7px 8px;font-size:9px}.bar{padding:11px 13px;gap:9px}
+  .gauge .gk{width:104px}.quota{padding:6px 10px;font-size:9px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 
-<div class="atmos"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
-<div class="smoke">
-  <div class="plume p1"></div>
-  <div class="plume p2"></div>
-  <div class="plume p3"></div>
-  <div class="plume p4"></div>
-  <div class="plume p5"></div>
-</div>
-<div class="wisps"></div>
-<div class="grain"></div><div class="vig"></div>
+<div class="atmos"></div><div class="grain"></div><div class="vig"></div>
 
-<div class="wrap">
+<div class="z">
 
-<!-- ══ LANDING ══ -->
+<!-- ════════ LANDING ════════ -->
 <div id="v-landing">
-  <div class="hero">
-    <div class="tag" style="margin-bottom:22px">Lead Intelligence Terminal</div>
-    <h1 class="wordmark">Ramel'<em>s</em><br>Vision</h1>
-    <div style="height:36px"></div>
-    <h2 class="thesis">Find the lead.<br>Know the business.<br><span style="color:var(--ember)">Close the deal.</span></h2>
-    <div style="height:24px"></div>
-    <p class="prose">Pull up to 200 local businesses at once. Every one arrives with a verified phone number, a full read on what's missing from their online setup, and the exact angle to open the call with.</p>
-    <div style="height:34px"></div>
-    <div class="cta"><button class="btn" onclick="go('app')">Open terminal</button></div>
+  <div class="aura-stage">
+    <div class="halo"></div>
+    <h1 class="aura-mark">Ramel<span class="ap">&#8217;</span>s Vision</h1>
+    <div class="aura-sub">Lead Intelligence &middot; Built To Close</div>
+    <div class="gold-line"></div>
   </div>
-  <div class="page" style="padding-top:0">
-    <div class="rule"><span class="idx">§</span>Operating principle</div>
-    <div class="readout">
-      <div><div class="k">Verified only</div><div class="v">Phone numbers, ratings, and review counts come straight from the listing. Nothing is generated.</div></div>
-      <div><div class="k">Absence is stated carefully</div><div class="v">"No website found in sources checked" — never "they have no website."</div></div>
-      <div><div class="k">Owners are never guessed</div><div class="v">If no source names a decision maker, the field reads unverified. Ask on the call.</div></div>
-      <div><div class="k">Scoring is explainable</div><div class="v">Every point in the 100-point model traces to a category you can see.</div></div>
+
+  <div class="pg" style="padding-top:8px">
+    <div style="max-width:900px;margin:0 auto 46px;text-align:center">
+      <p class="prose" style="margin:0 auto;font-size:16px">
+        Find local businesses with weak online presence, get a verified phone number for every one,
+        and walk into the call already knowing what they're missing and exactly what to pitch.
+        Every lead comes with a full website brief you can hand straight to your build system.
+      </p>
+      <div style="height:30px"></div>
+      <button class="btn" onclick="go('app')">Enter the terminal</button>
     </div>
-    <div style="height:44px"></div>
-    <div class="rule"><span class="idx">§</span>The run</div>
+
+    <div id="motiv-landing" style="margin-bottom:44px"></div>
+
+    <div class="rule"><span class="ix">&sect;</span>What you get on every lead</div>
+    <div class="readout">
+      <div><div class="rk">Verified phone</div><div class="rv">Every lead has a real, dialable number pulled from their live listing. No number, no lead.</div></div>
+      <div><div class="rk">Website brief</div><div class="rv">A full build brief per business — copy it straight into your site builder and go.</div></div>
+      <div><div class="rk">The gap</div><div class="rv">Exactly what they're missing online, and the offer that fits it.</div></div>
+      <div><div class="rk">Nothing invented</div><div class="rv">Owner names and emails show only when a real source has them. Never guessed.</div></div>
+    </div>
+
+    <div class="rule"><span class="ix">&sect;</span>The run</div>
     <div class="steps">
-      <div class="stp"><div class="i">01</div><h4>Sweep</h4><p>Multiple queries pull every matching business in the area.</p></div>
-      <div class="stp"><div class="i">02</div><h4>Verify</h4><p>Phone, website, booking, socials, and reputation checked.</p></div>
-      <div class="stp"><div class="i">03</div><h4>Score</h4><p>Digital gaps weighed against business strength.</p></div>
-      <div class="stp"><div class="i">04</div><h4>Rank</h4><p>Strong reputation plus weak online setup rises to the top.</p></div>
-      <div class="stp"><div class="i">05</div><h4>Dial</h4><p>Open the file, read the angle, tap the number.</p></div>
+      <div class="stp"><div class="si">01</div><h4>Sweep</h4><p>Pull every matching business in the area you target.</p></div>
+      <div class="stp"><div class="si">02</div><h4>Verify</h4><p>Phone, website, booking, socials, reviews, years open.</p></div>
+      <div class="stp"><div class="si">03</div><h4>Score</h4><p>Digital gaps weighed against real business strength.</p></div>
+      <div class="stp"><div class="si">04</div><h4>Brief</h4><p>Auto-written website brief for every single lead.</p></div>
+      <div class="stp"><div class="si">05</div><h4>Close</h4><p>Open the file, read the angle, tap the number, get paid.</p></div>
     </div>
   </div>
 </div>
 
-<!-- ══ APP ══ -->
+<!-- ════════ APP ════════ -->
 <div id="v-app" style="display:none">
   <header class="bar">
-    <button class="bar-mark" onclick="go('landing')">Ramel'<em>s</em> Vision</button>
+    <button class="bar-mark" onclick="go('landing')">Ramel&#8217;s Vision</button>
+    <div class="quota" id="quota-chip" title="Daily lead limit">
+      <span id="q-text"></span>
+      <span class="qbar"><i id="q-bar"></i></span>
+    </div>
     <nav class="nav">
-      <button onclick="tab('search')" id="t-search" class="on">Search</button>
+      <button onclick="tab('search')"  id="t-search"  class="on">Search</button>
       <button onclick="tab('results')" id="t-results">Results</button>
-      <button onclick="tab('saved')" id="t-saved">Files</button>
+      <button onclick="tab('saved')"   id="t-saved">Saved</button>
       <button onclick="tab('history')" id="t-history">History</button>
-      <button onclick="tab('settings')" id="t-settings">Setup</button>
+      <button onclick="tab('setup')"   id="t-setup">Setup</button>
     </nav>
   </header>
 
-  <main class="page">
+  <main class="pg">
 
-    <!-- SEARCH -->
+    <!-- ── SEARCH ── -->
     <div id="p-search">
-      <div class="rule"><span class="idx">§01</span>Target parameters</div>
-      <div class="slab p">
+      <div id="motiv-app" style="margin-bottom:26px"></div>
+
+      <div class="rule"><span class="ix">&sect;01</span>Target</div>
+      <div class="slab pd">
         <div class="g4">
-          <div class="fld"><label>Trade</label><input class="in" id="f-niche" value="Plumbers" list="nl">
-            <datalist id="nl"><option>Plumbers</option><option>Roofers</option><option>HVAC</option><option>Dentists</option><option>Electricians</option><option>Landscapers</option><option>Auto Detailers</option><option>Barbers</option><option>Med Spas</option><option>Pressure Washers</option><option>Chiropractors</option><option>Nail Salons</option><option>Gyms</option><option>Auto Repair</option><option>Pest Control</option><option>Towing</option><option>Locksmiths</option><option>Movers</option><option>Painters</option><option>Restaurants</option></datalist></div>
-          <div class="fld"><label>State</label><input class="in" id="f-state" value="California"></div>
-          <div class="fld"><label>City</label><input class="in" id="f-city" value="San Jose"></div>
-          <div class="fld"><label>Volume</label><select class="in" id="f-count">
-            <option value="10">10 leads</option><option value="25">25 leads</option>
-            <option value="50" selected>50 leads</option><option value="100">100 leads</option>
-            <option value="150">150 leads</option><option value="200">200 leads</option></select></div>
+          <div><label class="lb">Trade</label>
+            <input class="in" id="f-niche" value="Plumbers" list="nl" placeholder="Plumbers">
+            <datalist id="nl">
+              <option>Plumbers</option><option>Roofers</option><option>HVAC</option>
+              <option>Electricians</option><option>Landscapers</option><option>Dentists</option>
+              <option>Auto Detailers</option><option>Barbers</option><option>Med Spas</option>
+              <option>Pressure Washers</option><option>Chiropractors</option><option>Nail Salons</option>
+              <option>Gyms</option><option>Auto Repair</option><option>Pest Control</option>
+              <option>Towing</option><option>Locksmiths</option><option>Movers</option>
+              <option>Painters</option><option>Restaurants</option><option>Flooring</option>
+              <option>Fencing</option><option>Concrete</option><option>Junk Removal</option>
+            </datalist>
+          </div>
+          <div><label class="lb">State</label><input class="in" id="f-state" value="California"></div>
+          <div><label class="lb">City</label><input class="in" id="f-city" value="Sunnyvale"></div>
+          <div><label class="lb">Volume</label>
+            <select class="in" id="f-count">
+              <option value="10">10 leads</option><option value="25" selected>25 leads</option>
+              <option value="50">50 leads</option><option value="100">100 leads</option>
+              <option value="150">150 leads</option><option value="200">200 leads</option>
+            </select>
+          </div>
         </div>
-        <div style="height:16px"></div>
-        <div class="g2">
-          <div class="sw on" id="sw-phone" onclick="tg('sw-phone')"><div class="box">✓</div>
-            <div><div class="t">Require a phone number</div><div class="s">Drops anything you can't dial</div></div></div>
-          <div class="sw" id="sw-near" onclick="tg('sw-near')"><div class="box">✓</div>
-            <div><div class="t">Widen to surrounding area</div><div class="s">More volume, looser geography</div></div></div>
+
+        <div style="height:15px"></div>
+        <div class="g3">
+          <div class="sw on" id="sw-phone" onclick="tg('sw-phone')"><div class="bx">&check;</div>
+            <div><div class="t">Require phone number</div><div class="s">Drops anything you can't dial</div></div></div>
+          <div class="sw on" id="sw-quality" onclick="tg('sw-quality')"><div class="bx">&check;</div>
+            <div><div class="t">Good businesses only</div><div class="s">Established, well-reviewed, worth your time</div></div></div>
+          <div class="sw" id="sw-widen" onclick="tg('sw-widen')"><div class="bx">&check;</div>
+            <div><div class="t">Widen to nearby cities</div><div class="s">More volume, looser geography</div></div></div>
         </div>
+
         <div class="hr"></div>
-        <div class="rule" style="margin-bottom:14px"><span class="idx">§02</span>Narrow the sweep</div>
+        <div class="rule" style="margin-bottom:14px"><span class="ix">&sect;02</span>Narrow the sweep</div>
         <div class="g2">
-          <div class="fld"><label>Website</label><div class="chips" id="c-web">
+          <div><label class="lb">Website</label><div class="chips" id="c-web">
             <button class="chip" data-v="none">None found</button>
             <button class="chip" data-v="exists">Has one</button>
-            <button class="chip" data-v="unknown">Unverified</button></div></div>
-          <div class="fld"><label>Booking</label><div class="chips" id="c-book">
+            <button class="chip" data-v="unknown">Unconfirmed</button></div></div>
+          <div><label class="lb">Booking</label><div class="chips" id="c-book">
             <button class="chip" data-v="none">None found</button>
             <button class="chip" data-v="exists">Has one</button>
-            <button class="chip" data-v="unknown">Unverified</button></div></div>
+            <button class="chip" data-v="unknown">Unconfirmed</button></div></div>
         </div>
-        <div style="height:16px"></div>
+        <div style="height:15px"></div>
         <div class="g2">
-          <div class="fld"><label>Social presence</label><div class="chips" id="c-soc">
+          <div><label class="lb">Social presence</label><div class="chips" id="c-soc">
             <button class="chip" data-v="none">Nothing found</button>
-            <button class="chip" data-v="multi">Thin</button></div></div>
-          <div class="fld"><label>Temperature</label><div class="chips" id="c-temp">
+            <button class="chip" data-v="thin">Thin</button></div></div>
+          <div><label class="lb">Temperature</label><div class="chips" id="c-temp">
             <button class="chip" data-v="HOT">Hot</button>
             <button class="chip" data-v="WARM">Warm</button>
             <button class="chip" data-v="COLD">Cold</button></div></div>
         </div>
-        <div style="height:16px"></div>
-        <div class="g3">
-          <div class="fld"><label>Reviews at least</label><input class="in" id="f-minrev" placeholder="25" inputmode="numeric"></div>
-          <div class="fld"><label>Reviews at most</label><input class="in" id="f-maxrev" placeholder="300" inputmode="numeric"></div>
-          <div class="fld"><label>Rating at least</label><input class="in" id="f-minrate" placeholder="4.3" inputmode="decimal"></div>
+        <div style="height:15px"></div>
+        <div class="g4">
+          <div><label class="lb">Reviews min</label><input class="in" id="f-minrev" placeholder="20" inputmode="numeric"></div>
+          <div><label class="lb">Reviews max</label><input class="in" id="f-maxrev" placeholder="500" inputmode="numeric"></div>
+          <div><label class="lb">Rating min</label><input class="in" id="f-minrate" placeholder="4.0" inputmode="decimal"></div>
+          <div><label class="lb">Years open min</label><input class="in" id="f-minyears" placeholder="2" inputmode="numeric"></div>
         </div>
+
         <div class="hr"></div>
         <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-          <button class="btn" onclick="run(false)">Run sweep</button>
-          <button class="btn line" onclick="run(true)">Load sample</button>
-          <button class="btn line" onclick="clearF()">Reset filters</button>
-          <span class="note" id="src-label" style="margin-left:auto"></span>
+          <button class="btn" onclick="run(false)" id="btn-run">Run sweep</button>
+          <button class="btn ln" onclick="run(true)">Load sample</button>
+          <button class="btn ln" onclick="clearFilters()">Reset filters</button>
+          <span class="note" id="src-note" style="margin-left:auto"></span>
         </div>
         <div style="height:12px"></div>
-        <div class="note" id="cost"></div>
+        <div class="note" id="cost-note"></div>
       </div>
     </div>
 
-    <!-- RESULTS -->
+    <!-- ── RESULTS ── -->
     <div id="p-results" style="display:none">
       <div id="a-prog" style="display:none">
         <div class="scan">
           <div class="scan-hd"><span class="dot"></span><span id="scan-title">Sweeping</span></div>
-          <div class="scan-body" id="log"></div>
+          <div class="scan-bd" id="log"></div>
         </div>
-        <div style="height:18px"></div>
         <div class="track"><i id="bar" style="width:0%"></i></div>
       </div>
 
       <div id="a-res" style="display:none">
-        <div class="rule"><span class="idx">§</span><span id="res-line"></span></div>
-        <div class="metrics">
-          <div class="met hot"><div class="n" id="m-total">0</div><div class="k">Leads</div></div>
-          <div class="met live"><div class="n" id="m-phone">0</div><div class="k">Callable</div></div>
-          <div class="met hot"><div class="n" id="m-hot">0</div><div class="k">Hot</div></div>
-          <div class="met"><div class="n" id="m-warm">0</div><div class="k">Warm</div></div>
-          <div class="met hot"><div class="n" id="m-noweb">0</div><div class="k">No website</div></div>
-          <div class="met hot"><div class="n" id="m-nobook">0</div><div class="k">No booking</div></div>
-          <div class="met hot"><div class="n" id="m-nosoc">0</div><div class="k">No social</div></div>
-          <div class="met"><div class="n" id="m-avg">0</div><div class="k">Avg signal</div></div>
+        <div class="rule"><span class="ix">&sect;</span><span id="res-line"></span></div>
+        <div class="mets">
+          <div class="met g"><div class="n" id="m-total">0</div><div class="k">Leads</div></div>
+          <div class="met e"><div class="n" id="m-phone">0</div><div class="k">Callable</div></div>
+          <div class="met e"><div class="n" id="m-email">0</div><div class="k">With email</div></div>
+          <div class="met g"><div class="n" id="m-hot">0</div><div class="k">Hot</div></div>
+          <div class="met r"><div class="n" id="m-noweb">0</div><div class="k">No website</div></div>
+          <div class="met r"><div class="n" id="m-nobook">0</div><div class="k">No booking</div></div>
+          <div class="met r"><div class="n" id="m-nosoc">0</div><div class="k">No social</div></div>
+          <div class="met b"><div class="n" id="m-avg">0</div><div class="k">Avg signal</div></div>
         </div>
-        <div style="height:24px"></div>
-        <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
-          <button class="chip on" id="l-cards" onclick="setL('cards')">Files</button>
-          <button class="chip" id="l-table" onclick="setL('table')">Table</button>
-          <button class="chip" onclick="saveHot()">Save all hot</button>
+        <div style="height:22px"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <button class="chip on" id="l-cards" onclick="setLayout('cards')">Cards</button>
+          <button class="chip" id="l-table" onclick="setLayout('table')">Table</button>
+          <button class="chip" onclick="saveAllHot()">Save all hot</button>
           <div style="margin-left:auto;display:flex;gap:7px;flex-wrap:wrap">
-            <button class="btn line s" onclick="expCall()">Call list</button>
-            <button class="btn line s" onclick="expCSV()">CSV</button>
-            <button class="btn line s" onclick="expJSON()">JSON</button>
-            <button class="btn line s" onclick="expReport()">Report</button>
+            <button class="btn ln s" onclick="expCalls()">Call list</button>
+            <button class="btn ln s" onclick="expBriefs()">All briefs</button>
+            <button class="btn ln s" onclick="expCSV()">CSV</button>
+            <button class="btn ln s" onclick="expJSON()">JSON</button>
           </div>
         </div>
         <div style="height:20px"></div>
@@ -512,69 +562,103 @@ ul.t li{margin-bottom:4px}
         <div class="tbl" id="tbl" style="display:none"></div>
       </div>
 
-      <div id="a-err" style="display:none" class="slab p">
-        <div class="rule"><span class="idx">§</span>Sweep halted</div>
-        <p class="prose" id="err-msg" style="margin-bottom:20px"></p>
-        <button class="btn line s" onclick="tab('search')">Back to parameters</button>
-        <span style="display:inline-block;width:8px"></span>
-        <button class="btn line s" onclick="run(true)">Load sample instead</button>
+      <div id="a-err" style="display:none" class="slab pd">
+        <div class="rule"><span class="ix">&sect;</span>Sweep halted</div>
+        <p class="prose" id="err-msg" style="margin-bottom:22px"></p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn ln s" onclick="tab('search')">Back to search</button>
+          <button class="btn ln s" onclick="run(true)">Load sample instead</button>
+          <button class="btn ln s" onclick="tab('setup')">Open setup</button>
+        </div>
       </div>
 
-      <div id="a-empty" class="void" style="display:none">
-        <h3>Nothing swept yet</h3><p>Set your parameters and run a sweep to populate this screen.</p>
-        <div style="height:20px"></div><button class="btn" onclick="tab('search')">Set parameters</button>
+      <div id="a-empty" class="void-st" style="display:none">
+        <h3>Nothing swept yet</h3><p>Set your target and run a sweep.</p>
+        <div style="height:22px"></div>
+        <button class="btn" onclick="tab('search')">Go to search</button>
       </div>
     </div>
 
-    <!-- SAVED -->
+    <!-- ── SAVED ── -->
     <div id="p-saved" style="display:none">
-      <div class="rule"><span class="idx">§</span>Working files</div>
-      <div class="chips" id="s-tabs" style="margin-bottom:18px"></div>
-      <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap" id="s-acts"></div>
-      <div id="s-cards" class="grid"></div>
-      <div id="s-empty" class="void" style="display:none"><h3>No files open</h3><p>Save a lead from any result to start a working file.</p></div>
+      <div class="rule"><span class="ix">&sect;</span>Saved leads</div>
+      <div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap" id="s-acts"></div>
+      <div class="chips" id="s-tabs" style="margin-bottom:20px"></div>
+      <div class="grid" id="s-cards"></div>
+      <div id="s-empty" class="void-st" style="display:none">
+        <h3>No saved leads</h3><p>Save a lead from any result card to start working it.</p></div>
     </div>
 
-    <!-- HISTORY -->
+    <!-- ── HISTORY ── -->
     <div id="p-history" style="display:none">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
-        <div class="rule" style="flex:1"><span class="idx">§</span>Previous sweeps</div>
-        <button class="btn line s" onclick="clrHist()">Clear</button>
+        <div class="rule" style="flex:1"><span class="ix">&sect;</span>Search history</div>
+        <button class="btn ln s" onclick="clearHist()">Clear all</button>
       </div>
-      <div id="h-cards" class="grid"></div>
-      <div id="h-empty" class="void" style="display:none"><h3>No sweeps recorded</h3><p>Every run is logged here so you can reopen the results.</p></div>
+      <div class="grid" id="h-cards"></div>
+      <div id="h-empty" class="void-st" style="display:none">
+        <h3>No searches yet</h3><p>Every sweep gets logged here so you can reopen it later.</p></div>
     </div>
 
-    <!-- SETTINGS -->
-    <div id="p-settings" style="display:none">
-      <div class="rule"><span class="idx">§01</span>Data source</div>
-      <div class="slab p" style="margin-bottom:16px">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:6px">
-          <div style="font-size:16px;font-weight:700">Claude AI search <span class="mark m-hot" style="margin-left:8px">Active</span></div>
+    <!-- ── SETUP ── -->
+    <div id="p-setup" style="display:none">
+      <div class="rule"><span class="ix">&sect;01</span>Data source</div>
+      <div class="slab pd" style="margin-bottom:18px">
+        <div style="font-size:16px;font-weight:700;margin-bottom:6px">Apify relay <span id="pill-relay"></span></div>
+        <div class="note" style="margin-bottom:18px">
+          Your proxy URL. It holds your Apify token server-side and pulls live Google Maps data.
+          This is what makes the site work as a real product without exposing your key in the browser.
         </div>
-        <div class="note" style="margin-bottom:14px">Uses Claude's built-in web search to find and research real businesses. No API key, no proxy, no Apify account needed. Works directly on iPhone.</div>
-        <div class="slab p" style="border-color:rgba(79,169,124,.25);background:rgba(79,169,124,.05)">
-          <div style="font-size:13px;color:#9FD3B7;line-height:1.8">
-            ✓ Works on iPhone with no setup<br>
-            ✓ No proxy server needed<br>
-            ✓ Uses your existing Claude plan<br>
-            ✓ Finds real businesses with web search<br>
-            ✓ Every search batched to use minimum messages
+        <div><label class="lb">Proxy URL</label>
+          <input class="in" type="url" id="relay-in" placeholder="https://your-proxy.onrender.com"></div>
+        <div style="height:14px"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn ln s" onclick="testRelay()">Test connection</button>
+          <button class="btn s" onclick="saveRelay()">Save &amp; activate</button>
+        </div>
+        <div id="relay-msg" style="margin-top:14px;font-size:13px"></div>
+      </div>
+
+      <div class="slab pd" style="margin-bottom:18px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+          <div>
+            <div style="font-size:16px;font-weight:700">Sample data <span id="pill-demo"></span></div>
+            <div class="note" style="margin-top:6px">Fictional records for testing the interface. Doesn't touch your daily limit.</div>
           </div>
+          <button class="btn ln s" onclick="togDemo()" id="demo-btn">Use sample data</button>
+        </div>
+      </div>
+
+      <div class="rule"><span class="ix">&sect;02</span>Daily limit</div>
+      <div class="slab pd" style="margin-bottom:18px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+          <div style="flex:1;min-width:240px">
+            <div style="font-size:16px;font-weight:700;margin-bottom:6px">
+              <span id="quota-used-big" class="big" style="font-size:26px">0</span>
+              <span class="note" style="font-size:13px"> of 400 leads pulled today</span>
+            </div>
+            <div class="note" id="quota-reset-note"></div>
+          </div>
+          <button class="btn ln s" onclick="resetQuotaConfirm()">Reset counter</button>
         </div>
         <div style="height:14px"></div>
-        <div class="note"><strong style="color:var(--bone)">Usage per search:</strong> ~2–4 Claude messages for 10 leads, ~4–8 for 25 leads. Scoring, filters, CRM and exports use zero Claude messages.</div>
+        <div class="track" style="margin:0"><i id="q-bar-big" style="width:0%"></i></div>
       </div>
-      <div class="slab p" style="margin-bottom:16px">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-          <div><div style="font-size:16px;font-weight:700">Sample data <span id="pill-demo"></span></div>
-          <div class="note" style="margin-top:6px">Fictional records for testing the interface. No connection needed.</div></div>
-          <button class="btn line s" onclick="togDemo()" id="demo-btn">Switch to sample</button>
+
+      <div class="rule"><span class="ix">&sect;03</span>Owner names and emails — read this</div>
+      <div class="slab pd">
+        <p class="prose" style="margin-bottom:16px">
+          Business listings carry the company name, phone, address, reviews, and website. They almost
+          never carry the owner's personal name, and only sometimes carry an email. This app fills those
+          fields when a real source has them and says so plainly when it doesn't — because calling a
+          business and using the wrong name kills the call in three seconds.
+        </p>
+        <div class="goldb">
+          <strong>How to get the owner's name in 10 seconds, every time:</strong><br><br>
+          "Hey, quick one — who handles the website and marketing side over there?"<br><br>
+          Whoever picks up will either say "that's me" or hand you a name. Now you have the decision
+          maker and a reason to be transferred. That works better than any scraped field ever will.
         </div>
-      </div>
-      <div class="rule"><span class="idx">§02</span>On phone numbers</div>
-      <div class="slab p">
-        <p class="prose" style="margin:0">Claude searches the web for real businesses and only returns phone numbers that appear on public listings. With <strong style="color:var(--bone)">Require a phone number</strong> switched on, any business without a verified number is dropped before scoring — so every file you open is one you can dial. Numbers are never made up.</p>
       </div>
     </div>
 
@@ -583,707 +667,1267 @@ ul.t li{margin-bottom:4px}
 </div>
 
 <div id="scrim" class="scrim" style="display:none" onclick="closeD()"></div>
-<aside id="dossier" class="dossier" style="display:none">
-  <div class="d-hd">
+<aside id="dsr" class="dsr" style="display:none">
+  <div class="dhd">
     <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start">
-      <div style="min-width:0">
-        <div class="stamp" id="d-stamp"></div>
-        <div style="height:10px"></div>
-        <div id="d-marks" style="display:flex;gap:6px;flex-wrap:wrap"></div>
-        <div style="height:12px"></div>
-        <div id="d-name" style="font-size:21px;font-weight:800;letter-spacing:-.015em;line-height:1.2"></div>
+      <div style="min-width:0;flex:1">
+        <div class="note" id="d-stamp" style="letter-spacing:.2em;margin-bottom:11px"></div>
+        <div id="d-marks" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px"></div>
+        <div id="d-name" style="font-size:22px;font-weight:800;letter-spacing:-.015em;line-height:1.2"></div>
         <div id="d-loc" class="note" style="margin-top:7px"></div>
       </div>
-      <button class="x" onclick="closeD()">✕</button>
+      <button class="xb" onclick="closeD()">&#10005;</button>
     </div>
-    <div style="height:16px"></div>
-    <div class="sig-wrap" id="d-sig"></div>
-    <div style="height:16px"></div>
+    <div class="sigrow" id="d-sig"></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-      <a id="d-dial" class="btn live s" style="display:none"></a>
-      <button class="btn line s" onclick="togSave()" id="d-save">Save file</button>
-      <button class="btn line s" id="d-copy" onclick="copyNum()" style="display:none">Copy number</button>
-      <select class="sel" id="d-status" onchange="setStat()"></select>
+      <a id="d-dial" class="btn grn s" style="display:none"></a>
+      <a id="d-mail" class="btn blu s" style="display:none">Email</a>
+      <button class="btn ln s" onclick="togSave()" id="d-save">Save lead</button>
+      <select class="sel" id="d-status" onchange="setStatus()"></select>
     </div>
   </div>
-  <div class="d-body" id="d-body"></div>
+  <div class="dbd" id="d-body"></div>
 </aside>
 
 <div id="toast" class="toast" style="display:none"></div>
 
 <script>
-const LS={saved:'rv3:saved',crm:'rv3:crm',hist:'rv3:hist',demo:'rv3:demo'};
-let leads=[],saved=[],crm={},hist=[],useDemo=false,cur=null,dropped=0,noPhone=0,sc=9,sd=-1;
-const F={web:[],book:[],soc:[],temp:[],minRev:null,maxRev:null,minRate:null};
-const SOC=['facebook','instagram','tiktok','youtube','linkedin'];
-const PIPE=['New','Contacted','Follow up','Interested','Proposal','Won','Lost'];
-const ld=(k,f)=>{try{return JSON.parse(localStorage.getItem(k))??f}catch{return f}};
-const sv=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
-const $=id=>document.getElementById(id);
+"use strict";
 
-function init(){
-  saved=ld(LS.saved,[]);crm=ld(LS.crm,{});hist=ld(LS.hist,[]);useDemo=ld(LS.demo,false);
-  // Claude mode — no proxy needed
-  document.querySelectorAll('.chips .chip[data-v]').forEach(c=>c.onclick=()=>c.classList.toggle('on'));
-  $('f-count').onchange=cost;
-  srcLabel();demoUI();cost();renderSaved();renderHist();go('landing');
+/* ══════════ CONSTANTS ══════════ */
+var DAILY_LIMIT = 400;
+var SOC = ["facebook","instagram","tiktok","youtube","linkedin"];
+var PIPE = ["New","Contacted","Follow up","Interested","Proposal","Won","Lost"];
+var LS = {saved:"rv6:saved", crm:"rv6:crm", hist:"rv6:hist", relay:"rv6:relay",
+          demo:"rv6:demo", quota:"rv6:quota"};
+
+var MOTIV = [
+  ["Every no is rent paid on the yes.",
+   "The people who win at this aren't smarter than you. They just stayed on the phone after it got uncomfortable. Make the next call."],
+  ["A business with no website is a check you haven't cashed yet.",
+   "Every listing on this screen without a site is somebody losing customers today and not knowing why. You already know why. That's the whole business."],
+  ["You are one system away from a different life.",
+   "Not one lucky break. One repeatable system you run whether you feel like it or not. Pull the leads, make the calls, send the work. Repeat until it's boring, then repeat more."],
+  ["Charge for the outcome, not the hours.",
+   "A website isn't $500 of your time. It's a business getting found, getting booked, and getting paid for years. Price it like what it does, not like what it costs you."],
+  ["The first ten calls are tuition.",
+   "You'll fumble them. Everybody does. By call twenty you'll hear the objection coming before they finish the sentence. Just get through the tuition fast."],
+  ["Nobody is coming to hand you this.",
+   "No algorithm, no shortcut, no perfect moment. There's a list of businesses that need what you do and a phone in your hand. That's the whole equation."],
+  ["Consistency beats intensity every single time.",
+   "Twenty calls a day for a year is 5,000 conversations. Two hundred calls in one heroic weekend is a story you tell once. Pick the one that compounds."],
+  ["Your competition quits at 4pm.",
+   "That's the entire edge. Not talent, not luck, not connections. They stop and you don't. Everything else is noise."],
+  ["Get the money, then get better.",
+   "You don't need to be the best builder in your city. You need to be findable, reliable, and worth calling back. Skill follows revenue, not the other way around."],
+  ["This is a numbers game with a human on the other end.",
+   "Run the numbers like a machine. Treat the person like a person. Do both at once and this thing prints."]
+];
+
+/* ══════════ STATE ══════════ */
+var leads = [], saved = [], crm = {}, hist = [];
+var useDemo = false, layout = "cards", cur = null;
+var dropped = 0, noPhone = 0, sortCol = 10, sortDir = -1, savedTab = "All";
+var busy = false;
+var F = {web:[],book:[],soc:[],temp:[],minRev:null,maxRev:null,minRate:null,minYears:null};
+
+/* ══════════ HELPERS ══════════ */
+function $(id){ return document.getElementById(id); }
+function ld(k,f){ try { var v=JSON.parse(localStorage.getItem(k)); return v===null||v===undefined?f:v; } catch(e){ return f; } }
+function sv(k,v){ try { localStorage.setItem(k,JSON.stringify(v)); } catch(e){} }
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function todayKey(){ var d=new Date(); return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(); }
+function nSoc(l){ var n=0; for(var i=0;i<SOC.length;i++){ if(l.social&&l.social[SOC[i]]) n++; } return n; }
+
+/* ══════════ QUOTA ══════════ */
+function getQuota(){
+  var q = ld(LS.quota,{day:todayKey(),used:0});
+  if(q.day !== todayKey()){ q = {day:todayKey(),used:0}; sv(LS.quota,q); }
+  return q;
 }
-function go(v){$('v-landing').style.display=v==='landing'?'':'none';
-  $('v-app').style.display=v==='app'?'':'none';if(v==='app')tab('search')}
+function quotaLeft(){ return Math.max(0, DAILY_LIMIT - getQuota().used); }
+function addQuota(n){
+  var q = getQuota();
+  q.used = Math.min(DAILY_LIMIT, q.used + n);
+  sv(LS.quota,q);
+  renderQuota();
+}
+function renderQuota(){
+  var q = getQuota(), pct = Math.round((q.used/DAILY_LIMIT)*100);
+  var left = DAILY_LIMIT - q.used;
+  var chip = $("quota-chip");
+  if(chip){
+    $("q-text").innerHTML = '<span class="qn">'+left+'</span> left today';
+    $("q-bar").style.width = pct+"%";
+    chip.className = "quota" + (left<=60 ? " warn" : "");
+  }
+  if($("quota-used-big")) $("quota-used-big").textContent = q.used;
+  if($("q-bar-big")) $("q-bar-big").style.width = pct+"%";
+  if($("quota-reset-note")){
+    var d=new Date(); d.setHours(24,0,0,0);
+    var hrs = Math.max(0, Math.round((d-new Date())/3600000));
+    $("quota-reset-note").textContent = left>0
+      ? left+" leads remaining. Resets in about "+hrs+" hour"+(hrs===1?"":"s")+"."
+      : "Daily limit reached. Resets in about "+hrs+" hour"+(hrs===1?"":"s")+".";
+  }
+}
+function resetQuotaConfirm(){
+  if(confirm("Reset today's counter back to zero?")){
+    sv(LS.quota,{day:todayKey(),used:0});
+    renderQuota(); toast("Counter reset");
+  }
+}
+
+/* ══════════ SCORING ══════════ */
+function calcHealth(l){
+  var g=l.reviews.rating, r=l.reviews.count, y=l.age.years;
+  var w=l.website.status, b=l.booking.status, s=nSoc(l), x=0;
+  if(g!=null) x += Math.max(0,Math.min(30,((g-3)/1.9)*30));
+  if(r!=null) x += Math.max(0,Math.min(25,(Math.log(r+1)/Math.log(600))*25));
+  if(y!=null) x += Math.min(15,(y/10)*15);
+  x += w==="exists"?15:(w==="none"?0:5);
+  x += b==="exists"?5:(b==="none"?0:2);
+  x += Math.min(10,s*3.5);
+  return Math.round(Math.max(0,Math.min(100,x)));
+}
+function calcTemp(l){
+  var w=l.website.status, b=l.booking.status, s=nSoc(l);
+  var r=l.reviews.count, g=l.reviews.rating, y=l.age.years;
+  var opp = (w==="none"?20:(w==="unknown"?9:3)) + (b==="none"?10:(b==="unknown"?5:0));
+  var cats=[
+    {k:"Online gap",   m:30, v:Math.min(30,opp)},
+    {k:"Biz strength", m:20, v:r!=null?Math.min(20,(Math.log(r+1)/Math.log(400))*20):8},
+    {k:"Reputation",   m:20, v:g!=null?Math.max(0,Math.min(20,((g-3.2)/1.6)*20)):8},
+    {k:"Longevity",    m:10, v:y!=null?Math.min(10,(y/8)*10):4},
+    {k:"Social gap",   m:10, v:s===0?10:(s===1?6:(s===2?3:1))},
+    {k:"Activity",     m:10, v:r!=null?Math.min(10,(r/40)*10):4}
+  ];
+  var total=0; for(var i=0;i<cats.length;i++) total+=cats[i].v;
+  total=Math.round(total);
+  var temp = total>=75?"HOT":(total>=50?"WARM":"COLD");
+  var ev=[];
+  if(y!=null) ev.push({s:1,t:y+" years in business"});
+  if(r!=null) ev.push({s:1,t:r+" reviews on their listing"});
+  if(g!=null) ev.push({s:1,t:g.toFixed(1)+" star rating"});
+  if(l.phone) ev.push({s:1,t:"Phone verified — "+l.phone});
+  if(l.email) ev.push({s:1,t:"Email found — "+l.email});
+  if(w==="none") ev.push({s:1,t:"No website found in sources checked"});
+  else if(w==="exists") ev.push({s:0,t:"Website already in place"});
+  else ev.push({s:2,t:"Website status not confirmed"});
+  if(b==="none") ev.push({s:1,t:"No booking system found"});
+  else if(b==="exists") ev.push({s:0,t:"Online booking already set up"});
+  else ev.push({s:2,t:"Booking status not confirmed"});
+  if(s===0) ev.push({s:1,t:"No social profiles found"});
+  else ev.push({s:0,t:s+" social channel"+(s>1?"s":"")+" detected"});
+  return {total:total,temp:temp,cats:cats,ev:ev};
+}
+function socLabel(l){ var n=nSoc(l); return n>=3?"Strong":(n===2?"Average":(n===1?"Weak":"None found")); }
+
+/* ══════════ WEBSITE BRIEF GENERATOR ══════════ */
+var TRADE_COPY = {
+  plumber:{svc:["Emergency repairs","Drain cleaning","Water heater install & repair","Leak detection","Repiping","Fixture installation"],
+    pain:"a burst pipe or a dead water heater at the worst possible time",
+    urgency:"high",tone:"calm, dependable, fast-response"},
+  roofing:{svc:["Roof repair","Full replacement","Storm & hail damage","Inspections","Gutter work","Emergency tarping"],
+    pain:"a leak spreading across the ceiling after a storm",
+    urgency:"high",tone:"trustworthy, weatherproof, insurance-savvy"},
+  hvac:{svc:["AC repair","Heating repair","System installation","Seasonal tune-ups","Duct work","Indoor air quality"],
+    pain:"no heat in January or no AC in a heat wave",
+    urgency:"high",tone:"comfortable, responsive, technically confident"},
+  electric:{svc:["Panel upgrades","Rewiring","Lighting installation","EV charger install","Troubleshooting","Emergency service"],
+    pain:"flickering power or an outlet that just died",
+    urgency:"high",tone:"safety-first, licensed, precise"},
+  landscap:{svc:["Lawn maintenance","Design & installation","Irrigation","Tree & shrub care","Hardscaping","Seasonal cleanup"],
+    pain:"a yard that has gotten away from them",
+    urgency:"medium",tone:"visual, seasonal, transformation-focused"},
+  dental:{svc:["Cleanings & checkups","Cosmetic dentistry","Emergency dental","Implants","Whitening","Family dentistry"],
+    pain:"tooth pain, or years of putting off a visit",
+    urgency:"medium",tone:"warm, gentle, anxiety-reducing"},
+  detail:{svc:["Full detail","Paint correction","Ceramic coating","Interior deep clean","Mobile service","Fleet detailing"],
+    pain:"a car that looks tired and is losing resale value",
+    urgency:"low",tone:"visual, premium, before-and-after driven"},
+  barber:{svc:["Haircuts","Beard trims & shaves","Fades & designs","Kids cuts","Hot towel service","Walk-ins"],
+    pain:"needing a reliable barber who gets the cut right every time",
+    urgency:"low",tone:"stylish, local, personality-forward"},
+  spa:{svc:["Injectables","Facials","Laser treatments","Body contouring","Skincare consults","Membership plans"],
+    pain:"wanting results without a clinical, intimidating experience",
+    urgency:"low",tone:"elevated, clean, results-oriented"},
+  pressure:{svc:["House washing","Driveway & concrete","Roof soft wash","Decks & fences","Gutter cleaning","Commercial"],
+    pain:"a property that looks dirty and dated from the curb",
+    urgency:"low",tone:"dramatic before-and-after, satisfying, instant-result"},
+  chiro:{svc:["Adjustments","Back & neck pain","Sports injury","Auto accident care","Massage therapy","Wellness plans"],
+    pain:"chronic pain they've been living with too long",
+    urgency:"medium",tone:"relief-focused, credible, non-pushy"},
+  nail:{svc:["Manicures","Pedicures","Gel & acrylic","Nail art","Spa packages","Group bookings"],
+    pain:"wanting a salon that's clean, on time, and does good work",
+    urgency:"low",tone:"bright, visual, Instagram-ready"},
+  gym:{svc:["Memberships","Personal training","Group classes","Nutrition coaching","Open gym","Trial passes"],
+    pain:"starting over and needing a place that isn't intimidating",
+    urgency:"medium",tone:"motivating, community, results"},
+  auto:{svc:["Diagnostics","Brakes & suspension","Engine repair","Oil & maintenance","Transmission","Pre-purchase inspection"],
+    pain:"a check engine light and no idea who to trust",
+    urgency:"high",tone:"honest, transparent-pricing, no-upsell"},
+  pest:{svc:["General pest control","Termite treatment","Rodent removal","Bed bugs","Mosquito control","Quarterly plans"],
+    pain:"seeing something in the house they really don't want to see",
+    urgency:"high",tone:"discreet, thorough, fast"},
+  tow:{svc:["24/7 towing","Roadside assistance","Jump starts & lockouts","Flatbed service","Accident recovery","Long distance"],
+    pain:"being stranded and needing someone right now",
+    urgency:"high",tone:"immediate, 24/7, reassuring"},
+  locksmith:{svc:["Emergency lockout","Rekeying","Lock installation","Car keys","Safes","Commercial security"],
+    pain:"being locked out at the worst possible moment",
+    urgency:"high",tone:"fast-arrival, licensed, trustworthy"},
+  mov:{svc:["Local moving","Long distance","Packing services","Loading & unloading","Storage","Piano & specialty"],
+    pain:"a move that's stressful and full of unknowns",
+    urgency:"medium",tone:"organized, careful, upfront-pricing"},
+  paint:{svc:["Interior painting","Exterior painting","Cabinet refinishing","Drywall repair","Color consults","Commercial"],
+    pain:"rooms that feel dated and a project they keep postponing",
+    urgency:"low",tone:"transformation, clean lines, portfolio-driven"},
+  restaurant:{svc:["Dine-in","Takeout","Catering","Private events","Online ordering","Daily specials"],
+    pain:"deciding where to eat and wanting to see the menu first",
+    urgency:"low",tone:"appetizing, photo-forward, menu-first"},
+  floor:{svc:["Hardwood install","Tile & stone","LVP & laminate","Carpet","Refinishing","Free estimates"],
+    pain:"floors that are worn out and a room they want to redo",
+    urgency:"low",tone:"visual, material-focused, quote-driven"},
+  fence:{svc:["Wood fencing","Vinyl & composite","Chain link","Gates & automation","Repairs","Free estimates"],
+    pain:"privacy, pets, or a fence finally falling apart",
+    urgency:"low",tone:"durable, practical, estimate-focused"},
+  concrete:{svc:["Driveways","Patios & walkways","Stamped concrete","Foundations","Repair & resurfacing","Commercial"],
+    pain:"cracked, uneven concrete that looks bad and is a trip hazard",
+    urgency:"low",tone:"solid, long-lasting, craftsmanship"},
+  junk:{svc:["Full junk removal","Furniture & appliance","Estate cleanouts","Construction debris","Garage cleanout","Same-day"],
+    pain:"a garage or property full of stuff they can't haul themselves",
+    urgency:"medium",tone:"fast, no-hassle, same-day"},
+  _default:{svc:["Core services","Consultations","Maintenance plans","Emergency service","Free estimates","Commercial work"],
+    pain:"finding a local provider they can actually trust",
+    urgency:"medium",tone:"professional, local, trust-building"}
+};
+
+function tradeProfile(cat){
+  var c = String(cat||"").toLowerCase();
+  var keys = Object.keys(TRADE_COPY);
+  for(var i=0;i<keys.length;i++){
+    if(keys[i]!=="_default" && c.indexOf(keys[i])>=0) return TRADE_COPY[keys[i]];
+  }
+  return TRADE_COPY._default;
+}
+
+function buildBrief(l){
+  var p = tradeProfile(l.category);
+  var n = l.name;
+  var loc = (l.city||"")+(l.state?", "+l.state:"");
+  var yrs = l.age.years;
+  var rev = l.reviews.count, rate = l.reviews.rating;
+  var hasWeb = l.website.status==="exists";
+  var hasBook = l.booking.status==="exists";
+  var socN = nSoc(l);
+
+  var trust = [];
+  if(yrs!=null) trust.push(yrs+" years serving "+(l.city||"the area"));
+  if(rev!=null && rate!=null) trust.push(rate+" stars across "+rev+" reviews");
+  if(!trust.length) trust.push("Local, owner-operated, community-focused");
+
+  var pages = ["Home","Services"];
+  if(p.urgency==="high") pages.push("Emergency Service");
+  pages.push("About","Reviews");
+  if(!hasBook) pages.push("Book Online");
+  pages.push("Service Area","Contact");
+
+  var primaryCTA = p.urgency==="high"
+    ? "Call now — we answer 24/7"
+    : (hasBook ? "Book your appointment" : "Get a free estimate");
+
+  var lines = [];
+  lines.push("WEBSITE BRIEF — "+n.toUpperCase());
+  lines.push("=".repeat(Math.min(60, n.length+16)));
+  lines.push("");
+  lines.push("BUSINESS");
+  lines.push(n+" is a "+(l.category||"local service business").toLowerCase()+" serving "+(loc||"their local area")+".");
+  if(yrs!=null) lines.push("They have been in business roughly "+yrs+" years.");
+  if(rev!=null && rate!=null) lines.push("They hold a "+rate+" star rating from "+rev+" public reviews, which means their service quality is already proven — the website's job is to make that visible, not to invent it.");
+  lines.push("");
+  lines.push("CURRENT ONLINE SITUATION");
+  lines.push("- Website: "+(hasWeb ? l.website.url : "None found in sources checked"));
+  lines.push("- Online booking: "+(hasBook ? "Yes" : (l.booking.status==="none" ? "None found" : "Not confirmed")));
+  lines.push("- Social profiles found: "+(socN===0 ? "None" : socN));
+  lines.push("- Phone: "+(l.phone||"Not listed"));
+  lines.push("- Email: "+(l.email||"Not found — collect on the call"));
+  lines.push("");
+  lines.push("WHO THE SITE IS TALKING TO");
+  lines.push("Homeowners and local businesses in "+(l.city||"the area")+" dealing with "+p.pain+".");
+  lines.push("They are searching on a phone, they are comparing two or three options, and they will call whoever looks most competent and easiest to reach.");
+  lines.push("");
+  lines.push("TONE AND FEEL");
+  lines.push(p.tone.charAt(0).toUpperCase()+p.tone.slice(1)+". Not corporate, not cutesy. This is a real local operator with a real reputation — the site should feel like the trustworthy version of them, not a template.");
+  lines.push("");
+  lines.push("SERVICES TO FEATURE");
+  for(var i=0;i<p.svc.length;i++) lines.push("- "+p.svc[i]);
+  lines.push("");
+  lines.push("TRUST SIGNALS TO PUT ABOVE THE FOLD");
+  for(var j=0;j<trust.length;j++) lines.push("- "+trust[j]);
+  lines.push("- Licensed and insured");
+  lines.push("- Local phone number, tap-to-call on mobile");
+  lines.push("");
+  lines.push("PAGES TO BUILD");
+  lines.push(pages.join(" / "));
+  lines.push("");
+  lines.push("PRIMARY CALL TO ACTION");
+  lines.push(primaryCTA);
+  lines.push("Put it in the header, at the end of every section, and as a sticky bar on mobile.");
+  lines.push("");
+  lines.push("HERO HEADLINE OPTIONS");
+  lines.push('1. "'+(l.city||"Local")+"'s "+(l.category||"trusted")+" — "+(yrs!=null?yrs+" years and counting":"trusted by your neighbors")+'"');
+  lines.push('2. "'+(p.urgency==="high"?"Fast, honest ":"Quality ")+(l.category||"service").toLowerCase()+" in "+(l.city||"your area")+'"');
+  if(rev!=null && rate!=null) lines.push('3. "'+rate+" stars. "+rev+" reviews. One call away."+'"');
+  lines.push("");
+  lines.push("WHAT TO EMPHASIZE");
+  if(!hasWeb) lines.push("- They have no site at all right now, so this is their entire first impression online. Lead with credibility and make the phone number impossible to miss.");
+  if(!hasBook) lines.push("- No booking system today. Adding one is the single biggest conversion win available — every call they miss is revenue gone.");
+  if(socN===0) lines.push("- No social presence found. Build the site so photos and reviews can be added easily later.");
+  if(rev!=null && rev<30) lines.push("- Review count is still low. Build in a review-request flow after service.");
+  if(rev!=null && rev>=100) lines.push("- Strong review volume. Pull real reviews onto the homepage as social proof.");
+  lines.push("");
+  lines.push("TECHNICAL NOTES");
+  lines.push("- Mobile-first. Most of their traffic will be someone standing in their driveway with a problem.");
+  lines.push("- Click-to-call on every screen.");
+  lines.push("- Local SEO: city name in title tags, service area page, Google Business Profile linked.");
+  lines.push("- Fast load. No heavy sliders. Speed converts.");
+  lines.push("");
+  lines.push("SOURCES");
+  lines.push("Google Maps listing data. Checked "+l.checked+".");
+  lines.push("Owner name and email are only listed above if a real source contained them.");
+  return lines.join("\n");
+}
+
+/* ══════════ LEAD BUILDER ══════════ */
+function buildLead(raw, niche, city, state){
+  var web = raw.website
+    ? {status:"exists", url:raw.website, https:String(raw.website).indexOf("https")===0}
+    : {status:"none", url:null};
+  var bu = raw.bookingUrl || (raw.reservationLinks && raw.reservationLinks[0] && raw.reservationLinks[0].link);
+  var book = bu ? {status:"exists", url:bu} : {status:"unknown", url:null};
+  var social = {};
+  for(var i=0;i<SOC.length;i++) social[SOC[i]] = raw[SOC[i]] || null;
+  if(raw.socialMediaLinks && raw.socialMediaLinks.length){
+    for(var j=0;j<raw.socialMediaLinks.length;j++){
+      var sm = raw.socialMediaLinks[j], plat = String(sm.platform||"").toLowerCase();
+      for(var k=0;k<SOC.length;k++){
+        if(plat.indexOf(SOC[k])>=0 && !social[SOC[k]]) social[SOC[k]] = sm.link;
+      }
+    }
+  }
+  var phoneRaw = raw.phone || raw.phoneUnformatted || null;
+  var phone = (phoneRaw && String(phoneRaw)!=="null" && String(phoneRaw).match(/\d{3}/)) ? String(phoneRaw) : null;
+  var emailRaw = raw.email || (raw.emails && raw.emails[0]) || null;
+  var email = (emailRaw && String(emailRaw).indexOf("@")>0) ? String(emailRaw) : null;
+  var ownerRaw = raw.owner || raw.ownerName || null;
+  var owner = (ownerRaw && String(ownerRaw).length>1 && String(ownerRaw).toLowerCase()!=="null") ? String(ownerRaw) : null;
+
+  var l = {
+    id: String(raw.placeId || raw.cid || (String(raw.name||raw.title||"")+Math.random())).replace(/\W/g,"").slice(0,24),
+    name: raw.name || raw.title || "Unnamed business",
+    address: raw.address || null,
+    city: raw.city || city,
+    state: raw.state || state,
+    category: raw.category || raw.categoryName || niche,
+    phone: phone, email: email, owner: owner,
+    website: web, booking: book, social: social,
+    reviews: {count: (raw.reviews>0?raw.reviews:(raw.reviewsCount>0?raw.reviewsCount:null)),
+              rating: (raw.rating>0?raw.rating:(raw.totalScore>0?raw.totalScore:null))},
+    age: {years: (raw.years>0?raw.years:(raw.yearsInBusiness>0?raw.yearsInBusiness:null))},
+    mapUrl: raw.url || null,
+    demo: !!raw.demo,
+    checked: new Date().toLocaleDateString()
+  };
+
+  var s = nSoc(l), w = web.status, b = book.status;
+  var well=[],poor=[],missing=[],sell=[];
+  if(l.reviews.count>50) well.push(l.reviews.count+" reviews built up over time");
+  if(l.reviews.rating>=4.5) well.push(l.reviews.rating+" star reputation");
+  if(l.age.years>=5) well.push(l.age.years+" years established");
+  if(w==="none"){ poor.push("Nothing for online searchers to land on"); missing.push("Website"); sell.push("Website build"); }
+  if(b==="none"||b==="unknown"){ missing.push("Online booking"); sell.push("Booking system"); }
+  if(w!=="none" && b!=="exists") sell.push("Lead capture form");
+  if(s===0){ missing.push("Social presence"); sell.push("Social media setup"); }
+  if(l.reviews.count!=null && l.reviews.count<30) sell.push("Review generation system");
+  l.opp = {well:well,poor:poor,missing:missing,sell:sell};
+
+  var mention=[], avoid=[];
+  if(l.reviews.count) mention.push("Their "+l.reviews.count+" reviews and the reputation behind them");
+  if(l.age.years) mention.push("How long they've been working the area — "+l.age.years+" years");
+  if(w==="none") mention.push("How much easier it'd be for people searching to find them");
+  if(b!=="exists") mention.push("Letting customers book without playing phone tag");
+  if(s===0) mention.push("The social presence their competitors already have");
+  avoid.push("Revenue, profit, or customer counts — none of that is public");
+  if(!l.owner) avoid.push("Any owner name — ask who handles marketing instead");
+  if(w==="unknown") avoid.push("That they have no website — it was never confirmed");
+  if(b==="unknown") avoid.push("That they have no booking system — it was never confirmed");
+  var pitch = w==="none"
+    ? "You've clearly built something real here — what I'm looking at is how much easier it could be for people searching online to actually find and book you."
+    : (b!=="exists"
+      ? "Your customers already trust you. The gap I see is that booking still means a phone call — that's costing you the ones who won't make it."
+      : "Your setup is solid. What I'd focus on is getting more of the right people to it.");
+  l.call = {mention:mention, avoid:avoid, pitch:pitch};
+
+  if(w==="none" && b!=="exists") l.offer = {h:"Website + online booking", w:"No web presence and no booking system found in sources checked."};
+  else if(w==="none") l.offer = {h:"Website build", w:"No website found in sources checked."};
+  else if(b!=="exists") l.offer = {h:"Online booking system", w:"No booking system detected in sources checked."};
+  else if(s===0) l.offer = {h:"Social media presence", w:"No social profiles found in sources checked."};
+  else l.offer = {h:"Lead generation & SEO", w:"Core setup is in place — growth comes from traffic and conversion."};
+
+  l.health = calcHealth(l);
+  l.t = calcTemp(l);
+  l.brief = buildBrief(l);
+  return l;
+}
+
+/* ══════════ SAMPLE DATA ══════════ */
+var SAMPLE = [
+  ["Martinez Plumbing & Drain","(408) 555-0143","info@martinezplumbing.example",null,null,null,[],327,4.8,11,"Plumber"],
+  ["Ridgeline Roofing","(408) 555-0271",null,"https://example.com",null,null,["facebook"],142,4.6,12,"Roofing"],
+  ["Valley Air & Heat","(408) 555-0392","service@valleyair.example","https://example.com","https://example.com/book",null,["facebook","instagram"],511,4.7,15,"HVAC"],
+  ["Lopez Electric","(408) 555-0418",null,null,null,"Danny Lopez",["facebook"],89,4.9,6,"Electrician"],
+  ["Green Valley Landscaping","(408) 555-0577",null,null,null,null,[],204,4.5,9,"Landscaper"],
+  ["Cascade Auto Detail","(408) 555-0620",null,null,null,null,["instagram"],61,4.4,3,"Auto Detailing"],
+  ["Bright Wash Exteriors","(408) 555-0744","hello@brightwash.example",null,null,null,[],47,5.0,2,"Pressure Washing"],
+  ["Alder Med Spa","(408) 555-0630",null,"https://example.com","https://example.com/book",null,["instagram","tiktok","facebook"],388,4.8,6,"Med Spa"],
+  ["Sentinel Pest Control","(408) 555-0851",null,null,null,null,[],156,4.6,9,"Pest Control"],
+  ["Ironside Towing","(408) 555-0967",null,null,null,null,[],73,4.2,4,"Towing"]
+];
+function makeSample(city,state,n){
+  var out=[];
+  for(var i=0;i<Math.min(n,60);i++){
+    var r = SAMPLE[i%SAMPLE.length];
+    var sfx = i>=SAMPLE.length ? " "+(Math.floor(i/SAMPLE.length)+1) : "";
+    var raw = {name:r[0]+sfx, phone:r[1], email:r[2], website:r[3], bookingUrl:r[4], owner:r[5],
+      address:(100+i*37)+" Example Ave, "+city+", "+state, city:city, state:state, category:r[10],
+      reviews:r[7], rating:r[8], years:r[9], demo:true};
+    for(var k=0;k<r[6].length;k++) raw[r[6][k]] = "https://example.com/"+r[6][k];
+    out.push(buildLead(raw, r[10], city, state));
+  }
+  out.sort(function(a,b){ return b.t.total-a.t.total; });
+  return out;
+}
+
+/* ══════════ FILTERS ══════════ */
+function passes(l){
+  var w=l.website.status, b=l.booking.status, s=nSoc(l);
+  if(F.web.length && F.web.indexOf(w)<0) return false;
+  if(F.book.length && F.book.indexOf(b)<0) return false;
+  if(F.soc.length){
+    var ok=false;
+    for(var i=0;i<F.soc.length;i++){ if(F.soc[i]==="none"? s===0 : s<=1) ok=true; }
+    if(!ok) return false;
+  }
+  if(F.temp.length && F.temp.indexOf(l.t.temp)<0) return false;
+  if(F.minRev!=null && (l.reviews.count==null || l.reviews.count<F.minRev)) return false;
+  if(F.maxRev!=null && (l.reviews.count==null || l.reviews.count>F.maxRev)) return false;
+  if(F.minRate!=null && (l.reviews.rating==null || l.reviews.rating<F.minRate)) return false;
+  if(F.minYears!=null && (l.age.years==null || l.age.years<F.minYears)) return false;
+  return true;
+}
+function qualityGate(l){
+  if(l.reviews.count!=null && l.reviews.count<8) return false;
+  if(l.reviews.rating!=null && l.reviews.rating<3.7) return false;
+  return true;
+}
+
+/* ══════════ QUERY EXPANSION ══════════ */
+var VARIANTS = {
+  plumbers:["plumber","emergency plumber","drain cleaning","water heater repair","plumbing contractor"],
+  roofers:["roofer","roofing contractor","roof repair","roof replacement"],
+  hvac:["hvac contractor","air conditioning repair","heating repair","furnace repair"],
+  electricians:["electrician","electrical contractor","emergency electrician"],
+  landscapers:["landscaper","landscaping","lawn care","tree service"],
+  dentists:["dentist","dental clinic","family dentistry"],
+  "auto detailers":["auto detailing","car detailing","mobile detailing"],
+  barbers:["barber shop","barber","mens haircut"],
+  "med spas":["med spa","medical spa","botox clinic"],
+  "pressure washers":["pressure washing","power washing","exterior cleaning"],
+  chiropractors:["chiropractor","chiropractic clinic"],
+  "nail salons":["nail salon","manicure pedicure"],
+  gyms:["gym","fitness center","personal trainer"],
+  "auto repair":["auto repair","mechanic","brake repair"],
+  "pest control":["pest control","exterminator","termite control"],
+  towing:["towing service","tow truck"],
+  locksmiths:["locksmith","emergency locksmith"],
+  movers:["moving company","movers"],
+  painters:["painter","painting contractor","house painting"],
+  restaurants:["restaurant","dining"],
+  flooring:["flooring contractor","hardwood flooring","tile installation"],
+  fencing:["fence contractor","fence installation"],
+  concrete:["concrete contractor","driveway concrete","stamped concrete"],
+  "junk removal":["junk removal","hauling service"]
+};
+function buildQueries(niche, city, state, count, widen){
+  var key = String(niche).toLowerCase().trim();
+  var v = VARIANTS[key] || [niche];
+  var need = Math.ceil(count/45), qs = [];
+  for(var i=0;i<Math.min(Math.max(need,1), v.length);i++) qs.push(v[i]+" in "+city+", "+state);
+  if(qs.length===1 && count>45){
+    qs.push(niche+" near "+city+", "+state);
+    qs.push("best "+niche+" "+city+" "+state);
+  }
+  if(widen) qs.push(v[0]+" near "+city+", "+state);
+  return qs.slice(0,6);
+}
+
+/* ══════════ UI PLUMBING ══════════ */
+function go(v){
+  $("v-landing").style.display = v==="landing" ? "" : "none";
+  $("v-app").style.display     = v==="app" ? "" : "none";
+  if(v==="app"){ tab("search"); renderQuota(); }
+  window.scrollTo(0,0);
+}
 function tab(t){
-  ['search','results','saved','history','settings'].forEach(v=>{
-    $('p-'+v).style.display=v===t?'':'none';$('t-'+v).classList.toggle('on',v===t)});
-  if(t==='saved')renderSaved();if(t==='history')renderHist();
-  if(t==='results'&&!leads.length){$('a-empty').style.display='';
-    ['a-res','a-prog','a-err'].forEach(i=>$(i).style.display='none')}
-  navCounts();
+  var tabs=["search","results","saved","history","setup"];
+  for(var i=0;i<tabs.length;i++){
+    $("p-"+tabs[i]).style.display = tabs[i]===t ? "" : "none";
+    $("t-"+tabs[i]).className = tabs[i]===t ? "on" : "";
+  }
+  if(t!=="results") $("a-err").style.display="none";
+  if(t==="saved") renderSaved();
+  if(t==="history") renderHist();
+  if(t==="setup") renderQuota();
+  if(t==="results" && !busy && !leads.length && $("a-err").style.display==="none"){
+    $("a-empty").style.display=""; $("a-res").style.display="none"; $("a-prog").style.display="none";
+  }
+  navCounts(); window.scrollTo(0,0);
 }
 function navCounts(){
-  $('t-results').innerHTML='Results'+(leads.length?`<span class="ct">${leads.length}</span>`:'');
-  $('t-saved').innerHTML='Files'+(saved.length?`<span class="ct">${saved.length}</span>`:'');
+  $("t-results").innerHTML = "Results" + (leads.length ? '<span class="bdg">'+leads.length+'</span>' : "");
+  $("t-saved").innerHTML   = "Saved"   + (saved.length ? '<span class="bdg">'+saved.length+'</span>' : "");
 }
-const tg=id=>$(id).classList.toggle('on');
-const on=id=>$(id).classList.contains('on');
-const getC=id=>Array.from(document.querySelectorAll('#'+id+' .chip.on')).map(c=>c.dataset.v);
-function clearF(){document.querySelectorAll('.chips .chip[data-v]').forEach(c=>c.classList.remove('on'));
-  ['f-minrev','f-maxrev','f-minrate'].forEach(i=>$(i).value='')}
-function cost(){const n=+$('f-count').value;
-  $('cost').textContent=n>50
-    ?`${n} leads uses ${Math.ceil(n/12)} Claude messages · takes about 2–3 minutes`
-    :`Uses about ${Math.ceil(n/12)} Claude messages · takes 30–90 seconds`}
-function srcLabel(){$('src-label').textContent=useDemo?'Source — sample data':'Source — Claude AI search'}
+function tg(id){ $(id).classList.toggle("on"); }
+function isOn(id){ return $(id).classList.contains("on"); }
+function chipVals(id){
+  var els = document.querySelectorAll("#"+id+" .chip.on"), out=[];
+  for(var i=0;i<els.length;i++) out.push(els[i].getAttribute("data-v"));
+  return out;
+}
+function clearFilters(){
+  var els=document.querySelectorAll(".chips .chip[data-v]");
+  for(var i=0;i<els.length;i++) els[i].classList.remove("on");
+  ["f-minrev","f-maxrev","f-minrate","f-minyears"].forEach(function(id){ $(id).value=""; });
+  toast("Filters reset");
+}
+function toast(m){
+  var el=$("toast"); el.textContent=m; el.style.display="";
+  clearTimeout(window._tt); window._tt=setTimeout(function(){ el.style.display="none"; },2600);
+}
+function srcNote(){
+  var relay = localStorage.getItem(LS.relay);
+  $("src-note").textContent = useDemo ? "Source — sample data"
+    : (relay ? "Source — Apify relay" : "Source — not set, open Setup");
+}
+function costNote(){
+  var n = parseInt($("f-count").value,10);
+  var left = quotaLeft();
+  $("cost-note").textContent = n>left
+    ? "You have "+left+" leads left today. This sweep will stop at "+left+"."
+    : "Uses "+n+" of your "+left+" remaining leads today.";
+}
 function demoUI(){
-  $('pill-demo').innerHTML=useDemo?'<span class="mark m-hot">Active</span>':'';
-  $('demo-btn').textContent=useDemo?'Using sample':'Switch to sample';srcLabel()}
-function togDemo(){useDemo=!useDemo;sv(LS.demo,useDemo);demoUI()}
+  $("pill-demo").innerHTML  = useDemo ? '<span class="mk mk-hot">Active</span>' : "";
+  $("pill-relay").innerHTML = !useDemo ? '<span class="mk mk-hot">Active</span>' : "";
+  $("demo-btn").textContent = useDemo ? "Switch to live data" : "Use sample data";
+  srcNote(); costNote();
+}
+function togDemo(){ useDemo=!useDemo; sv(LS.demo,useDemo); demoUI(); }
 
-/* ── scoring ── */
-const nSoc=l=>SOC.filter(k=>l.social&&l.social[k]).length;
-function health(l){const g=l.reviews.rating,r=l.reviews.count,y=l.age.years,w=l.website.status,b=l.booking.status,s=nSoc(l);
-  let x=0;
-  if(g!=null)x+=Math.max(0,Math.min(30,((g-3)/1.9)*30));
-  if(r!=null)x+=Math.max(0,Math.min(25,(Math.log10(r+1)/Math.log10(600))*25));
-  if(y!=null)x+=Math.min(15,(y/10)*15);
-  x+=w==='exists'?15:w==='none'?0:5;x+=b==='exists'?5:b==='none'?0:2;x+=Math.min(10,s*3.5);
-  return Math.round(Math.max(0,Math.min(100,x)))}
-function temp(l){
-  const w=l.website.status,b=l.booking.status,s=nSoc(l),r=l.reviews.count,g=l.reviews.rating,y=l.age.years;
-  const opp=(w==='none'?20:w==='unknown'?9:3)+(b==='none'?10:b==='unknown'?5:0);
-  const cats=[{k:'Online opportunity',m:30,v:Math.min(30,opp)},
-    {k:'Business strength',m:20,v:r!=null?Math.min(20,(Math.log10(r+1)/Math.log10(400))*20):8},
-    {k:'Reputation',m:20,v:g!=null?Math.max(0,Math.min(20,((g-3.2)/1.6)*20)):8},
-    {k:'Years operating',m:10,v:y!=null?Math.min(10,(y/8)*10):4},
-    {k:'Social gap',m:10,v:s===0?10:s===1?6:s===2?3:1},
-    {k:'Customer activity',m:10,v:r!=null?Math.min(10,(r/40)*10):4}];
-  const total=Math.round(cats.reduce((a,c)=>a+c.v,0));
-  const t=total>=75?'HOT':total>=50?'WARM':'COLD';
-  const ev=[];
-  if(y!=null)ev.push({s:1,t:`${y} years operating`});
-  if(r!=null)ev.push({s:1,t:`${r} reviews on the listing`});
-  if(g!=null)ev.push({s:1,t:`${g.toFixed(1)} average rating`});
-  if(l.phone)ev.push({s:1,t:`Phone on file — ${l.phone}`});
-  if(w==='none')ev.push({s:1,t:'No website found in sources checked'});
-  else if(w==='exists')ev.push({s:0,t:'Website already in place'});
-  else ev.push({s:2,t:'Website status not confirmed'});
-  if(b==='none')ev.push({s:1,t:'No booking system found in sources checked'});
-  else if(b==='exists')ev.push({s:0,t:'Online booking already in place'});
-  else ev.push({s:2,t:'Booking status not confirmed'});
-  if(s===0)ev.push({s:1,t:'No social profiles found in sources checked'});
-  else ev.push({s:0,t:`${s} social channel${s>1?'s':''} on the listing`});
-  return{total,temp:t,cats,ev}}
-const socStr=l=>{const n=nSoc(l);return n>=3?'Strong':n===2?'Average':n===1?'Weak':'None found'};
-function opp(w,b,s,g,r){const A=[],B=[],C=[],D=[];
-  if(r>100)A.push(`${r} reviews built up over time`);
-  if(g>=4.5)A.push(`${g} rating — customers are happy`);
-  if(w==='none'){B.push('Nothing for online searchers to land on');C.push('Website');D.push('Website build')}
-  if(b==='none'){C.push('Online booking');D.push('Booking system')}
-  if(w!=='none'&&b==='none')D.push('Lead capture form');
-  if(s===0){C.push('Social presence');D.push('Social media setup')}
-  if(r!=null&&r<30)D.push('Review generation');
-  return{well:A,poor:B,missing:C,sell:D}}
-function intel(l,w,b,s){const m=[],a=[];
-  if(l.reviews.count)m.push(`Their ${l.reviews.count} reviews and the reputation behind them`);
-  if(l.age.years)m.push(`How long they've been working the area — ${l.age.years} years`);
-  if(w==='none')m.push('How much easier it would be for people to find them online');
-  if(b==='none')m.push('Letting customers book without picking up the phone');
-  if(s===0)m.push('The social presence their competitors already have');
-  a.push('Revenue, profit, or customer counts — none of that is public');
-  a.push("The owner's name — no source confirmed it");
-  if(w==='unknown')a.push('That they have no website — it was never confirmed');
-  if(b==='unknown')a.push('That they have no booking system — it was never confirmed');
-  const p=w==='none'?"You've clearly built something real here — I'm looking at how much easier it could be for people searching online to actually find and book you."
-    :b==='none'?"Your customers already trust you. The gap I see is that booking still means a phone call — that's costing you the ones who won't make it."
-    :"Your setup is solid. What I'd focus on is getting more of the right people to it.";
-  return{mention:m,avoid:a,pitch:p}}
-function offer(w,b,s){
-  if(w==='none'&&b==='none')return{h:'Website + online booking',w:'No web presence and no booking system found in sources checked.'};
-  if(w==='none')return{h:'Website build',w:'No website found in sources checked.'};
-  if(b==='none')return{h:'Online booking system',w:'No booking system detected in sources checked.'};
-  if(s===0)return{h:'Social presence',w:'No social profiles detected in sources checked.'};
-  return{h:'Lead generation and SEO',w:'The core setup is in place — growth comes from traffic and conversion.'}}
-
-/* ── normalize ── */
-function norm(p,niche,city,state){
-  const web=p.website?{status:'exists',url:p.website,https:p.website.startsWith('https')}:{status:'none',url:null};
-  const bu=p.bookingLink||(p.reservationLinks&&p.reservationLinks[0]&&p.reservationLinks[0].link);
-  const book=bu?{status:'exists',url:bu}:{status:'unknown',url:null};
-  const social={};SOC.forEach(k=>social[k]=null);
-  (p.socialMediaLinks||[]).forEach(s=>{const pl=(s.platform||'').toLowerCase();
-    SOC.forEach(k=>{if(pl.includes(k)&&!social[k])social[k]=s.link})});
-  const l={id:(p.placeId||p.cid||p.title||Math.random())+'',name:p.title||'Unnamed business',
-    address:p.address||null,city:p.city||city,state:p.state||state,category:p.categoryName||niche,
-    phone:p.phone||p.phoneUnformatted||null,email:p.email||null,website:web,booking:book,social,
-    reviews:{count:p.reviewsCount??null,rating:p.totalScore??null},
-    age:{years:p.yearsInBusiness??null},photos:(p.imageUrls||[]).slice(0,3),
-    hours:(p.openingHours||[]).slice(0,3).map(h=>`${h.day} ${h.hours}`).join('  ·  ')||null,
-    operating:p.permanentlyClosed?'Permanently closed':p.temporarilyClosed?'Temporarily closed':'Open on Google Maps',
-    mapUrl:p.url||null,demo:false,checked:new Date().toLocaleDateString()};
-  const s=nSoc(l);
-  l.opp=opp(web.status,book.status,s,l.reviews.rating,l.reviews.count);
-  l.call=intel(l,web.status,book.status,s);l.offer=offer(web.status,book.status,s);
-  l.health=health(l);l.t=temp(l);return l}
-
-function pass(l){const w=l.website.status,b=l.booking.status,s=nSoc(l);
-  if(F.web.length&&!F.web.includes(w))return false;
-  if(F.book.length&&!F.book.includes(b))return false;
-  if(F.soc.length&&!F.soc.some(k=>k==='none'?s===0:s<=1))return false;
-  if(F.temp.length&&!F.temp.includes(l.t.temp))return false;
-  if(F.minRev!=null&&(l.reviews.count==null||l.reviews.count<F.minRev))return false;
-  if(F.maxRev!=null&&(l.reviews.count==null||l.reviews.count>F.maxRev))return false;
-  if(F.minRate!=null&&(l.reviews.rating==null||l.reviews.rating<F.minRate))return false;
-  return true}
-
-/* ── query expansion ── */
-const VAR={plumbers:['plumber','emergency plumber','drain cleaning','water heater repair','plumbing contractor'],
-roofers:['roofer','roofing contractor','roof repair','roof replacement'],
-hvac:['hvac contractor','air conditioning repair','heating repair','furnace repair'],
-dentists:['dentist','dental clinic','family dentistry','cosmetic dentist'],
-electricians:['electrician','electrical contractor','emergency electrician'],
-landscapers:['landscaper','landscaping','lawn care','tree service'],
-barbers:['barber shop','barber','mens haircut'],
-'auto detailers':['auto detailing','car detailing','mobile detailing'],
-'med spas':['med spa','medical spa','botox clinic'],
-'pressure washers':['pressure washing','power washing','exterior cleaning'],
-'auto repair':['auto repair','mechanic','brake repair','transmission repair'],
-'pest control':['pest control','exterminator','termite control'],
-chiropractors:['chiropractor','chiropractic clinic'],'nail salons':['nail salon','manicure'],
-gyms:['gym','fitness center','personal trainer'],towing:['towing service','tow truck'],
-locksmiths:['locksmith','emergency locksmith'],movers:['moving company','movers'],
-painters:['painter','painting contractor','house painting'],restaurants:['restaurant','dining']};
-function queries(niche,city,state,count,near){
-  const v=VAR[niche.toLowerCase().trim()]||[niche];
-  const need=Math.ceil(count/45),q=[];
-  for(let i=0;i<Math.min(Math.max(need,1),v.length);i++)q.push(`${v[i]} in ${city}, ${state}`);
-  if(q.length===1&&count>45){q.push(`${niche} near ${city}, ${state}`);q.push(`best ${niche} ${city} ${state}`)}
-  if(near)q.push(`${v[0]} near ${city}, ${state}`);
-  return q.slice(0,6)}
-
-/* ── sweep ── */
-function log(t,c){const el=$('log'),d=document.createElement('div');
-  d.className='ln'+(c?' '+c:'');
-  const ts=new Date().toLocaleTimeString('en-US',{hour12:false});
-  d.innerHTML=`<span class="ts">${ts}</span><b>${t}</b>`;
-  el.appendChild(d);el.scrollTop=el.scrollHeight}
-const bar=p=>$('bar').style.width=p+'%';
-
-/* ── Claude AI provider — minimal token usage ── */
-const CLAUDE_URL='https://api.anthropic.com/v1/messages';
-
-async function callClaude(prompt, systemMsg){
-  const body={
-    model:'claude-sonnet-4-6',
-    max_tokens:1000,
-    system: systemMsg || 'You are a business research engine. Return only valid JSON. No markdown, no explanation, no extra text — just the raw JSON.',
-    messages:[{role:'user',content:prompt}],
-    tools:[{type:'web_search_20250305',name:'web_search'}]
-  };
-  const r=await fetch(CLAUDE_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-  if(!r.ok){const t=await r.text().catch(()=>'');throw new Error(`Claude API ${r.status}: ${t.slice(0,120)}`);}
-  const d=await r.json();
-  // extract text blocks (web search results may also come back)
-  return (d.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n');
+/* ══════════ MOTIVATION ══════════ */
+function motivHTML(){
+  var m = MOTIV[Math.floor(Math.random()*MOTIV.length)];
+  return '<div class="motiv"><div class="mk-lbl">Keep going</div>'
+    + '<p>'+esc(m[0])+'</p><div class="sub">'+esc(m[1])+'</div></div>';
+}
+function renderMotiv(){
+  if($("motiv-landing")) $("motiv-landing").innerHTML = motivHTML();
+  if($("motiv-app")) $("motiv-app").innerHTML = motivHTML();
 }
 
-function parseJSON(text, expectArray){
-  if(!text) return expectArray ? [] : null;
-  let t = text.replace(/```json/gi,'').replace(/```/g,'').trim();
-  const open = expectArray ? '[' : '{';
-  const i = t.indexOf(open);
-  if(i < 0) return expectArray ? [] : null;
-  t = t.slice(i);
-  // find the matching close
-  const close = expectArray ? ']' : '}';
-  let depth=0, inStr=false, esc=false, end=-1;
-  for(let p=0;p<t.length;p++){
-    const c=t[p];
-    if(inStr){if(esc)esc=false;else if(c==='\\')esc=true;else if(c==='"')inStr=false;continue;}
-    if(c==='"')inStr=true;
-    else if(c==='{'||c==='[')depth++;
-    else if(c==='}'||c===']'){depth--;if(depth===0){end=p;break;}}
+/* ══════════ SEARCH ══════════ */
+function log(t,cls){
+  var el=$("log"), d=document.createElement("div");
+  d.className = "ln"+(cls?" "+cls:"");
+  var ts=new Date().toLocaleTimeString("en-US",{hour12:false});
+  d.innerHTML = '<span class="ts">'+ts+'</span><b>'+esc(t)+'</b>';
+  el.appendChild(d); el.scrollTop=el.scrollHeight;
+}
+function setBar(p){ $("bar").style.width = p+"%"; }
+function showErr(m){
+  busy=false;
+  $("a-prog").style.display="none"; $("a-res").style.display="none"; $("a-empty").style.display="none";
+  $("a-err").style.display=""; $("err-msg").textContent=m;
+  $("btn-run").disabled=false;
+}
+
+function run(demo){
+  if(busy) return;
+  var niche=$("f-niche").value.trim(), city=$("f-city").value.trim(), state=$("f-state").value.trim();
+  var count=parseInt($("f-count").value,10);
+  var reqPhone=isOn("sw-phone"), quality=isOn("sw-quality"), widen=isOn("sw-widen");
+
+  F.web=chipVals("c-web"); F.book=chipVals("c-book");
+  F.soc=chipVals("c-soc"); F.temp=chipVals("c-temp");
+  var a=$("f-minrev").value.trim(), b=$("f-maxrev").value.trim();
+  var c=$("f-minrate").value.trim(), d=$("f-minyears").value.trim();
+  F.minRev=a?parseInt(a,10):null; F.maxRev=b?parseInt(b,10):null;
+  F.minRate=c?parseFloat(c):null; F.minYears=d?parseInt(d,10):null;
+
+  if(!demo && (!niche||!city||!state)){ toast("Fill in trade, city, and state"); return; }
+
+  var left = quotaLeft();
+  if(!demo && !useDemo && left<=0){
+    tab("results");
+    showErr("You've hit your 400 lead limit for today. The counter resets at midnight. Use the time to work the leads you already pulled — that's where the money actually is.");
+    return;
   }
-  if(end<0) t = t + (expectArray?']':'}'); // try repairing truncated
-  try{ return JSON.parse(end>=0 ? t.slice(0,end+1) : t); }
-  catch(e){ return expectArray ? [] : null; }
-}
+  var target = (demo||useDemo) ? count : Math.min(count,left);
 
-async function run(demo){
-  const niche=$('f-niche').value.trim(),city=$('f-city').value.trim(),state=$('f-state').value.trim();
-  const count=+$('f-count').value,reqPhone=on('sw-phone'),near=on('sw-near');
-  F.web=getC('c-web');F.book=getC('c-book');F.soc=getC('c-soc');F.temp=getC('c-temp');
-  const a=$('f-minrev').value.trim(),b=$('f-maxrev').value.trim(),c=$('f-minrate').value.trim();
-  F.minRev=a?+a:null;F.maxRev=b?+b:null;F.minRate=c?+c:null;
-  if(!demo&&(!niche||!city||!state)){toast('Fill in trade, city, and state');return}
+  busy=true; $("btn-run").disabled=true;
+  leads=[]; dropped=0; noPhone=0;
+  tab("results");
+  $("a-prog").style.display=""; $("a-res").style.display="none";
+  $("a-err").style.display="none"; $("a-empty").style.display="none";
+  $("log").innerHTML=""; setBar(3);
+  $("scan-title").textContent = "Sweeping "+city+", "+state;
 
-  leads=[];dropped=0;noPhone=0;tab('results');
-  $('a-prog').style.display='';['a-res','a-err','a-empty'].forEach(i=>$(i).style.display='none');
-  $('log').innerHTML='';bar(3);$('scan-title').textContent=`Sweeping ${city}, ${state}`;
-
-  log(`Target — ${niche} · ${city}, ${state} · ${count} leads`);
-  if(reqPhone)log('Phone required — leads without a number will be dropped','ok');
+  log("Target — "+niche+" · "+city+", "+state+" · "+target+" leads");
+  if(reqPhone) log("Phone required — no-number leads dropped","ok");
+  if(quality) log("Quality gate on — weak listings filtered out","ok");
+  if(widen) log("Widened to surrounding cities","ok");
 
   if(demo||useDemo){
-    log('Source — sample data');
-    await new Promise(r=>setTimeout(r,500));bar(55);
-    const rows=demoRows(city,state,count);
-    rows.forEach(r=>log(`${r.name} — ${r.phone||'no number listed'}`,r.t.temp==='HOT'?'hit':''));
-    bar(90);finish(rows,count,reqPhone);return;
+    log("Source — sample data (does not count toward daily limit)");
+    setTimeout(function(){
+      setBar(58);
+      var rows = makeSample(city,state,target);
+      for(var i=0;i<rows.length;i++) log(rows[i].name+" — "+(rows[i].phone||"no number"), rows[i].t.temp==="HOT"?"hit":"");
+      setBar(92);
+      finish(rows, target, reqPhone, quality, false);
+    }, 500);
+    return;
   }
 
-  // Claude batched search — one call per batch of ~12 businesses
-  const batchSize=12;
-  const batches=Math.ceil(count/batchSize);
-  const all=[];
-  const seen=new Set();
+  var relay = (localStorage.getItem(LS.relay)||"").replace(/\/+$/,"");
+  if(!relay){
+    showErr("No data relay configured. Open Setup and add your proxy URL, or switch on sample data to test the interface.");
+    return;
+  }
 
-  log(`Claude AI search — ${batches} batch${batches>1?'es':''} of ${batchSize}`);
-  log('Using web search to find real businesses with verified info');
+  var qs = buildQueries(niche, city, state, target, widen);
+  log(qs.length+" quer"+(qs.length>1?"ies":"y")+" queued");
+  for(var qi=0;qi<qs.length;qi++) log("   "+qs[qi]);
+  var per = Math.min(60, Math.ceil((target*1.9)/qs.length)+5);
+  var all=[], seen={}, idx=0;
 
-  try{
-    for(let b=0;b<batches;b++){
-      const pct=8+Math.round(((b+1)/batches)*72);
-      bar(pct);
-      const offset=b*batchSize;
-      log(`Batch ${b+1} of ${batches} — searching…`);
-
-      const nearStr=near?`and nearby areas around ${city}`:city;
-      const filterHints=[];
-      if(F.web.includes('none')) filterHints.push('prefer businesses with no website');
-      if(F.book.includes('none')) filterHints.push('prefer businesses with no online booking');
-      if(reqPhone) filterHints.push('MUST have a real phone number');
-      if(F.minRev) filterHints.push(`at least ${F.minRev} reviews`);
-
-      const prompt=`Search the web and find ${batchSize} real, currently operating ${niche} businesses in ${nearStr}, ${state}, USA.
-${b>0?`This is batch ${b+1}. Find DIFFERENT businesses from these already found: ${all.slice(0,5).map(x=>x.name).join(', ')}...`:''}
-${filterHints.length?`Priority filters: ${filterHints.join(', ')}.`:''}
-
-For each business, search for: their Google Maps or Yelp listing, official website, phone number, review count, rating, and any social media.
-
-Return ONLY a JSON array of ${batchSize} businesses. Each object must have EXACTLY these fields:
-[{
-  "name": "Business Name",
-  "phone": "(555) 555-5555 or null if not found — NEVER make up a number",
-  "address": "123 Main St, ${city}, ${state}",
-  "city": "${city}",
-  "state": "${state}",
-  "category": "${niche}",
-  "website": "https://... or null if not found",
-  "bookingUrl": "booking/scheduling link or null",
-  "facebook": "facebook URL or null",
-  "instagram": "instagram URL or null",
-  "tiktok": "tiktok URL or null",
-  "youtube": "youtube URL or null",
-  "reviews": 0,
-  "rating": 0.0,
-  "years": 0
-}]
-
-CRITICAL RULES:
-- Only return businesses you actually found in web search results
-- Never invent a business name, phone number, address, or website
-- If you could not find a phone number, set phone to null — do not guess
-- If you could not find reviews, set reviews to 0 and rating to 0
-- Return raw JSON array only — no markdown, no explanation`;
-
-      let raw;
-      try{ raw = await callClaude(prompt); }
-      catch(e){
-        if(b===0) throw e;
-        log(`Batch ${b+1} failed — ${e.message}. Using results so far.`,'hit');
-        break;
+  function nextQuery(){
+    if(idx>=qs.length || all.length>=target*1.9){ done(); return; }
+    setBar(12 + Math.round((idx/qs.length)*66));
+    log("Query "+(idx+1)+" of "+qs.length+" — relaying");
+    fetch(relay+"/search",{
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({searchStringsArray:[qs[idx]], maxCrawledPlacesPerSearch:per})
+    }).then(function(r){
+      if(!r.ok) return r.text().then(function(t){ throw new Error("Relay returned "+r.status+". "+String(t).slice(0,120)); });
+      return r.json();
+    }).then(function(places){
+      if(!places || !places.length){ log("Query "+(idx+1)+" returned nothing"); idx++; nextQuery(); return; }
+      var added=0;
+      for(var i=0;i<places.length;i++){
+        var p=places[i];
+        var key = String(p.placeId||p.cid||p.title||"").toLowerCase();
+        if(!key || seen[key]) continue;
+        seen[key]=1;
+        all.push(buildLead(p, niche, city, state));
+        added++;
       }
-
-      const parsed = parseJSON(raw, true);
-      if(!Array.isArray(parsed)||!parsed.length){
-        log(`Batch ${b+1} returned no usable data`,'hit');
-        if(b===0) throw new Error('Claude returned no businesses. Check your internet connection and try again.');
-        break;
-      }
-
-      let added=0;
-      parsed.forEach(p=>{
-        if(!p||!p.name) return;
-        const id=(p.name+p.address).toLowerCase().replace(/\s/g,'');
-        if(seen.has(id)) return;
-        seen.add(id);
-
-        // Build normalized lead from Claude's response
-        const web=p.website?{status:'exists',url:p.website,https:(p.website||'').startsWith('https')}:{status:'none',url:null};
-        const book=p.bookingUrl?{status:'exists',url:p.bookingUrl}:{status:'unknown',url:null};
-        const social={facebook:p.facebook||null,instagram:p.instagram||null,tiktok:p.tiktok||null,youtube:p.youtube||null,linkedin:null};
-        const phone=(p.phone&&p.phone!=='null'&&p.phone.match(/\d{3}/)) ? p.phone : null;
-        const l={
-          id:(p.name+p.address+Math.random()).replace(/\W/g,'').slice(0,24),
-          name:p.name,address:p.address||null,city:p.city||city,state:p.state||state,
-          category:p.category||niche,phone,email:null,website:web,booking:book,social,
-          reviews:{count:p.reviews>0?p.reviews:null,rating:p.rating>0?p.rating:null},
-          age:{years:p.years>0?p.years:null},photos:[],hours:null,
-          operating:'Found via web search',mapUrl:null,demo:false,
-          checked:new Date().toLocaleDateString()
-        };
-        const s=nSoc(l);
-        l.opp=opp(web.status,book.status,s,l.reviews.rating,l.reviews.count);
-        l.call=intel(l,web.status,book.status,s);
-        l.offer=offer(web.status,book.status,s);
-        l.health=health(l);l.t=temp(l);
-        all.push(l);added++;
-      });
-      log(`${added} new businesses found · ${all.length} total`,added?'ok':'');
-      if(all.length>=count*1.3) break;
-    }
-
-    if(!all.length) throw new Error('No businesses found. Try a different city or trade and search again.');
-    bar(88);
-    log(`${all.length} businesses researched · ${all.filter(l=>l.phone).length} with a verified phone`,'ok');
-    finish(all,count,reqPhone);
-  }catch(e){err(e.message);}
+      log(added+" new · "+all.length+" collected", added?"ok":"");
+      idx++; nextQuery();
+    }).catch(function(e){
+      log("Query "+(idx+1)+" failed — "+e.message, "err");
+      if(idx===0 && all.length===0){ showErr(e.message); return; }
+      idx++; nextQuery();
+    });
+  }
+  function done(){
+    if(!all.length){ showErr("Nothing came back. Try a larger city, a broader trade, or check your relay in Setup."); return; }
+    setBar(86);
+    var wp=0; for(var i=0;i<all.length;i++) if(all[i].phone) wp++;
+    log(all.length+" businesses · "+wp+" with a phone number","ok");
+    finish(all, target, reqPhone, quality, true);
+  }
+  nextQuery();
 }
 
-function finish(all,count,reqPhone){
-  let pool=all;
-  if(reqPhone){const b=pool.length;pool=pool.filter(l=>l.phone);noPhone=b-pool.length;
-    if(noPhone)log(`${noPhone} dropped — no number on the listing`,'hit')}
-  const ok=pool.filter(pass).sort((a,b)=>b.t.total-a.t.total);
-  dropped=pool.length-ok.length;leads=ok.slice(0,count);bar(100);
-  log(`${leads.length} file${leads.length===1?'':'s'} ready${dropped?` · ${dropped} filtered out`:''}`,'ok');
-  hist.unshift({at:new Date().toLocaleString(),q:{niche:$('f-niche').value,city:$('f-city').value,state:$('f-state').value,count},leads});
-  hist=hist.slice(0,20);sv(LS.hist,hist);
-  setTimeout(render,650)}
-function err(m){$('a-prog').style.display='none';$('a-err').style.display='';$('err-msg').textContent=m}
+function finish(all, target, reqPhone, quality, countsToQuota){
+  var pool = all.slice();
 
-function demoRows(city,state,count){
-  const base=[['Martinez Plumbing & Drain','(408) 555-0143','none','unknown',[],327,4.8,11,'Plumber'],
-  ['Ridgeline Roofing','(408) 555-0271','exists','unknown',['facebook'],142,4.6,12,'Roofing'],
-  ['Valley Air & Heat','(408) 555-0392','exists','exists',['facebook','instagram'],511,4.7,15,'HVAC'],
-  ['Lopez Electric','(408) 555-0418','none','unknown',['facebook'],89,4.9,6,'Electrician'],
-  ['Cascade Auto Detail',null,'unknown','unknown',['instagram'],61,4.4,3,'Detailing'],
-  ['Green Valley Landscaping','(408) 555-0577','none','unknown',[],204,4.5,9,'Landscaper'],
-  ['Alder Med Spa','(408) 555-0630','exists','exists',['instagram','tiktok','facebook'],388,4.8,6,'Med spa'],
-  ['Bright Wash Exteriors','(408) 555-0744','none','unknown',['facebook'],47,5.0,2,'Pressure washing'],
-  ['Sentinel Pest Control','(408) 555-0851','none','unknown',[],156,4.6,9,'Pest control'],
-  ['Ironside Towing','(408) 555-0967','unknown','unknown',[],73,4.2,4,'Towing']];
-  const out=[];
-  for(let i=0;i<Math.min(count,40);i++){
-    const r=base[i%base.length],sfx=i>=base.length?` ${Math.floor(i/base.length)+1}`:'';
-    const social={};SOC.forEach(k=>social[k]=r[4].includes(k)?`https://example.com/${k}`:null);
-    const l={id:'s-'+i,name:r[0]+sfx,phone:r[1],email:null,
-      address:`${100+i*37} Example Ave, ${city}, ${state}`,city,state,category:r[8],
-      website:{status:r[2],url:r[2]==='exists'?'https://example.com':null},
-      booking:{status:r[3],url:null},social,reviews:{count:r[5],rating:r[6]},age:{years:r[7]},
-      photos:[],hours:null,operating:'Sample record',mapUrl:null,demo:true,checked:new Date().toLocaleDateString()};
-    const s=nSoc(l);
-    l.opp=opp(l.website.status,l.booking.status,s,r[6],r[5]);
-    l.call=intel(l,l.website.status,l.booking.status,s);
-    l.offer=offer(l.website.status,l.booking.status,s);
-    l.health=health(l);l.t=temp(l);out.push(l)}
-  return out.sort((a,b)=>b.t.total-a.t.total)}
+  if(quality){
+    var before = pool.length;
+    pool = pool.filter(qualityGate);
+    var cut = before-pool.length;
+    if(cut) log(cut+" removed by quality gate","hit");
+  }
+  if(reqPhone){
+    var b2 = pool.length;
+    pool = pool.filter(function(l){ return !!l.phone; });
+    noPhone = b2-pool.length;
+    if(noPhone) log(noPhone+" dropped — no phone number","err");
+  }
 
-/* ── signature meter ── */
-function sig(score,t,ticks){
-  const n=ticks||20,fill=Math.round((score/100)*n);
-  let h=`<div class="sig ${t.toLowerCase()}">`;
-  for(let i=0;i<n;i++)h+=`<s class="${i<fill?'f':''}" style="height:${40+((i/n)*60)}%"></s>`;
-  return h+'</div>'}
-function sigRow(score,t){
-  return`<div class="sig-wrap" style="flex:1">${sig(score,t)}<span class="sig-val" style="color:${t==='HOT'?'var(--ember)':t==='WARM'?'var(--caution)':'var(--steel)'}">${score}<span style="color:var(--smoke2)">/100</span></span></div>`}
+  var anyFilter = F.web.length||F.book.length||F.soc.length||F.temp.length
+    || F.minRev!=null || F.maxRev!=null || F.minRate!=null || F.minYears!=null;
 
-/* ── render ── */
+  var pass = pool.filter(passes);
+  pass.sort(function(a,b){ return b.t.total-a.t.total; });
+  var final = pass.slice(0,target);
+  dropped = pool.length-pass.length;
+
+  if(!final.length){
+    if(reqPhone && !pool.length)
+      showErr("Found "+all.length+" business"+(all.length===1?"":"es")+", but none had a verified phone number. Turn off \u201cRequire phone number\u201d or try a larger city.");
+    else if(anyFilter)
+      showErr("Found "+pool.length+" business"+(pool.length===1?"":"es")+", but your filters excluded all of them. Reset the filters and run it again.");
+    else
+      showErr("No results qualified. Try a different city or trade.");
+    return;
+  }
+
+  leads = final;
+  setBar(100);
+  log(final.length+" lead"+(final.length===1?"":"s")+" ready"+(dropped?" · "+dropped+" filtered":""),"ok");
+
+  if(countsToQuota) addQuota(final.length);
+
+  hist.unshift({at:new Date().toLocaleString(), q:{niche:$("f-niche").value, city:$("f-city").value,
+    state:$("f-state").value, count:target}, leads:final});
+  hist = hist.slice(0,30);
+  sv(LS.hist,hist);
+
+  busy=false; $("btn-run").disabled=false;
+  setTimeout(render, 600);
+}
+
+/* ══════════ RENDER RESULTS ══════════ */
+function sigHTML(score, temp){
+  var ticks=22, fill=Math.round((score/100)*ticks), cls=temp.toLowerCase();
+  var h='<div class="sig '+cls+'">';
+  for(var i=0;i<ticks;i++) h += '<s class="'+(i<fill?"f":"")+'" style="height:'+(40+(i/ticks)*60)+'%"></s>';
+  return h+"</div>";
+}
+function sigRow(score,temp){
+  var col = temp==="HOT"?"var(--gold2)":(temp==="WARM"?"var(--silver2)":"var(--navy-lt)");
+  return '<div class="sigrow">'+sigHTML(score,temp)
+    +'<span class="sigv" style="color:'+col+'">'+score
+    +'<span style="color:var(--mut2);font-weight:400">/100</span></span></div>';
+}
+function statTxt(s,url,none){
+  if(s==="none") return '<span class="no">'+none+'</span>';
+  if(s==="unknown") return '<span class="unk">Not confirmed</span>';
+  return '<span class="yes">'+esc(url?String(url).replace(/^https?:\/\//,"").replace(/\/$/,"").slice(0,24):"Yes")+'</span>';
+}
 function render(){
-  $('a-prog').style.display='none';$('a-res').style.display='';
-  const c=fn=>leads.filter(fn).length;
-  $('res-line').textContent=`${leads.length} file${leads.length===1?'':'s'} ready`+
-    (dropped?` · ${dropped} filtered out`:'')+(noPhone?` · ${noPhone} had no number`:'');
-  $('m-total').textContent=leads.length;$('m-phone').textContent=c(l=>l.phone);
-  $('m-hot').textContent=c(l=>l.t.temp==='HOT');$('m-warm').textContent=c(l=>l.t.temp==='WARM');
-  $('m-noweb').textContent=c(l=>l.website.status==='none');$('m-nobook').textContent=c(l=>l.booking.status==='none');
-  $('m-nosoc').textContent=c(l=>nSoc(l)===0);
-  $('m-avg').textContent=leads.length?Math.round(leads.reduce((a,l)=>a+l.t.total,0)/leads.length):0;
-  cards();table();navCounts()}
+  $("a-prog").style.display="none"; $("a-res").style.display=""; $("a-empty").style.display="none";
+  function cnt(fn){ var n=0; for(var i=0;i<leads.length;i++) if(fn(leads[i])) n++; return n; }
+  $("res-line").textContent = leads.length+" lead"+(leads.length===1?"":"s")+" ready"
+    +(dropped?" · "+dropped+" filtered":"")+(noPhone?" · "+noPhone+" had no phone":"");
+  $("m-total").textContent = leads.length;
+  $("m-phone").textContent = cnt(function(l){return !!l.phone;});
+  $("m-email").textContent = cnt(function(l){return !!l.email;});
+  $("m-hot").textContent   = cnt(function(l){return l.t.temp==="HOT";});
+  $("m-noweb").textContent = cnt(function(l){return l.website.status==="none";});
+  $("m-nobook").textContent= cnt(function(l){return l.booking.status!=="exists";});
+  $("m-nosoc").textContent = cnt(function(l){return nSoc(l)===0;});
+  var avg=0; for(var i=0;i<leads.length;i++) avg+=leads[i].t.total;
+  $("m-avg").textContent = leads.length?Math.round(avg/leads.length):0;
+  renderCards(); renderTable(); navCounts();
+}
+function cardHTML(l){
+  var t=l.t, cls=t.temp.toLowerCase(), isS=isSaved(l.id);
+  var h = '<div class="card '+cls+'" onclick="openD(\''+l.id+'\')">'
+    + '<div style="display:flex;justify-content:space-between;gap:12px;margin-bottom:2px">'
+    +   '<div style="min-width:0"><h3>'+esc(l.name)+'</h3>'
+    +   '<div class="loc">'+esc(l.city)+", "+esc(l.state)+(l.category?" — "+esc(l.category):"")+'</div></div>'
+    +   '<div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end;flex-shrink:0">'
+    +     '<span class="mk mk-'+cls+'">'+t.temp+'</span>'
+    +     (l.phone?'<span class="mk mk-go">Callable</span>':'')
+    +   '</div></div>'
+    + sigRow(t.total,t.temp)
+    + '<div class="rows">'
+    +   '<div class="row"><span class="k">Owner</span><span class="v">'+(l.owner?esc(l.owner):'<span class="unk">Ask on call</span>')+'</span></div>'
+    +   '<div class="row"><span class="k">Email</span><span class="v">'+(l.email?'<span class="yes">'+esc(l.email)+'</span>':'<span class="unk">Not found</span>')+'</span></div>'
+    +   '<div class="row"><span class="k">Years</span><span class="v">'+(l.age.years!=null?'<b class="mono">'+l.age.years+'</b>':'<span class="unk">—</span>')+'</span></div>'
+    +   '<div class="row"><span class="k">Website</span><span class="v">'+statTxt(l.website.status,l.website.url,"None found")+'</span></div>'
+    +   '<div class="row"><span class="k">Booking</span><span class="v">'+statTxt(l.booking.status,null,"None found")+'</span></div>'
+    +   '<div class="row"><span class="k">Reviews</span><span class="v">'+(l.reviews.count!=null?'<b class="mono">'+l.reviews.count+'</b> at <b class="mono">'+l.reviews.rating+'</b>':'<span class="unk">—</span>')+'</span></div>'
+    + '</div>';
+  h += l.phone
+    ? '<a class="dial" href="tel:'+esc(l.phone)+'" onclick="event.stopPropagation()">'+esc(l.phone)+'</a>'
+    : '<div class="dial off">No number listed</div>';
+  h += '<div style="height:9px"></div>'
+    + '<button class="btn ln s" style="width:100%" onclick="event.stopPropagation();togSaveId(\''+l.id+'\')">'
+    + (isS?"&#9733; Saved":"&#9734; Save lead")+'</button></div>';
+  return h;
+}
+function renderCards(){
+  var h=""; for(var i=0;i<leads.length;i++) h+=cardHTML(leads[i]);
+  $("cards").innerHTML=h;
+}
+var TCOLS=[
+  ["Business", function(l){return esc(l.name);}, function(l){return l.name;}, 0],
+  ["Owner",    function(l){return l.owner?esc(l.owner):'<span class="unk">—</span>';}, function(l){return l.owner?1:0;}, 0],
+  ["Phone",    function(l){return l.phone?'<span class="yes">'+esc(l.phone)+'</span>':'<span class="unk">—</span>';}, function(l){return l.phone?1:0;}, 1],
+  ["Email",    function(l){return l.email?'<span class="yes">'+esc(l.email)+'</span>':'<span class="unk">—</span>';}, function(l){return l.email?1:0;}, 0],
+  ["City",     function(l){return esc(l.city);}, function(l){return l.city;}, 0],
+  ["Years",    function(l){return l.age.years!=null?l.age.years:"—";}, function(l){return l.age.years==null?-1:l.age.years;}, 1],
+  ["Web",      function(l){return l.website.status==="none"?'<span class="no">none</span>':(l.website.status==="exists"?'<span class="yes">yes</span>':'<span class="unk">?</span>');}, function(l){return l.website.status;}, 0],
+  ["Book",     function(l){return l.booking.status==="exists"?'<span class="yes">yes</span>':'<span class="no">none</span>';}, function(l){return l.booking.status;}, 0],
+  ["Reviews",  function(l){return l.reviews.count==null?"—":l.reviews.count;}, function(l){return l.reviews.count==null?-1:l.reviews.count;}, 1],
+  ["Rating",   function(l){return l.reviews.rating==null?"—":l.reviews.rating;}, function(l){return l.reviews.rating==null?-1:l.reviews.rating;}, 1],
+  ["Signal",   function(l){return l.t.total;}, function(l){return l.t.total;}, 1],
+  ["Temp",     function(l){return '<span class="mk mk-'+l.t.temp.toLowerCase()+'">'+l.t.temp+'</span>';}, function(l){return l.t.total;}, 0]
+];
+function renderTable(){
+  var rows=leads.slice();
+  var keyFn=TCOLS[sortCol][2];
+  rows.sort(function(a,b){
+    var x=keyFn(a), y=keyFn(b);
+    if(typeof x==="string") return x.localeCompare(y)*sortDir;
+    return (x-y)*sortDir;
+  });
+  var h='<table><thead><tr>';
+  for(var i=0;i<TCOLS.length;i++)
+    h+='<th onclick="sortBy('+i+')">'+TCOLS[i][0]+(sortCol===i?(sortDir===-1?" &darr;":" &uarr;"):"")+'</th>';
+  h+='</tr></thead><tbody>';
+  for(var r=0;r<rows.length;r++){
+    h+='<tr onclick="openD(\''+rows[r].id+'\')">';
+    for(var c=0;c<TCOLS.length;c++)
+      h+='<td class="'+(TCOLS[c][3]?"n":"")+'">'+TCOLS[c][1](rows[r])+'</td>';
+    h+='</tr>';
+  }
+  $("tbl").innerHTML = h+'</tbody></table>';
+}
+function sortBy(i){ sortDir = (sortCol===i) ? -sortDir : -1; sortCol=i; renderTable(); }
+function setLayout(v){
+  $("l-cards").className = "chip"+(v==="cards"?" on":"");
+  $("l-table").className = "chip"+(v==="table"?" on":"");
+  $("cards").style.display = v==="cards"?"":"none";
+  $("tbl").style.display   = v==="table"?"":"none";
+  layout=v;
+}
 
-function stat(s,url,none){
-  if(s==='none')return`<span class="no">${none}</span>`;
-  if(s==='unknown')return`<span class="unk">Not confirmed</span>`;
-  return`<span class="yes">${url?url.replace(/^https?:\/\//,'').replace(/\/$/,'').slice(0,26):'Yes'}</span>`}
+/* ══════════ SAVE / CRM ══════════ */
+function isSaved(id){ for(var i=0;i<saved.length;i++) if(saved[i].id===id) return true; return false; }
+function findLead(id){
+  for(var i=0;i<leads.length;i++) if(leads[i].id===id) return leads[i];
+  for(var j=0;j<saved.length;j++) if(saved[j].id===id) return saved[j];
+  for(var h=0;h<hist.length;h++)
+    for(var k=0;k<hist[h].leads.length;k++) if(hist[h].leads[k].id===id) return hist[h].leads[k];
+  return null;
+}
+function togSaveId(id){
+  var l=findLead(id); if(!l) return;
+  var at=-1; for(var i=0;i<saved.length;i++) if(saved[i].id===id) at=i;
+  if(at>=0){ saved.splice(at,1); toast("Removed from saved"); }
+  else { saved.push(l); toast("Saved"); }
+  sv(LS.saved,saved);
+  renderCards(); renderSaved(); navCounts();
+  if(cur && cur.id===id) $("d-save").innerHTML = isSaved(id)?"&#9733; Saved":"&#9734; Save lead";
+}
+function togSave(){ if(cur) togSaveId(cur.id); }
+function saveAllHot(){
+  var n=0;
+  for(var i=0;i<leads.length;i++){
+    if(leads[i].t.temp==="HOT" && !isSaved(leads[i].id)){ saved.push(leads[i]); n++; }
+  }
+  sv(LS.saved,saved); renderCards(); renderSaved(); navCounts();
+  toast(n+" hot lead"+(n===1?"":"s")+" saved");
+}
+function setStatus(){
+  if(!cur) return;
+  var c = crm[cur.id] || {status:"New",note:""};
+  c.status = $("d-status").value;
+  crm[cur.id]=c; sv(LS.crm,crm); renderSaved();
+}
+function setLeadStatus(id,s){
+  var c=crm[id]||{status:"New",note:""}; c.status=s; crm[id]=c; sv(LS.crm,crm); renderSaved();
+}
+function saveNote(){
+  if(!cur) return;
+  var c=crm[cur.id]||{status:"New",note:""};
+  c.note = $("d-note").value; crm[cur.id]=c; sv(LS.crm,crm);
+}
 
-function fileHTML(l,i){
-  const t=l.t,cls=t.temp.toLowerCase(),isS=saved.some(s=>s.id===l.id);
-  return`<div class="file ${cls}" onclick="openD('${l.id}')">
-    <div class="file-hd">
-      <div style="min-width:0"><h3>${l.name}</h3><div class="loc">${l.city}, ${l.state}${l.category?' — '+l.category:''}</div></div>
-      <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">
-        <span class="mark m-${cls}">${t.temp}</span>
-        ${l.phone?'<span class="mark m-live">Callable</span>':''}</div>
-    </div>
-    ${sigRow(t.total,t.temp)}
-    <div class="rows">
-      <div class="row"><span class="k">Website</span><span class="v">${stat(l.website.status,l.website.url,'None found')}</span></div>
-      <div class="row"><span class="k">Booking</span><span class="v">${stat(l.booking.status,null,'None found')}</span></div>
-      <div class="row"><span class="k">Social</span><span class="v ${nSoc(l)?'':'no'}">${socStr(l)}</span></div>
-      <div class="row"><span class="k">Reviews</span><span class="v">${l.reviews.count!=null?`<span class="num">${l.reviews.count}</span> at <span class="num">${l.reviews.rating}</span>`:'<span class="unk">—</span>'}</span></div>
-      <div class="row"><span class="k">Health</span><span class="v num">${l.health}</span></div>
-    </div>
-    ${l.phone?`<a class="dial" href="tel:${l.phone}" onclick="event.stopPropagation()">${l.phone}</a>`
-      :'<div class="dial off">No number listed</div>'}
-    <div style="height:8px"></div>
-    <button class="btn line s" style="width:100%" onclick="event.stopPropagation();togSaveId('${l.id}')">${isS?'Saved to files':'Save file'}</button>
-  </div>`}
-function cards(){$('cards').innerHTML=leads.map(fileHTML).join('')}
-
-const C=[['Business',l=>l.name,l=>l.name,0],
-['Phone',l=>l.phone?`<span class="yes">${l.phone}</span>`:'<span class="unk">—</span>',l=>l.phone?1:0,1],
-['City',l=>l.city,l=>l.city,0],
-['Web',l=>l.website.status==='none'?'<span class="no">none</span>':l.website.status==='unknown'?'<span class="unk">?</span>':'<span class="yes">yes</span>',l=>l.website.status,0],
-['Book',l=>l.booking.status==='none'?'<span class="no">none</span>':l.booking.status==='unknown'?'<span class="unk">?</span>':'<span class="yes">yes</span>',l=>l.booking.status,0],
-['Soc',l=>nSoc(l),l=>nSoc(l),1],['Reviews',l=>l.reviews.count??'—',l=>l.reviews.count??-1,1],
-['Rating',l=>l.reviews.rating??'—',l=>l.reviews.rating??-1,1],['Health',l=>l.health,l=>l.health,1],
-['Signal',l=>l.temp,l=>l.t.total,1],['Temp',l=>`<span class="mark m-${l.t.temp.toLowerCase()}">${l.t.temp}</span>`,l=>l.t.total,0]];
-function table(){
-  const key=C[sc][2];
-  const rows=[...leads].sort((a,b)=>{const x=key(a),y=key(b);
-    return typeof x==='string'?x.localeCompare(y)*sd:(x-y)*sd});
-  let h='<table><thead><tr>'+C.map((c,i)=>`<th onclick="sortBy(${i})">${c[0]}${sc===i?(sd===-1?' ↓':' ↑'):''}</th>`).join('')+'</tr></thead><tbody>';
-  rows.forEach(l=>{h+=`<tr onclick="openD('${l.id}')">`+C.map((c,i)=>{
-    const v=i===9?`<span class="num" style="color:${l.t.temp==='HOT'?'var(--ember)':l.t.temp==='WARM'?'var(--caution)':'var(--steel)'}">${l.t.total}</span>`:c[1](l);
-    return`<td class="${c[3]?'n':''}">${v}</td>`}).join('')+'</tr>'});
-  $('tbl').innerHTML=h+'</tbody></table>'}
-function sortBy(i){sd=sc===i?-sd:-1;sc=i;table()}
-function setL(v){$('l-cards').classList.toggle('on',v==='cards');$('l-table').classList.toggle('on',v==='table');
-  $('cards').style.display=v==='cards'?'':'none';$('tbl').style.display=v==='table'?'':'none'}
-function saveHot(){const h=leads.filter(l=>l.t.temp==='HOT'&&!saved.some(s=>s.id===l.id));
-  h.forEach(l=>saved.push(l));sv(LS.saved,saved);cards();renderSaved();navCounts();
-  toast(`${h.length} hot file${h.length===1?'':'s'} saved`)}
-
-/* ── dossier ── */
-const find=id=>leads.find(l=>l.id===id)||saved.find(l=>l.id===id);
+/* ══════════ DRAWER ══════════ */
 function openD(id){
-  const l=find(id);if(!l)return;cur=l;
-  const t=l.t,cls=t.temp.toLowerCase(),c=crm[l.id]||{status:'New',note:''};
-  const idx=leads.findIndex(x=>x.id===id);
-  $('d-stamp').textContent=`File ${String(idx>=0?idx+1:saved.findIndex(x=>x.id===id)+1).padStart(4,'0')} — opened ${l.checked}`;
-  $('d-marks').innerHTML=`<span class="mark m-${cls}">${t.temp} lead</span>`+
-    (l.phone?'<span class="mark m-live">Callable</span>':'')+
-    (l.demo?'<span class="mark m-warm">Sample</span>':'');
-  $('d-name').textContent=l.name;
-  $('d-loc').textContent=l.address||`${l.city}, ${l.state}`;
-  $('d-sig').innerHTML=sigRow(t.total,t.temp);
-  $('d-save').textContent=saved.some(s=>s.id===l.id)?'Saved to files':'Save file';
-  $('d-status').innerHTML=PIPE.map(s=>`<option ${s===c.status?'selected':''}>${s}</option>`).join('');
-  const dial=$('d-dial'),cp=$('d-copy');
-  if(l.phone){dial.style.display='';dial.href='tel:'+l.phone;dial.textContent='Call '+l.phone;cp.style.display=''}
-  else{dial.style.display='none';cp.style.display='none'}
-  const socs=SOC.filter(k=>l.social[k]);
+  var l=findLead(id); if(!l) return;
+  cur=l;
+  var t=l.t, cls=t.temp.toLowerCase();
+  var c=crm[l.id]||{status:"New",note:""};
 
-  $('d-body').innerHTML=`
-  ${l.demo?'<div style="padding-top:22px"><div class="caution">Sample record — fictional. Do not call this number.</div></div>':''}
-  <div class="sect">
-    <div class="rule"><span class="idx">§01</span>Why this scored ${t.total}</div>
-    <ul class="ev">${t.ev.map(e=>`<li class="${e.s===0?'n':e.s===2?'q':''}">${e.t}</li>`).join('')}</ul>
-    <div style="height:18px"></div>
-    ${t.cats.map(x=>`<div class="gauge"><span class="g-k">${x.k}</span><span class="g-b"><i style="width:${(x.v/x.m)*100}%"></i></span><span class="g-v">${Math.round(x.v)}/${x.m}</span></div>`).join('')}
-  </div>
-  <div class="sect">
-    <div class="rule"><span class="idx">§02</span>Contact</div>
-    <div class="row"><span class="k">Phone</span><span class="v">${l.phone?`<a href="tel:${l.phone}" class="yes">${l.phone}</a>`:'<span class="unk">Not listed</span>'}</span></div>
-    <div class="row"><span class="k">Email</span><span class="v">${l.email||'<span class="unk">Not found</span>'}</span></div>
-    <div class="row"><span class="k">Address</span><span class="v">${l.address||'<span class="unk">Not found</span>'}</span></div>
-    <div class="row"><span class="k">Decision maker</span><span class="v"><span class="unk">Not verified — ask on the call</span></span></div>
-    <div class="row"><span class="k">Trade</span><span class="v">${l.category||'—'}</span></div>
-    <div class="row"><span class="k">Hours</span><span class="v">${l.hours||'<span class="unk">Not listed</span>'}</span></div>
-    <div class="row"><span class="k">Status</span><span class="v">${l.operating}</span></div>
-    <div class="row"><span class="k">Years open</span><span class="v">${l.age.years!=null?`<span class="num">${l.age.years}</span>`:'<span class="unk">Not listed</span>'}</span></div>
-    ${l.mapUrl?`<div class="row"><span class="k">Listing</span><span class="v"><a href="${l.mapUrl}" target="_blank">Open in Maps</a></span></div>`:''}
-  </div>
-  <div class="sect">
-    <div class="rule"><span class="idx">§03</span>Online setup</div>
-    <div style="margin-bottom:18px">
-      <div class="note" style="margin-bottom:7px">Website</div>
-      ${l.website.status==='none'?'<div class="no mono" style="font-size:12.5px;letter-spacing:.1em">NO WEBSITE FOUND IN SOURCES CHECKED</div>'
-        :l.website.status==='exists'?`<a href="${l.website.url}" target="_blank" style="font-size:14.5px">${l.website.url}</a>
-          <div style="margin-top:8px" class="note">${l.website.https?'Secure (HTTPS)':'Not secured — no HTTPS'}</div>`
-        :'<div class="unk" style="font-size:13.5px">Could not be confirmed either way.</div>'}
-    </div>
-    <div style="margin-bottom:18px">
-      <div class="note" style="margin-bottom:7px">Booking</div>
-      ${l.booking.status==='none'?'<div class="no mono" style="font-size:12.5px;letter-spacing:.1em">NO BOOKING SYSTEM FOUND</div>'
-        :l.booking.status==='exists'?`<div class="yes" style="font-size:14px">Booking link on the listing${l.booking.url?` — <a href="${l.booking.url}" target="_blank">open</a>`:''}</div>`
-        :'<div class="unk" style="font-size:13.5px">Not confirmed. Google Maps does not always surface booking links.</div>'}
-    </div>
-    <div>
-      <div class="note" style="margin-bottom:7px">Social — ${socStr(l)}</div>
-      ${socs.length?`<div class="chips">${socs.map(k=>`<a class="chip" href="${l.social[k]}" target="_blank">${k[0].toUpperCase()+k.slice(1)}</a>`).join('')}</div>`
-        :'<div class="no mono" style="font-size:12.5px;letter-spacing:.1em">NO PROFILES FOUND IN SOURCES CHECKED</div>'}
-      ${SOC.filter(k=>!l.social[k]).length?`<div class="note" style="margin-top:10px">Not found: ${SOC.filter(k=>!l.social[k]).join(', ')}</div>`:''}
-    </div>
-  </div>
-  <div class="sect">
-    <div class="rule"><span class="idx">§04</span>Reputation</div>
-    ${l.reviews.count==null?'<div class="unk" style="font-size:13.5px">No review data on the listing.</div>':`
-    <div style="display:flex;gap:36px;align-items:baseline">
-      <div><div class="big">${l.reviews.rating}</div><div class="note" style="margin-top:8px">Rating</div></div>
-      <div><div class="big">${l.reviews.count}</div><div class="note" style="margin-top:8px">Reviews</div></div>
-      <div><div class="big">${l.health}</div><div class="note" style="margin-top:8px">Health score</div></div>
-    </div>
-    <div class="note" style="margin-top:18px">Health reflects public signals only — reviews, rating, age, and online setup. Revenue and customer counts are private and are not estimated.</div>`}
-  </div>
-  <div class="sect">
-    <div class="rule"><span class="idx">§05</span>The gap</div>
-    ${[['well','Working for them'],['poor','Working against them'],['missing','Missing'],['sell','Sellable']].map(([k,title])=>{
-      const arr=l.opp[k]||[];
-      return`<div style="margin-bottom:16px"><div class="note" style="margin-bottom:7px">${title}</div>
-      ${arr.length?`<ul class="t">${arr.map(x=>`<li>${x}</li>`).join('')}</ul>`:'<div class="unk" style="font-size:13px">Nothing established from the listing.</div>'}</div>`}).join('')}
-  </div>
-  <div class="sect">
-    <div class="rule"><span class="idx">§06</span>The offer</div>
-    <div style="font-size:19px;font-weight:800;color:var(--ember);letter-spacing:-.01em">${l.offer.h}</div>
-    <p class="prose" style="margin-top:10px">${l.offer.w}</p>
-    <div class="pull" style="margin-top:16px">${l.call.pitch}</div>
-  </div>
-  <div class="sect">
-    <div class="rule"><span class="idx">§07</span>Before you dial</div>
-    <div class="note" style="margin-bottom:8px">Lead with</div>
-    <ul class="t">${l.call.mention.map(x=>`<li>${x}</li>`).join('')}</ul>
-    <div class="note" style="margin:18px 0 8px">Do not claim</div>
-    <div class="caution"><ul class="t" style="font-size:13px">${l.call.avoid.map(x=>`<li>${x}</li>`).join('')}</ul></div>
-  </div>
-  <div class="sect">
-    <div class="rule"><span class="idx">§08</span>Sources</div>
-    <ul class="t" style="font-size:12.5px"><li>Found via Claude AI web search</li>
-    ${l.mapUrl?`<li><a href="${l.mapUrl}" target="_blank">View the original listing</a></li>`:''}</ul>
-    <div class="note" style="margin-top:14px">Checked ${l.checked}. Run the sweep again to refresh.</div>
-  </div>
-  <div class="sect">
-    <div class="rule"><span class="idx">§09</span>Call notes</div>
-    <textarea class="in" rows="4" placeholder="Called Aug 16. Spoke to the owner. Follow up Monday." id="d-note">${c.note||''}</textarea>
-  </div>`;
-  const nt=$('d-note');if(nt)nt.onblur=saveNote;
-  $('scrim').style.display='';$('dossier').style.display='';
-  document.body.style.overflow='hidden'}
-function closeD(){$('scrim').style.display='none';$('dossier').style.display='none';document.body.style.overflow=''}
-function copyNum(){if(!cur||!cur.phone)return;
-  navigator.clipboard?.writeText(cur.phone).then(()=>toast('Number copied'),()=>toast('Could not copy'))}
-function saveNote(){if(!cur)return;const c=crm[cur.id]||{status:'New',note:''};
-  c.note=$('d-note').value;crm[cur.id]=c;sv(LS.crm,crm)}
-function setStat(){if(!cur)return;const c=crm[cur.id]||{status:'New',note:''};
-  c.status=$('d-status').value;crm[cur.id]=c;sv(LS.crm,crm);renderSaved()}
-function togSave(){if(cur)togSaveId(cur.id)}
-function togSaveId(id){const l=find(id);if(!l)return;
-  const i=saved.findIndex(s=>s.id===id);
-  if(i>=0){saved.splice(i,1);toast('Removed from files')}else{saved.push(l);toast('Saved to files')}
-  sv(LS.saved,saved);cards();renderSaved();navCounts();
-  if(cur&&cur.id===id)$('d-save').textContent=saved.some(s=>s.id===id)?'Saved to files':'Save file'}
-function toast(m){const el=$('toast');el.textContent=m;el.style.display='';
-  clearTimeout(window._tt);window._tt=setTimeout(()=>el.style.display='none',2400)}
+  $("d-stamp").textContent = "LEAD FILE — checked "+l.checked;
+  $("d-marks").innerHTML = '<span class="mk mk-'+cls+'">'+t.temp+' lead</span>'
+    + (l.phone?'<span class="mk mk-go">Callable</span>':'')
+    + (l.email?'<span class="mk mk-go">Email on file</span>':'')
+    + (l.demo?'<span class="mk mk-no">Sample</span>':'');
+  $("d-name").textContent = l.name;
+  $("d-loc").textContent  = l.address || (l.city+", "+l.state);
+  $("d-sig").innerHTML    = sigHTML(t.total,t.temp)
+    + '<span class="sigv" style="color:'+(t.temp==="HOT"?"var(--gold2)":(t.temp==="WARM"?"var(--silver2)":"var(--navy-lt)"))+'">'
+    + t.total+'<span style="color:var(--mut2);font-weight:400">/100</span></span>';
+  $("d-save").innerHTML = isSaved(l.id)?"&#9733; Saved":"&#9734; Save lead";
 
-/* ── files ── */
+  var sel=$("d-status"), so="";
+  for(var i=0;i<PIPE.length;i++) so += '<option'+(PIPE[i]===c.status?" selected":"")+'>'+PIPE[i]+'</option>';
+  sel.innerHTML=so;
+
+  var dial=$("d-dial"), mail=$("d-mail");
+  if(l.phone){ dial.style.display=""; dial.href="tel:"+l.phone; dial.textContent="Call "+l.phone; }
+  else dial.style.display="none";
+  if(l.email){ mail.style.display=""; mail.href="mailto:"+l.email; mail.textContent="Email"; }
+  else mail.style.display="none";
+
+  var socs=[]; for(var s=0;s<SOC.length;s++) if(l.social[SOC[s]]) socs.push(SOC[s]);
+
+  var h="";
+  if(l.demo) h += '<div style="padding-top:22px"><div class="warnb"><strong>Sample record.</strong> Fictional business — do not call this number.</div></div>';
+  if(l.phone) h += '<div style="padding-top:22px"><div class="infob"><strong>Ready to call.</strong> '+esc(l.phone)+'</div></div>';
+
+  /* §01 score */
+  h += '<div class="sect"><div class="rule"><span class="ix">&sect;01</span>Why this scored '+t.total+'</div><ul class="ev">';
+  for(var e=0;e<t.ev.length;e++)
+    h += '<li class="'+(t.ev[e].s===0?"b":(t.ev[e].s===2?"q":""))+'">'+esc(t.ev[e].t)+'</li>';
+  h += '</ul><div style="height:18px"></div>';
+  for(var g=0;g<t.cats.length;g++){
+    var ct=t.cats[g];
+    h += '<div class="gauge"><span class="gk">'+ct.k+'</span><span class="gb"><i style="width:'
+      + ((ct.v/ct.m)*100) + '%"></i></span><span class="gv">'+Math.round(ct.v)+'/'+ct.m+'</span></div>';
+  }
+  h += '</div>';
+
+  /* §02 contact */
+  h += '<div class="sect"><div class="rule"><span class="ix">&sect;02</span>Contact</div>';
+  var rowsC=[
+    ["Owner", l.owner ? esc(l.owner) : '<span class="unk">Not in public sources — ask on the call</span>'],
+    ["Phone", l.phone ? '<a class="yes" href="tel:'+esc(l.phone)+'">'+esc(l.phone)+'</a>' : '<span class="unk">Not listed</span>'],
+    ["Email", l.email ? '<a class="yes" href="mailto:'+esc(l.email)+'">'+esc(l.email)+'</a>' : '<span class="unk">Not found — collect on the call</span>'],
+    ["Address", l.address ? esc(l.address) : '<span class="unk">Not listed</span>'],
+    ["Trade", esc(l.category||"—")],
+    ["Years in business", l.age.years!=null ? '<b class="mono">'+l.age.years+'</b>' : '<span class="unk">Not listed</span>']
+  ];
+  for(var rc=0;rc<rowsC.length;rc++)
+    h += '<div class="row" style="border-bottom:1px solid var(--rim);padding:8px 0"><span class="k">'
+      + rowsC[rc][0]+'</span><span class="v">'+rowsC[rc][1]+'</span></div>';
+  if(!l.owner)
+    h += '<div style="height:14px"></div><div class="goldb"><strong>Getting the name:</strong> '
+      + '"Hey, quick one — who handles the website and marketing side over there?" '
+      + 'They either say "that\'s me" or give you the name. Either way you now have your decision maker.</div>';
+  h += '</div>';
+
+  /* §03 online */
+  h += '<div class="sect"><div class="rule"><span class="ix">&sect;03</span>Online presence</div>';
+  h += '<div style="margin-bottom:17px"><div class="note" style="margin-bottom:7px">Website</div>';
+  h += l.website.status==="none"
+    ? '<div class="no mono" style="font-size:12.5px;letter-spacing:.1em">NO WEBSITE FOUND IN SOURCES CHECKED</div>'
+    : (l.website.status==="exists"
+      ? '<a href="'+esc(l.website.url)+'" target="_blank" rel="noreferrer" style="font-size:14.5px">'+esc(l.website.url)+'</a>'
+      : '<div class="unk" style="font-size:13.5px">Could not be confirmed either way.</div>');
+  h += '</div><div style="margin-bottom:17px"><div class="note" style="margin-bottom:7px">Booking</div>';
+  h += l.booking.status==="exists"
+    ? '<div class="yes" style="font-size:14px">Booking link found</div>'
+    : (l.booking.status==="none"
+      ? '<div class="no mono" style="font-size:12.5px;letter-spacing:.1em">NO BOOKING SYSTEM FOUND</div>'
+      : '<div class="unk" style="font-size:13.5px">Not confirmed from the listing.</div>');
+  h += '</div><div><div class="note" style="margin-bottom:7px">Social — '+socLabel(l)+'</div>';
+  if(socs.length){
+    h += '<div class="chips">';
+    for(var sk=0;sk<socs.length;sk++)
+      h += '<a class="chip" href="'+esc(l.social[socs[sk]])+'" target="_blank" rel="noreferrer">'
+        + socs[sk].charAt(0).toUpperCase()+socs[sk].slice(1)+'</a>';
+    h += '</div>';
+  } else {
+    h += '<div class="no mono" style="font-size:12.5px;letter-spacing:.1em">NO PROFILES FOUND IN SOURCES CHECKED</div>';
+  }
+  h += '</div></div>';
+
+  /* §04 reputation */
+  h += '<div class="sect"><div class="rule"><span class="ix">&sect;04</span>Reputation</div>';
+  if(l.reviews.count==null) h += '<div class="unk" style="font-size:13.5px">No review data on the listing.</div>';
+  else {
+    h += '<div style="display:flex;gap:36px;align-items:baseline;flex-wrap:wrap">'
+      + '<div><div class="big">'+l.reviews.rating+'</div><div class="note" style="margin-top:8px">Rating</div></div>'
+      + '<div><div class="big">'+l.reviews.count+'</div><div class="note" style="margin-top:8px">Reviews</div></div>'
+      + '<div><div class="big">'+l.health+'</div><div class="note" style="margin-top:8px">Health score</div></div>'
+      + '</div><div class="note" style="margin-top:18px">Health reflects public signals only — reviews, rating, years open, and online setup. Revenue and customer counts are private and are never estimated.</div>';
+  }
+  h += '</div>';
+
+  /* §05 gap */
+  h += '<div class="sect"><div class="rule"><span class="ix">&sect;05</span>The gap</div>';
+  var gaps=[["well","Working for them"],["poor","Working against them"],["missing","Missing"],["sell","What you can sell"]];
+  for(var gp=0;gp<gaps.length;gp++){
+    var arr=l.opp[gaps[gp][0]]||[];
+    h += '<div style="margin-bottom:15px"><div class="note" style="margin-bottom:7px">'+gaps[gp][1]+'</div>';
+    if(arr.length){
+      h += '<ul class="t">';
+      for(var ai=0;ai<arr.length;ai++) h += '<li>'+esc(arr[ai])+'</li>';
+      h += '</ul>';
+    } else h += '<div class="unk" style="font-size:13px">Nothing established.</div>';
+    h += '</div>';
+  }
+  h += '</div>';
+
+  /* §06 offer */
+  h += '<div class="sect"><div class="rule"><span class="ix">&sect;06</span>The offer</div>'
+    + '<div style="font-size:19px;font-weight:800;color:var(--gold2);margin-bottom:10px">'+esc(l.offer.h)+'</div>'
+    + '<p class="prose" style="margin-bottom:16px">'+esc(l.offer.w)+'</p>'
+    + '<div class="pull">'+esc(l.call.pitch)+'</div></div>';
+
+  /* §07 call */
+  h += '<div class="sect"><div class="rule"><span class="ix">&sect;07</span>Before you dial</div>'
+    + '<div class="note" style="margin-bottom:8px">Lead with</div><ul class="t" style="margin-bottom:18px">';
+  for(var mi=0;mi<l.call.mention.length;mi++) h += '<li>'+esc(l.call.mention[mi])+'</li>';
+  h += '</ul><div class="note" style="margin-bottom:8px">Do not claim</div><div class="warnb"><ul class="t" style="font-size:13px">';
+  for(var av=0;av<l.call.avoid.length;av++) h += '<li>'+esc(l.call.avoid[av])+'</li>';
+  h += '</ul></div></div>';
+
+  /* §08 WEBSITE BRIEF */
+  h += '<div class="sect"><div class="rule"><span class="ix">&sect;08</span>Website build brief</div>'
+    + '<div class="note" style="margin-bottom:12px">Copy this straight into your build system. It is written from this business\u2019s real data.</div>'
+    + '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">'
+    + '<button class="btn s" onclick="copyBrief()">Copy brief</button>'
+    + '<button class="btn ln s" onclick="downloadBrief()">Download .txt</button></div>'
+    + '<div class="brief" id="brief-box">'+esc(l.brief)+'</div></div>';
+
+  /* §09 notes */
+  h += '<div class="sect"><div class="rule"><span class="ix">&sect;09</span>Call notes</div>'
+    + '<textarea class="in" rows="4" id="d-note" placeholder="Called Aug 19. Spoke to the owner. Follow up Friday.">'
+    + esc(c.note||"")+'</textarea></div>';
+
+  $("d-body").innerHTML=h;
+  var nt=$("d-note"); if(nt) nt.onblur=saveNote;
+  $("scrim").style.display=""; $("dsr").style.display="";
+  document.body.style.overflow="hidden";
+}
+function closeD(){
+  $("scrim").style.display="none"; $("dsr").style.display="none";
+  document.body.style.overflow=""; cur=null;
+}
+function copyBrief(){
+  if(!cur) return;
+  var txt = cur.brief;
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(function(){ toast("Brief copied"); },
+      function(){ fallbackCopy(txt); });
+  } else fallbackCopy(txt);
+}
+function fallbackCopy(txt){
+  var ta=document.createElement("textarea");
+  ta.value=txt; ta.style.position="fixed"; ta.style.opacity="0";
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand("copy"); toast("Brief copied"); }
+  catch(e){ toast("Select the text and copy manually"); }
+  document.body.removeChild(ta);
+}
+function downloadBrief(){
+  if(!cur) return;
+  dl(cur.name.replace(/\W+/g,"-").toLowerCase()+"-brief.txt", cur.brief, "text/plain");
+}
+
+/* ══════════ SAVED ══════════ */
 function renderSaved(){
-  const ct={};['All',...PIPE].forEach(s=>ct[s]=s==='All'?saved.length:saved.filter(l=>(crm[l.id]?.status||'New')===s).length);
-  const at=window._st||'All';
-  $('s-tabs').innerHTML=['All',...PIPE].map(s=>`<button class="chip ${s===at?'on':''}" onclick="setST('${s}')">${s} ${ct[s]}</button>`).join('');
-  $('s-acts').innerHTML=saved.length?`<button class="btn line s" onclick="expSavedCSV()">Export CSV</button><button class="btn line s" onclick="expSavedCall()">Call list</button>`:'';
-  const list=at==='All'?saved:saved.filter(l=>(crm[l.id]?.status||'New')===at);
-  $('s-empty').style.display=saved.length?'none':'';
-  $('s-cards').innerHTML=list.map(l=>{const c=crm[l.id]||{status:'New',note:''};
-    return`<div class="file ${l.t.temp.toLowerCase()}">
-      <div class="file-hd"><div style="min-width:0"><h3>${l.name}</h3><div class="loc">${l.city}, ${l.state}</div></div>
-      <span class="mark m-${l.t.temp.toLowerCase()}">${l.t.total}</span></div>
-      ${sigRow(l.t.total,l.t.temp)}
-      <div class="rows">
-        <div class="row"><span class="k">Phone</span><span class="v">${l.phone?`<a href="tel:${l.phone}" class="yes">${l.phone}</a>`:'<span class="unk">—</span>'}</span></div>
-        <div class="row"><span class="k">Website</span><span class="v">${stat(l.website.status,null,'None')}</span></div>
-      </div>
-      <div style="height:12px"></div>
-      <select class="sel" style="width:100%" onchange="setLS('${l.id}',this.value)">${PIPE.map(s=>`<option ${s===c.status?'selected':''}>${s}</option>`).join('')}</select>
-      ${c.note?`<p class="note" style="margin-top:12px;color:#9A96A2">${c.note}</p>`:''}
-      <div style="height:12px"></div>
-      <div style="display:flex;gap:7px;flex-wrap:wrap">
-        ${l.phone?`<a class="btn live s" href="tel:${l.phone}">Call</a>`:''}
-        <button class="btn line s" onclick="openD('${l.id}')">Open file</button>
-        <button class="btn line s" onclick="togSaveId('${l.id}')">Remove</button></div>
-    </div>`}).join('')}
-function setST(t){window._st=t;renderSaved()}
-function setLS(id,s){const c=crm[id]||{status:'New',note:''};c.status=s;crm[id]=c;sv(LS.crm,crm);renderSaved()}
+  var counts={}, all=["All"].concat(PIPE);
+  counts["All"]=saved.length;
+  for(var p=0;p<PIPE.length;p++){
+    var n=0;
+    for(var i=0;i<saved.length;i++) if((crm[saved[i].id]&&crm[saved[i].id].status||"New")===PIPE[p]) n++;
+    counts[PIPE[p]]=n;
+  }
+  var th="";
+  for(var a=0;a<all.length;a++)
+    th += '<button class="chip'+(savedTab===all[a]?" on":"")+'" onclick="setSavedTab(\''+all[a]+'\')">'
+      + all[a]+" "+counts[all[a]]+'</button>';
+  $("s-tabs").innerHTML=th;
+  $("s-acts").innerHTML = saved.length
+    ? '<button class="btn ln s" onclick="expSavedCSV()">Export CSV</button>'
+      +'<button class="btn ln s" onclick="expSavedCalls()">Call list</button>'
+      +'<button class="btn ln s" onclick="expSavedBriefs()">All briefs</button>' : "";
+  var list = savedTab==="All" ? saved
+    : saved.filter(function(l){ return (crm[l.id]&&crm[l.id].status||"New")===savedTab; });
+  $("s-empty").style.display = saved.length?"none":"";
+  var h="";
+  for(var s=0;s<list.length;s++){
+    var l=list[s], c=crm[l.id]||{status:"New",note:""};
+    h += '<div class="card '+l.t.temp.toLowerCase()+'">'
+      + '<div style="display:flex;justify-content:space-between;gap:12px"><div style="min-width:0">'
+      + '<h3>'+esc(l.name)+'</h3><div class="loc">'+esc(l.city)+", "+esc(l.state)+'</div></div>'
+      + '<span class="mk mk-'+l.t.temp.toLowerCase()+'">'+l.t.total+'</span></div>'
+      + sigRow(l.t.total,l.t.temp)
+      + '<div class="rows">'
+      + '<div class="row"><span class="k">Owner</span><span class="v">'+(l.owner?esc(l.owner):'<span class="unk">Ask on call</span>')+'</span></div>'
+      + '<div class="row"><span class="k">Phone</span><span class="v">'+(l.phone?'<a class="yes" href="tel:'+esc(l.phone)+'">'+esc(l.phone)+'</a>':'<span class="unk">—</span>')+'</span></div>'
+      + '<div class="row"><span class="k">Email</span><span class="v">'+(l.email?'<span class="yes">'+esc(l.email)+'</span>':'<span class="unk">—</span>')+'</span></div>'
+      + '</div><div style="height:11px"></div>'
+      + '<select class="sel" style="width:100%" onchange="setLeadStatus(\''+l.id+'\',this.value)">';
+    for(var pp=0;pp<PIPE.length;pp++)
+      h += '<option'+(PIPE[pp]===c.status?" selected":"")+'>'+PIPE[pp]+'</option>';
+    h += '</select>';
+    if(c.note) h += '<p class="note" style="margin-top:11px;color:#8C93A4">'+esc(c.note)+'</p>';
+    h += '<div style="height:11px"></div><div style="display:flex;gap:7px;flex-wrap:wrap">'
+      + (l.phone?'<a class="btn grn s" href="tel:'+esc(l.phone)+'">Call</a>':'')
+      + '<button class="btn ln s" onclick="openD(\''+l.id+'\')">Open</button>'
+      + '<button class="btn ln s" onclick="togSaveId(\''+l.id+'\')">Remove</button></div></div>';
+  }
+  $("s-cards").innerHTML=h;
+}
+function setSavedTab(t){ savedTab=t; renderSaved(); }
 
-/* ── history ── */
+/* ══════════ HISTORY ══════════ */
 function renderHist(){
-  $('h-empty').style.display=hist.length?'none':'';
-  $('h-cards').innerHTML=hist.map((h,i)=>`<div class="file" onclick="reopen(${i})">
-    <div class="stamp">Sweep ${String(hist.length-i).padStart(3,'0')}</div>
-    <div style="height:10px"></div>
-    <h3>${h.q.niche}</h3><div class="loc">${h.q.city}, ${h.q.state}</div>
-    <div class="rows">
-      <div class="row"><span class="k">Files</span><span class="v num">${h.leads.length}</span></div>
-      <div class="row"><span class="k">Callable</span><span class="v num yes">${h.leads.filter(l=>l.phone).length}</span></div>
-      <div class="row"><span class="k">Hot</span><span class="v num">${h.leads.filter(l=>l.t.temp==='HOT').length}</span></div>
-      <div class="row"><span class="k">Run</span><span class="v" style="font-size:11px">${h.at}</span></div>
-    </div></div>`).join('')}
-function reopen(i){const h=hist[i];leads=h.leads;dropped=0;noPhone=0;
-  $('f-niche').value=h.q.niche;$('f-city').value=h.q.city;$('f-state').value=h.q.state;
-  tab('results');$('a-prog').style.display='none';$('a-empty').style.display='none';render()}
-function clrHist(){hist=[];sv(LS.hist,hist);renderHist()}
+  $("h-empty").style.display = hist.length?"none":"";
+  var h="";
+  for(var i=0;i<hist.length;i++){
+    var e=hist[i], hot=0, callable=0;
+    for(var j=0;j<e.leads.length;j++){
+      if(e.leads[j].t.temp==="HOT") hot++;
+      if(e.leads[j].phone) callable++;
+    }
+    h += '<div class="card" onclick="reopenHist('+i+')">'
+      + '<div class="note" style="letter-spacing:.2em;margin-bottom:11px">SWEEP '+String(hist.length-i).padStart(3,"0")+'</div>'
+      + '<h3>'+esc(e.q.niche)+'</h3><div class="loc">'+esc(e.q.city)+", "+esc(e.q.state)+'</div>'
+      + '<div class="rows">'
+      + '<div class="row"><span class="k">Leads</span><span class="v"><b class="mono">'+e.leads.length+'</b></span></div>'
+      + '<div class="row"><span class="k">Callable</span><span class="v yes"><b class="mono">'+callable+'</b></span></div>'
+      + '<div class="row"><span class="k">Hot</span><span class="v" style="color:var(--gold2)"><b class="mono">'+hot+'</b></span></div>'
+      + '<div class="row"><span class="k">Run</span><span class="v" style="font-size:11px">'+esc(e.at)+'</span></div>'
+      + '</div><div style="height:11px"></div>'
+      + '<button class="btn ln s" style="width:100%">Reopen results</button></div>';
+  }
+  $("h-cards").innerHTML=h;
+}
+function reopenHist(i){
+  var e=hist[i]; if(!e) return;
+  leads=e.leads; dropped=0; noPhone=0;
+  $("f-niche").value=e.q.niche; $("f-city").value=e.q.city; $("f-state").value=e.q.state;
+  tab("results"); $("a-prog").style.display="none"; $("a-err").style.display="none";
+  render(); toast("Reopened sweep from "+e.at);
+}
+function clearHist(){
+  if(!hist.length) return;
+  if(confirm("Clear all search history?")){ hist=[]; sv(LS.hist,hist); renderHist(); toast("History cleared"); }
+}
 
-/* ── export ── */
-const cel=v=>{const s=v==null?'':String(v);return/[",\n]/.test(s)?`"${s.replace(/"/g,'""')}"`:s};
-const EX=[['Business',l=>l.name],['Phone',l=>l.phone],['Email',l=>l.email],['Address',l=>l.address],
-['City',l=>l.city],['State',l=>l.state],['Trade',l=>l.category],['Website',l=>l.website.status],
-['Website URL',l=>l.website.url],['Booking',l=>l.booking.status],['Facebook',l=>l.social.facebook],
-['Instagram',l=>l.social.instagram],['Reviews',l=>l.reviews.count],['Rating',l=>l.reviews.rating],
-['Years',l=>l.age.years],['Health',l=>l.health],['Signal',l=>l.t.total],['Temperature',l=>l.t.temp],
-['Offer',l=>l.offer.h],['Missing',l=>l.opp.missing.join('; ')],['Checked',l=>l.checked]];
-const csv=a=>[EX.map(c=>cel(c[0])).join(','),...a.map(l=>EX.map(c=>cel(c[1](l))).join(','))].join('\n');
-const callList=a=>['Business,Phone,Signal,Temperature,Offer',
-  ...a.filter(l=>l.phone).map(l=>[cel(l.name),cel(l.phone),l.t.total,l.t.temp,cel(l.offer.h)].join(','))].join('\n');
-function expCSV(){dl('ramels-vision-leads.csv',csv(leads),'text/csv')}
-function expSavedCSV(){dl('ramels-vision-files.csv',csv(saved),'text/csv')}
-function expJSON(){dl('ramels-vision-leads.json',JSON.stringify(leads,null,2),'application/json')}
-function expCall(){dl('call-list.csv',callList(leads),'text/csv');toast(`${leads.filter(l=>l.phone).length} numbers exported`)}
-function expSavedCall(){dl('my-call-list.csv',callList(saved),'text/csv')}
-function expReport(){
-  const rows=leads.map((l,i)=>`<article><div class="fn">File ${String(i+1).padStart(4,'0')} — ${l.t.temp} — signal ${l.t.total}/100</div>
-  <h2>${l.name}</h2><p class="ph">${l.phone||'No number listed'}</p>
-  <p>${l.address||l.city+', '+l.state}</p>
-  <table><tr><td>Website</td><td>${l.website.status==='none'?'None found':l.website.url||l.website.status}</td></tr>
-  <tr><td>Booking</td><td>${l.booking.status==='none'?'None found':l.booking.status}</td></tr>
-  <tr><td>Reviews</td><td>${l.reviews.count||'—'} at ${l.reviews.rating||'—'}</td></tr>
-  <tr><td>Offer</td><td>${l.offer.h}</td></tr></table>
-  <p><b>Open with:</b> ${l.call.pitch}</p>
-  <p><b>Do not claim:</b> ${l.call.avoid.join(' · ')}</p></article>`).join('');
-  dl('ramels-vision-report.html',`<!doctype html><meta charset="utf-8"><title>Ramel's Vision — Report</title>
-  <style>body{font:14px/1.65 -apple-system,Segoe UI,Arial;margin:44px;color:#141216;max-width:820px}
-  h1{letter-spacing:.16em;text-transform:uppercase;font-size:20px;border-bottom:3px solid #B0111F;padding-bottom:12px}
-  .meta{color:#666;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:30px}
-  article{border-top:1px solid #ddd;padding:22px 0;page-break-inside:avoid}
-  .fn{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#B0111F}
-  h2{font-size:17px;margin:8px 0 4px}.ph{font-weight:700;font-size:16px;margin-bottom:4px}
-  table{border-collapse:collapse;margin:12px 0;font-size:13px}
-  td{border:1px solid #e2e2e2;padding:6px 10px}td:first-child{color:#777;width:110px;font-size:11px;text-transform:uppercase;letter-spacing:.08em}</style>
-  <h1>Ramel's Vision — Lead Report</h1>
-  <div class="meta">${leads.length} files · ${leads.filter(l=>l.phone).length} callable · ${new Date().toLocaleDateString()}</div>${rows}`,'text/html')}
-function dl(n,c,m){const a=document.createElement('a');
-  a.href='data:'+m+';charset=utf-8,'+encodeURIComponent(c);a.download=n;a.click()}
+/* ══════════ EXPORT ══════════ */
+function cel(v){
+  var s = v==null?"":String(v);
+  return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s;
+}
+var EXP=[
+  ["Business",function(l){return l.name;}],["Owner",function(l){return l.owner||"Not found";}],
+  ["Phone",function(l){return l.phone;}],["Email",function(l){return l.email||"Not found";}],
+  ["Years in business",function(l){return l.age.years;}],
+  ["Address",function(l){return l.address;}],["City",function(l){return l.city;}],
+  ["State",function(l){return l.state;}],["Trade",function(l){return l.category;}],
+  ["Website",function(l){return l.website.status;}],["Website URL",function(l){return l.website.url;}],
+  ["Booking",function(l){return l.booking.status;}],
+  ["Reviews",function(l){return l.reviews.count;}],["Rating",function(l){return l.reviews.rating;}],
+  ["Health",function(l){return l.health;}],["Signal",function(l){return l.t.total;}],
+  ["Temperature",function(l){return l.t.temp;}],["Offer",function(l){return l.offer.h;}],
+  ["Missing",function(l){return (l.opp.missing||[]).join("; ");}],
+  ["Checked",function(l){return l.checked;}]
+];
+function makeCSV(arr){
+  var head=[], i;
+  for(i=0;i<EXP.length;i++) head.push(cel(EXP[i][0]));
+  var out=[head.join(",")];
+  for(var r=0;r<arr.length;r++){
+    var row=[];
+    for(i=0;i<EXP.length;i++) row.push(cel(EXP[i][1](arr[r])));
+    out.push(row.join(","));
+  }
+  return out.join("\n");
+}
+function makeCalls(arr){
+  var out=["Business,Owner,Phone,Email,Years,Signal,Temperature,Offer"];
+  for(var i=0;i<arr.length;i++){
+    var l=arr[i]; if(!l.phone) continue;
+    out.push([cel(l.name),cel(l.owner||"Ask on call"),cel(l.phone),cel(l.email||""),
+      cel(l.age.years||""),l.t.total,l.t.temp,cel(l.offer.h)].join(","));
+  }
+  return out.join("\n");
+}
+function makeBriefs(arr){
+  var parts=[];
+  for(var i=0;i<arr.length;i++){
+    parts.push(arr[i].brief);
+    parts.push("\n\n"+"-".repeat(70)+"\n\n");
+  }
+  return parts.join("");
+}
+function dl(name,content,mime){
+  var blob=new Blob([content],{type:mime+";charset=utf-8"});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement("a"); a.href=url; a.download=name;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); },1500);
+}
+function expCSV(){ dl("ramels-vision-leads.csv", makeCSV(leads), "text/csv"); toast("CSV exported"); }
+function expJSON(){ dl("ramels-vision-leads.json", JSON.stringify(leads,null,2), "application/json"); toast("JSON exported"); }
+function expCalls(){
+  var n=0; for(var i=0;i<leads.length;i++) if(leads[i].phone) n++;
+  dl("call-list.csv", makeCalls(leads), "text/csv"); toast(n+" numbers exported");
+}
+function expBriefs(){ dl("website-briefs.txt", makeBriefs(leads), "text/plain"); toast(leads.length+" briefs exported"); }
+function expSavedCSV(){ dl("saved-leads.csv", makeCSV(saved), "text/csv"); toast("CSV exported"); }
+function expSavedCalls(){ dl("saved-call-list.csv", makeCalls(saved), "text/csv"); toast("Call list exported"); }
+function expSavedBriefs(){ dl("saved-briefs.txt", makeBriefs(saved), "text/plain"); toast("Briefs exported"); }
 
-/* ── setup ── */
-// Proxy removed — using Claude AI search
+/* ══════════ SETUP ══════════ */
+function saveRelay(){
+  var v=$("relay-in").value.trim().replace(/\/+$/,"");
+  localStorage.setItem(LS.relay,v);
+  useDemo=false; sv(LS.demo,false); demoUI();
+  $("relay-msg").innerHTML='<span class="yes">Saved. Relay is active.</span>';
+  toast("Relay saved");
+}
+function testRelay(){
+  var v=$("relay-in").value.trim().replace(/\/+$/,"");
+  var el=$("relay-msg");
+  if(!v){ el.innerHTML='<span class="no">Enter your relay URL first.</span>'; return; }
+  el.innerHTML='<span class="unk">Testing…</span>';
+  fetch(v+"/health").then(function(r){ return r.json(); }).then(function(d){
+    if(d && d.ok && d.tokenSet) el.innerHTML='<span class="yes">Relay is live and the token is set. Ready to sweep.</span>';
+    else if(d && d.ok) el.innerHTML='<span style="color:var(--gold2)">Relay is running but no API token is set on the server.</span>';
+    else el.innerHTML='<span class="no">Relay responded but not in the expected format.</span>';
+  }).catch(function(e){
+    el.innerHTML='<span class="no">Could not reach the relay. '+esc(e.message)+'</span>';
+  });
+}
 
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeD()});
+/* ══════════ INIT ══════════ */
+function init(){
+  saved = ld(LS.saved,[]);
+  crm   = ld(LS.crm,{});
+  hist  = ld(LS.hist,[]);
+  useDemo = ld(LS.demo,false);
+  var relay = localStorage.getItem(LS.relay)||"";
+  if(relay) $("relay-in").value = relay;
+
+  var chips=document.querySelectorAll(".chips .chip[data-v]");
+  for(var i=0;i<chips.length;i++){
+    chips[i].onclick = (function(el){ return function(){ el.classList.toggle("on"); }; })(chips[i]);
+  }
+  $("f-count").onchange = costNote;
+
+  renderQuota(); demoUI(); renderMotiv();
+  renderSaved(); renderHist(); navCounts();
+  go("landing");
+
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeD(); });
+  setInterval(renderQuota, 60000);
+}
 init();
 </script>
 </body>
